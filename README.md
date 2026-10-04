@@ -16,6 +16,8 @@ Milestone 1 covers **Foundations**: 8 stages plus a checkpoint, about 5–6 hour
 | 8 | The digit machine (% 10, / 10, reverse, palindrome, Armstrong) | Q5 number logic |
 | ✓ | Checkpoint (Section A mix + 2 notebook programs) | — |
 
+> Developers and coding agents: start with [docs/README.md](docs/README.md).
+
 ## Open it
 
 - **Simplest:** double-click `index.html`. It works from `file://` because the site uses no modules, no build step and no internet.

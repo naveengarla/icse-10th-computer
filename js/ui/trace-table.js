@@ -7,10 +7,21 @@
   var h = JP.dom.h;
 
   function valueOf(mem, name) {
-    for (var i = mem.frames.length - 1; i >= 0; i--) {
-      var vs = mem.frames[i].vars;
+    var parts = name.split('.');
+    if (parts.length === 2) {
+      var reference = null;
+      mem.frames.forEach(function (f) { f.vars.forEach(function (b) { if (b.name === parts[0]) reference = b.value; }); });
+      var object = (mem.objects || []).filter(function (o) { return reference && reference.v && o.id === reference.v.objectId; })[0];
+      var field = object && object.fields.filter(function (b) { return b.name === parts[1]; })[0];
+      return field ? field.text : '—';
+    }
+    var active = mem.frames[mem.frames.length - 1];
+    if (active) {
+      var vs = active.vars;
       for (var j = vs.length - 1; j >= 0; j--) if (vs[j].name === name) return vs[j].empty ? '?' : vs[j].text;
     }
+    var current = (mem.objects || []).filter(function (o) { return active && o.id === active.objectId; })[0];
+    if (current) for (var f = 0; f < current.fields.length; f++) if (current.fields[f].name === name) return current.fields[f].text;
     for (var k = 0; k < mem.fields.length; k++) if (mem.fields[k].name === name) return mem.fields[k].text;
     return '—';
   }

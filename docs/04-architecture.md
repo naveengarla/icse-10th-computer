@@ -45,7 +45,7 @@ var res = JP.engine.run(src, { input: '12 30', maxSteps: 3000 });
   - **Snippets** (bare statements; `prog.snippet === true`).
   - Full classes with `void main()`, `static void main()` or `public static void main(String args[])`.
   - Static helper methods (which run with their own frame and a `call` step).
-- **Objects (`new X()`) are not supported yet.** This is milestone 2.
+- **M2 objects are supported:** `new X()` allocates independent fields, runs initializers and the chosen constructor; instance calls carry a receiver. Non-static BlueJ main starts on an implicit object. A parameterized-only class must use static main to construct its object with arguments.
 - **Semantics match Java exactly. The tests cross-check this against JDK 21.**
   - int is 32-bit and wraps.
   - int/int truncates toward zero.
@@ -65,7 +65,7 @@ var res = JP.engine.run(src, { input: '12 30', maxSteps: 3000 });
 
 ```js
 { i, kind, line, note,          // note = plain-English explanation shown under the code
-  mem,                          // snapshot: {frames:[{vars:[{name,type,text,empty,...}]}], fields:[...]}
+  mem,                          // snapshot: {frames:[{name,objectId,vars:[...]}], fields:[...], objects:[{id,type,implicit,fields:[...]}]}
   out,                          // whole console text so far
   loops: [{line, pass}],        // active loops and their pass counters
   depth, inPos,                 // call depth, input-tape position
@@ -150,3 +150,11 @@ If you change the schema, keep `load()` tolerant of old data, or bump the key an
 | `stage` | Plays one card at a time, records time spent, and shows the recap on `/done` |
 | `play` | Free playground: an editable stepper |
 | `insights` | The parent view |
+
+## M2 pilot additions
+
+- `mem.fields` now contains class/static fields. `mem.objects` contains separate object field snapshots; frames include their receiver's `objectId`. Reference values use `{objectId,className}` handles, so Back does not read later mutations.
+- New step kinds: `object`, `fieldInit`, `constructor`. Call/constructor records include the selected signature.
+- `JP.ui.traceValueOf` resolves locals in the active frame, then that receiver's fields, then static fields. `a.amt` resolves the named reference to its object's field.
+- `js/content/stage-11-objects.js` registers the M2 pilot. `tests/m2-school-cases.js` contains runnable school practical fixtures, cross-checked by the existing JDK runner.
+- The content registry sorts by milestone, then stage number; journey grouping uses the optional `milestone` field, defaulting existing stages to M1. Completion links and Continue follow the same order. This does not alter stored progress.

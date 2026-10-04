@@ -19,15 +19,24 @@
         h('h1', 'Java in your head'),
         h('p.lead', 'In the exam there is no computer — ', h('em', 'you'), ' are the computer. Here you will learn to see a program run in your mind: one line at a time, boxes changing, decisions taken, loops going round.'),
         h('div.hero-row',
-          next ? h('a.btn.primary.big', { href: '#/stage/' + next.id + '/' + (Math.min(JP.store.stage(next.id).pos, next.cards.length - 1) + 1) }, status(next).state === 'new' ? 'Start: ' + next.title + ' ▶' : 'Continue: ' + next.title + ' ▶') : h('span.badge-done', '🎉 Foundations complete!'),
+          next ? h('a.btn.primary.big', { href: '#/stage/' + next.id + '/' + (Math.min(JP.store.stage(next.id).pos, next.cards.length - 1) + 1) }, status(next).state === 'new' ? 'Start: ' + next.title + ' ▶' : 'Continue: ' + next.title + ' ▶') : h('span.badge-done', '🎉 All available stages complete!'),
           h('div.overall', h('div.bar', h('div.fill', { style: { width: Math.round(100 * doneMin / totalMin) + '%' } })), h('span.muted', 'about ' + Math.round((totalMin - doneMin) / 60 * 10) / 10 + ' hours to go')))));
 
       var path = h('ol.journey');
+      var milestone = null;
       stages.forEach(function (st) {
+        var group = st.milestone || 'M1';
+        if (group !== milestone) {
+          if (milestone !== null) main.appendChild(path);
+          main.appendChild(h('h2', group === 'M1' ? 'M1 · Foundations' : group === 'M2' ? 'M2 · Objects, methods and constructors' : group));
+          if (group === 'M2') main.appendChild(h('p.muted', 'Stage 11 pilot is ready for review. Stages 9–10, 12–13 and the M2 checkpoint are still being prepared.'));
+          path = h('ol.journey');
+          milestone = group;
+        }
         var s = status(st);
         path.appendChild(h('li', { class: 'stage-tile ' + s.state },
           h('a', { href: '#/stage/' + st.id + '/' + (s.state === 'done' ? 1 : Math.min(JP.store.stage(st.id).pos, st.cards.length - 1) + 1) },
-            h('div.stage-num', st.n === 99 ? '✓' : String(st.n)),
+            h('div.stage-num', st.n % 100 === 99 ? '✓' : String(st.n)),
             h('div.stage-info',
               h('div.stage-title', st.title),
               h('div.stage-sub', st.subtitle || ''),

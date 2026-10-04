@@ -80,6 +80,7 @@
     this.method = null;
     this.breakable = [];
     this.methods = {};
+    this.instanceFields = {};
     var self = this;
     prog.methods.forEach(function (m) {
       (self.methods[m.name] = self.methods[m.name] || []).push(m);
@@ -89,7 +90,12 @@
 
   C.lookup = function (name) {
     for (var i = this.scopes.length - 1; i >= 0; i--) {
-      if (Object.prototype.hasOwnProperty.call(this.scopes[i].vars, name)) return this.scopes[i].vars[name];
+      if (Object.prototype.hasOwnProperty.call(this.scopes[i].vars, name)) {
+        if (this.scopes[i].isFieldScope && this.method && this.method.isStatic && this.instanceFields[name]) {
+          err("The instance field '" + name + "' belongs to an object. A static method needs an object and the dot operator to access it.", this.method.line);
+        }
+        return this.scopes[i].vars[name];
+      }
     }
     return null;
   };
@@ -117,10 +123,19 @@
     var fieldScope = { vars: {}, isFieldScope: true };
     this.scopes.push(fieldScope);
     var self = this;
+    var signatures = {};
+    prog.methods.concat(prog.ctors).forEach(function (m) {
+      var key = (m.isCtor ? 'constructor:' : 'method:') + m.name + '(' + m.params.map(function (p) { return p.type; }).join(',') + ')';
+      if (signatures[key]) err('Two methods or constructors have the same parameter list. Changing only the return type does not create an overload.', m.line);
+      signatures[key] = true;
+    });
     prog.fields.forEach(function (f) {
       f.decls.forEach(function (d) {
+        self.method = { isStatic: f.isStatic, line: d.line };
         if (d.init) self.expectAssignable(f.type, d.init, d.line);
         self.declare(d.name, f.type, d.line, true);
+        if (!f.isStatic) self.instanceFields[d.name] = true;
+        self.method = null;
       });
     });
     prog.methods.forEach(function (m) { self.checkMethod(m); });
@@ -295,6 +310,11 @@
           if (sf && sf[e.name]) return sf[e.name].t;
         }
         var ot = this.expr(e.obj);
+        if (ot === this.prog.className) {
+          var fieldType = null;
+          this.prog.fields.forEach(function (f) { f.decls.forEach(function (d) { if (d.name === e.name) { fieldType = f.type; e.isStaticField = f.isStatic; } }); });
+          if (fieldType) return fieldType;
+        }
         if (ot === 'String' && e.name === 'length') err('For a String, length is a method: write length() with brackets.', e.line);
         err("Unknown field '" + e.name + "'.", e.line);
         break;
@@ -445,7 +465,11 @@
       e.lib = m;
       return r;
     }
+    if (o.kind === 'Name' && o.name === this.prog.className && !this.lookup(o.name)) {
+      return this.checkUserCall(e, this.methods[e.name], false, true);
+    }
     var objT = this.expr(o);
+    if (objT === this.prog.className) return this.checkUserCall(e, this.methods[e.name], false);
     var table = E.lib.instance[objT];
     if (!table) err("A " + objT + " value has no methods to call with a dot.", e.line);
     var im = table[e.name];
@@ -460,23 +484,31 @@
     return rr;
   };
 
-  C.checkUserCall = function (e, cands, isCtor) {
+  C.checkUserCall = function (e, cands, isCtor, classCall) {
     var self = this;
     var ts = e.args.map(function (a) { return self.expr(a); });
     var applicable = (cands || []).filter(function (m) {
       if (m.params.length !== ts.length) return false;
-      for (var i = 0; i < ts.length; i++) if (!(m.params[i].type === ts[i] || (num(ts[i]) && num(m.params[i].type) && Vs.canWiden(ts[i], m.params[i].type)))) return false;
+      for (var i = 0; i < ts.length; i++) if (!(m.params[i].type === ts[i] || (ts[i] === 'null' && !num(m.params[i].type) && m.params[i].type !== 'boolean') || (num(ts[i]) && num(m.params[i].type) && Vs.canWiden(ts[i], m.params[i].type)))) return false;
       return true;
     });
     if (!applicable.length) {
       if (isCtor && !(cands || []).length && !ts.length) { e.target = null; return this.prog.className; }
       err('No ' + (isCtor ? 'constructor' : "version of '" + e.name + "'") + ' takes (' + ts.join(', ') + ').', e.line);
     }
-    // most specific: fewest widenings
-    applicable.sort(function (a, b) { return score(a) - score(b); });
-    function score(m) { var s = 0; for (var i = 0; i < ts.length; i++) if (m.params[i].type !== ts[i]) s++; return s; }
-    e.target = applicable[0];
-    return isCtor ? this.prog.className : applicable[0].ret;
+    // A most-specific signature must be convertible to every other applicable one.
+    var best = applicable.filter(function (a) {
+      return applicable.every(function (b) {
+        return a.params.every(function (p, i) { return p.type === b.params[i].type || (num(p.type) && num(b.params[i].type) && Vs.canWiden(p.type, b.params[i].type)); });
+      });
+    });
+    if (best.length !== 1) err('Ambiguous call: more than one version matches, and neither parameter list is more specific.', e.line);
+    e.target = best[0];
+    if (!isCtor && !e.target.isStatic && (classCall || (!e.obj && this.method && this.method.isStatic))) {
+      err('An instance method needs an object. Create an object and call ' + e.name + ' through it.', e.line);
+    }
+    e.classCall = !!classCall;
+    return isCtor ? this.prog.className : e.target.ret;
   };
 
   E.KNOWN_RET = { int: 1, long: 1, double: 1, float: 1, char: 1, boolean: 1, String: 1, void: 1, short: 1, byte: 1 };

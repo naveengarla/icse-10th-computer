@@ -18,7 +18,7 @@ function load(rel) {
   'js/engine/checker.js', 'js/engine/interpreter.js'].forEach(load);
 var E = ctx.JP.engine;
 
-var CASES = require('./cases.js');
+var CASES = require('./cases.js').concat(require('./m2-school-cases.js'));
 var useJdk = process.argv.indexOf('--jdk') >= 0;
 var only = process.argv.filter(function (a) { return a.indexOf('--only=') === 0; }).map(function (a) { return a.slice(7); })[0];
 
@@ -149,7 +149,11 @@ function gateProblems(card, res) {
     }
     if (g.ask && g.ask.indexOf('var:') === 0) {
       var nm = g.ask.slice(4);
-      if (!new RegExp('\\b' + nm + '\\b').test(card.code)) probs.push('gate asks about unknown variable ' + nm);
+      var names = nm.split('.');
+      if (!names.every(function (name) { return new RegExp('\\b' + name + '\\b').test(card.code); })) probs.push('gate asks about unknown variable ' + nm);
+      var hits = res.steps.filter(function (s) { return s.line === g.line && !QUIET[s.kind]; });
+      var target = hits[(g.n || 1) - 1];
+      if (target && ctx.JP.ui.traceValueOf(target.mem, nm) === '—') probs.push('gate variable ' + nm + ' is not available at the target step');
     }
   });
   if (card.trace && ctx.JP.ui && ctx.JP.ui.traceRows) {

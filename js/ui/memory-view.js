@@ -32,14 +32,22 @@
       var any = false;
       if (mem.fields.length) {
         any = true;
-        body.appendChild(h('div.frame.fields', h('div.frame-name', 'object\'s boxes (fields)'), h('div.boxes', mem.fields.map(box))));
+        body.appendChild(h('div.frame.fields', h('div.frame-name', 'class boxes (static fields)'), h('div.boxes', mem.fields.map(box))));
       }
+      (mem.objects || []).forEach(function (ob) {
+        any = true;
+        var labels = [];
+        mem.frames.forEach(function (f) { f.vars.forEach(function (b) { if (b.value && b.value.v && b.value.v.objectId === ob.id) labels.push(b.name); }); });
+        body.appendChild(h('div.frame.object-fields',
+          h('div.frame-name', 'Object #' + ob.id + ' of ' + ob.type + (labels.length ? ' ← ' + labels.join(', ') : ob.implicit ? ' — BlueJ main object' : '')),
+          h('div.boxes', ob.fields.length ? ob.fields.map(box) : h('span.muted', 'no fields'))));
+      });
       var n = mem.frames.length;
       mem.frames.forEach(function (f, i) {
         if (!f.vars.length && n === 1) return;
         any = true;
         body.appendChild(h('div', { class: 'frame' + (i === n - 1 ? ' active' : ' paused') },
-          n > 1 ? h('div.frame-name', f.name + '()' + (i === n - 1 ? ' — running now' : ' — waiting')) : null,
+          n > 1 ? h('div.frame-name', f.name + '()' + (f.objectId ? ' on object #' + f.objectId : '') + (i === n - 1 ? ' — running now' : ' — waiting')) : null,
           h('div.boxes', f.vars.length ? f.vars.map(box) : h('span.muted', 'no boxes yet'))));
       });
       if (!any) body.appendChild(h('p.muted.empty-mem', 'No boxes yet. A box appears when a variable is declared.'));

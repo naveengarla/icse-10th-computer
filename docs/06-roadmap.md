@@ -69,12 +69,12 @@ A milestone that only teaches concepts, or only shows programs, is not done.
 - `practical-2-data-members-methods.md`
 - `worksheets.md` sections 1, 2, 4, 6 and 7
 
-### What already exists in the engine
+### Current engine status (M2 pilot)
 - **Parser:** full classes with fields, methods (static and non-static), constructors (`prog.ctors`) and `new` expressions.
 - **Checker:**
   - fields are declared
   - methods and constructors are checked
-  - `checkUserCall` picks an overload: it filters by parameter count and widening, then prefers the version with the fewest widenings
+  - `checkUserCall` filters by parameter count and invocation conversions, then selects a signature more specific than every other applicable signature; ambiguous calls are rejected.
 - **Runtime:**
   - static helper methods with frames
   - the `call` step note ("values are COPIED into its own boxes")
@@ -97,14 +97,14 @@ A milestone that only teaches concepts, or only shows programs, is not done.
    - Static methods cannot use instance fields. The checker should already reject this; add tests.
 3. **BlueJ `void main()` inside the class:** school solutions put `void main()` (non-static) or `static void main()` in the same class, then do `C ob = new C(); ob.accept(); ob.calculate(); ob.display();`. Both forms must run.
 
-   Today the memory snapshot has one program-wide set of fields (`mem.fields`), not one set per object. With objects, the fields belong to each instance. If `main` is non-static and uses fields directly, run it on an implicit object, the way BlueJ does.
+   Implemented: `mem.fields` contains static/class fields; `mem.objects` contains independent field bundles. Non-static `main` runs on an implicit object initialized by its no-argument constructor, the way BlueJ does.
 4. **Memory view:**
    - Show each object as a labelled bundle of field boxes, e.g. "object of Employee", with the reference variable pointing to it or labelled with it.
    - **Two objects must visibly have separate fields.** This is the key misconception to break.
    - Keep method frames visually separate from objects.
 5. **Overload resolution must match Java:**
    - Java's rules: exact match, then widening, then the most specific version. If no single version is most specific, it's an "ambiguous" compile error.
-   - The current "fewest widenings" heuristic is not Java's rule. Add `--jdk` cases with `int`/`double`/`char`/`long` mixes and ambiguous calls. Fix the checker where it disagrees with Java.
+   - Implemented and tested with `int`/`double`/`char`/`long` mixes and ambiguous calls. The old "fewest widenings" heuristic has been replaced.
    - Friendly errors: "No version of area takes (double, int)". Also: "Two methods differ only in return type". That second one is a compile error in Java and a classic theory question.
 6. **"Try in real Java":** `JP.ui.toW3` already adds a `Main` launcher for full classes. Check that it works for classes with constructors and non-static `main`.
 
@@ -148,7 +148,7 @@ A milestone that only teaches concepts, or only shows programs, is not done.
 Pure vs impure methods and call by value or reference are **not** in the scope list. Include them only if the ch03 notes explicitly cover them; check first.
 
 ### Done when
-- Every program in the five M2 school-material files runs in the engine with output identical to `--jdk`, except where the school's code has a bug. Note any such bugs, but don't copy them into content.
+- Every program in the six M2 school-material files runs in the engine with output identical to `--jdk`, except where the school's code has a bug. Note any such bugs, but don't copy them into content.
 - Stages 9–13 and the checkpoint pass all three test suites.
 - The owner has seen the stage plan and a pilot of stage 11 or 12.
 
@@ -265,3 +265,9 @@ Probably none. Foundations already covers loops, `%`/`/`, flags and `break`. If 
 3. Are special numbers taught that are not in the transcribed material?
 4. Should the M2 checkpoint include a timed element?
 5. Pilot findings from Stages 1–3. These may change how fast new stages should go.
+
+## M2 pilot status (2026-10-04)
+
+The owner approved the stage plan recorded in 02-progress. Stage 11 is built as the agreed pilot; remaining stages wait for pilot review. Engine items 1–5 are implemented and covered by regression cases. All 11 school practical programs have runnable fixtures; chapter-note and worksheet coverage still needs completion before M2 can be declared done. The journey is grouped by milestone and storage remains compatible.
+
+The six-file completion criterion also requires the listed worksheet sections. No scope-map item is marked complete at this pilot boundary.

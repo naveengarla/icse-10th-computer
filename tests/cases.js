@@ -98,6 +98,48 @@ module.exports = [
   { name: 'long to int', src: 'int r=Math.round(2.5);', compileError: 'lossy' },
   { name: 'uninitialised read', src: 'int x;\nint y=x+1;', runtimeError: 'before it has been given a value', jdk: false },
 
+  // ---------- M2 objects, methods, constructors ----------
+  { name: 'M2 snapshots preserve past object state', src: 'class M\n{\nint x;\nvoid set(int n){x=n;}\nstatic void main(){M a=new M(); a.set(5); a.set(9);}\n}', out: '',
+    check: function (r) {
+      var states = r.steps.filter(function (s) { return s.mem.objects.length && s.mem.objects[0].fields[0].text === '5'; });
+      if (!states.length) return 'past value 5 disappeared from the snapshots';
+      var last = r.steps[r.steps.length - 1];
+      if (last.mem.objects[0].fields[0].text !== '9') return 'final object state is wrong';
+      var call = r.steps.filter(function (s) { return s.kind === 'call'; })[0];
+      return call.mem.frames[call.mem.frames.length - 1].objectId === 1 ? null : 'method frame lost its receiver';
+    } },
+  { name: 'M2 initialization before constructor snapshot', src: 'class M\n{\nint x=3;\nM(){x+=4;}\nstatic void main(){M a=new M();}\n}', out: '',
+    check: function (r) {
+      var created = r.steps.filter(function (s) { return s.kind === 'object'; })[0];
+      var ctor = r.steps.filter(function (s) { return s.kind === 'constructor'; })[0];
+      return created.mem.objects[0].fields[0].text === '0' && ctor.mem.objects[0].fields[0].text === '3' ? null : 'defaults, initializer and constructor are out of order';
+    } },
+  {"name": "M2 independent object fields", "src": "class M\n{\nint x;\nvoid set(int v){x=v;}\nvoid show(){System.out.println(x);}\nstatic void main()\n{\nM a=new M(); M b=new M(); a.set(7); b.show(); a.show();\n}\n}", "out": "0\n7\n"},
+  {"name": "M2 parameter copies and shadowing", "src": "class M\n{\nint x=9;\nvoid change(int x){x=20; System.out.println(x);}\nint read(){return x;}\nstatic void main()\n{\nint x=4; M a=new M(); a.change(x); System.out.println(x); System.out.println(a.read());\n}\n}", "out": "20\n4\n9\n"},
+  {"name": "M2 nested instance calls", "src": "class M\n{\nint x;\nvoid first(){x=3; second();}\nvoid second(){x+=4;}\nstatic void main()\n{\nM a=new M(); a.first(); System.out.println(a.x);\n}\n}", "out": "7\n"},
+  {"name": "M2 no argument constructor automatic", "src": "class M\n{\nint x=2;\nM(){x+=5; System.out.println(x);}\nstatic void main()\n{\nM a=new M(); System.out.println(a.x);\n}\n}", "out": "7\n7\n"},
+  {"name": "M2 parameterized constructor", "src": "class M\n{\nint x;\nM(int n){x=n;}\nint read(){return x;}\nstatic void main()\n{\nM a=new M(8); M b=new M(3); System.out.println(a.read()+b.read());\n}\n}", "out": "11\n"},
+  {"name": "M2 constructor overload widening", "src": "class M\n{\nint x;\nM(long n){x=1;}\nM(double n){x=2;}\nstatic void main()\n{\nM a=new M(4); M b=new M(4.0); System.out.println(a.x+\" \"+b.x);\n}\n}", "out": "1 2\n"},
+  {"name": "M2 default constructor unavailable", "src": "class M\n{\n\nM(int n){}\nstatic void main()\n{\nM a=new M();\n}\n}", "compileError": true},
+  {"name": "M2 duplicate signature return type", "src": "class M\n{\n\nint f(int n){return n;}\ndouble f(int n){return n;}\nstatic void main()\n{\n\n}\n}", "compileError": "return type"},
+  {"name": "M2 duplicate constructor", "src": "class M\n{\n\nM(int n){}\nM(int x){}\nstatic void main()\n{\n\n}\n}", "compileError": true},
+  {"name": "M2 static cannot read instance field", "src": "class M\n{\nint x;\n\nstatic void main()\n{\nSystem.out.println(x);\n}\n}", "compileError": "instance field"},
+  {"name": "M2 static cannot call instance method", "src": "class M\n{\n\nvoid f(){}\nstatic void main()\n{\nf();\n}\n}", "compileError": "instance method"},
+  {"name": "M2 class call to instance method rejected", "src": "class M\n{\n\nvoid f(){}\nstatic void main()\n{\nM.f();\n}\n}", "compileError": "instance method"},
+  {"name": "M2 static helper via class", "src": "class M\n{\n\nstatic int f(int n){return n*n;}\nstatic void main()\n{\nSystem.out.println(M.f(5));\n}\n}", "out": "25\n"},
+  {"name": "M2 overload most specific long before double", "src": "class M\n{\n\nstatic int f(double x){return 2;}\nstatic int f(long x){return 1;}\nstatic void main()\n{\nSystem.out.println(f(7));\n}\n}", "out": "1\n"},
+  {"name": "M2 overload char exact and widening", "src": "class M\n{\n\nstatic int f(long x){return 1;}\nstatic int f(int x){return 2;}\nstatic int f(char x){return 3;}\nstatic void main()\n{\nSystem.out.println(f('A')); System.out.println(f(65)); System.out.println(f(65L));\n}\n}", "out": "3\n2\n1\n"},
+  {"name": "M2 ambiguous crossed overloads", "src": "class M\n{\n\nstatic int f(int a,double b){return 1;}\nstatic int f(double a,int b){return 2;}\nstatic void main()\n{\nSystem.out.println(f(1,2));\n}\n}", "compileError": "Ambiguous"},
+  {"name": "M2 ambiguous constructors", "src": "class M\n{\n\nM(int a,double b){}\nM(double a,int b){}\nstatic void main()\n{\nM a=new M(1,2);\n}\n}", "compileError": "Ambiguous"},
+  {"name": "M2 count of exact arguments is insufficient", "src": "class M\n{\n\nstatic int f(int a,double b,double c){return 1;}\nstatic int f(long a,int b,int c){return 2;}\nstatic void main()\n{\nSystem.out.println(f(1,2,3));\n}\n}", "compileError": "Ambiguous"},
+  {"name": "M2 null instance call", "src": "class M\n{\n\nvoid f(){}\nstatic void main()\n{\nM a=null; a.f();\n}\n}", "runtimeError": "NullPointerException"},
+  {"name": "M2 static through null does not dereference", "src": "class M\n{\n\nstatic void f(){System.out.println(7);}\nstatic void main()\n{\nM a=null; a.f();\n}\n}", "out": "7\n"},
+  {"name": "M2 BlueJ implicit main object initialized", "src": "class M\n{\nint x=3;\nM(){x+=2;}\nvoid f(){System.out.println(x);}\nvoid main()\n{\nf();\n}\n}", "out": "5\n"},
+  {"name": "M2 field default values", "src": "class M\n{\nint n; double d; boolean b; char c; String s;\n\nstatic void main()\n{\nM a=new M(); System.out.println(a.n+\" \"+a.d+\" \"+a.b+\" \"+(int)a.c+\" \"+a.s);\n}\n}", "out": "0 0.0 false 0 null\n"},
+  {"name": "M2 references point to existing objects", "src": "class M\n{\nint x;\nvoid set(int n){x=n;}\nstatic void main()\n{\nM a=new M(); M b=a; b.set(6); System.out.println(a.x);\n}\n}", "out": "6\n"},
+  {"name": "M2 void method with class name is not constructor", "src": "class M\n{\nint x;\nvoid M(){x=8;}\nstatic void main()\n{\nM a=new M(); System.out.println(a.x); a.M(); System.out.println(a.x);\n}\n}", "out": "0\n8\n"},
+  {"name": "M2 static state used by school demo", "src": "class M\n{\nstatic int x;\nstatic void set(int y){x=y;}\nvoid show(){System.out.println(x);}\nstatic void main()\n{\nM a=new M(); M b=new M(); a.set(5); b.show();\n}\n}", "out": "5\n"},
+
   // ---------- expression reducer ----------
   { name: 'reducer precedence', expr: '2+3*4-6/4', value: '13' },
   { name: 'reducer String', expr: '"A"+1+2', value: '"A12"' },

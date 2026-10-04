@@ -121,6 +121,8 @@
     this.input = new E.InputTape(this.opts.input || '');
     this.frames = [];
     this.fields = [];
+    this.objects = [];
+    this.nextObjectId = 1;
     this.changed = {};
     this.effects = [];
     this.loops = [];
@@ -161,6 +163,8 @@
       var sc = f.scopes[i];
       for (var j = 0; j < sc.length; j++) if (sc[j].name === name) return sc[j];
     }
+    var ob = f.object;
+    if (ob) for (var j2 = 0; j2 < ob.fields.length; j2++) if (ob.fields[j2].name === name) return ob.fields[j2];
     for (var k = 0; k < this.fields.length; k++) if (this.fields[k].name === name) return this.fields[k];
     throw new Error('variable not found at runtime: ' + name);
   };
@@ -193,10 +197,13 @@
     }
     return {
       fields: this.fields.map(function (v) { return box(v, 0); }),
+      objects: this.objects.map(function (ob) {
+        return { id: ob.id, type: ob.type, implicit: ob.implicit, fields: ob.fields.map(function (v) { return box(v, 0); }) };
+      }),
       frames: this.frames.map(function (f) {
         var vars = [];
         f.scopes.forEach(function (sc, d) { sc.forEach(function (v) { vars.push(box(v, d)); }); });
-        return { name: f.name, vars: vars };
+        return { name: f.name, objectId: f.object ? f.object.id : null, vars: vars };
       })
     };
   };
@@ -341,7 +348,12 @@
           var fv = sf[n.name];
           return this.done(n, fv, rc, n.obj.name + '.' + n.name + ' is ' + L(fv) + '.');
         }
-        return V('System.in', null);
+        if (n.obj.name === 'System' && n.name === 'in') return V('System.in', null);
+        var ref = this.eval(n.obj, rc);
+        if (ref.v === null && !n.isStaticField) throw new RuntimeErr('NullPointerException', 'This variable holds null, so it has no fields.');
+        var fields = n.isStaticField ? this.fields : this.objectOf(ref).fields;
+        for (var fi = 0; fi < fields.length; fi++) if (fields[fi].name === n.name) return this.done(n, fields[fi].val, rc, 'Read ' + n.name + ' from ' + L(ref) + '.');
+        throw new Error('field not found: ' + n.name);
       }
       case 'Bin': {
         var op = n.op;
@@ -439,7 +451,8 @@
       case 'New':
         if (n.type === 'Scanner') return V('Scanner', { scanner: true });
         if (n.type === 'String') return n.args.length ? V('String', this.eval(n.args[0], rc).v) : V('String', '');
-        throw new RuntimeErr('Unsupported', 'Creating objects is covered in the next part of the course.');
+        var args = n.args.map(function (a) { return self.eval(a, rc); });
+        return this.done(n, this.createObject(n.target, args, n.line, false), rc, 'new creates a separate object with its own field boxes.');
       case 'Call':
         return this.call(n, rc);
     }
@@ -481,9 +494,11 @@
     }
     // user-defined method
     var m = n.target;
+    var receiver = n.obj && !n.classCall ? this.eval(n.obj, rc) : null;
     var vals = n.args.map(function (a) { return self.eval(a, rc); });
     this.flushReads(rc);
-    var ret = this.invoke(m, vals, n.line);
+    var object = m.isStatic ? null : receiver ? this.objectOf(receiver) : this.frame().object;
+    var ret = this.invoke(m, vals, n.line, object);
     if (m.ret === 'void') return V('void', null);
     return this.done(n, ret, rc, n.name + '(…) returned ' + L(ret) + '.');
   };
@@ -501,15 +516,49 @@
     return s;
   }
 
-  R.invoke = function (m, vals, callLine) {
+  R.objectOf = function (ref) {
+    if (!ref || ref.v === null) throw new RuntimeErr('NullPointerException', 'This variable holds null (no object), so it has no methods to call.');
+    for (var i = 0; i < this.objects.length; i++) if (this.objects[i].id === ref.v.objectId) return this.objects[i];
+    throw new Error('unknown object reference');
+  };
+
+  R.createObject = function (ctor, vals, line, implicit) {
     var self = this;
-    this.frames.push({ name: m.name, scopes: [[]], method: m });
+    var ob = { id: this.nextObjectId++, type: this.prog.className, fields: [], implicit: !!implicit };
+    this.objects.push(ob);
+    this.prog.fields.forEach(function (f) {
+      if (f.isStatic) return;
+      f.decls.forEach(function (d) {
+        var v = { id: self.nextId++, name: d.name, type: f.type, val: defaultVal(f.type), field: true };
+        ob.fields.push(v);
+        self.changed[v.id] = true;
+      });
+    });
+    this.rec('object', line, (implicit ? 'BlueJ starts the non-static main() on ' : 'Created ') + 'object #' + ob.id + ' of ' + ob.type + '. Its fields start with default values.');
+    this.frames.push({ name: 'field initialization', scopes: [[]], object: ob });
+    try {
+      this.prog.fields.forEach(function (f) {
+        if (f.isStatic) return;
+        f.decls.forEach(function (d) {
+          if (!d.init) return;
+          self.set(d.name, coerce(self.eval(d.init, null), f.type));
+          self.rec('fieldInit', d.line, self.effectNote());
+        });
+      });
+    } finally { this.frames.pop(); }
+    if (ctor) this.invoke(ctor, vals, line, ob);
+    return V(this.prog.className, { objectId: ob.id, className: ob.type });
+  };
+
+  R.invoke = function (m, vals, callLine, object) {
+    var self = this;
+    this.frames.push({ name: m.name, scopes: [[]], method: m, object: object });
     m.params.forEach(function (p, i) {
       var v = self.declare(p.name, p.type, coerce(vals[i], p.type));
       v.param = true;
     });
     var desc = m.params.map(function (p, i) { return p.name + ' = ' + L(coerce(vals[i], p.type)); }).join(', ');
-    this.rec('call', m.line, 'Jump into ' + m.name + '(). ' + (desc ? 'The values are COPIED into its own boxes: ' + desc + '.' : ''), { callLine: callLine });
+    this.rec(m.isCtor ? 'constructor' : 'call', m.line, (m.isCtor ? 'The constructor runs automatically for object #' + object.id + '. ' : 'Jump into ' + m.name + '(). ') + (desc ? 'The values are COPIED into its own boxes: ' + desc + '.' : ''), { callLine: callLine, signature: m.name + '(' + m.params.map(function (p) { return p.type; }).join(', ') + ')' });
     var saveLoops = this.loops, saveBreak = this.breakCtx;
     this.loops = [];
     this.breakCtx = [];
@@ -518,7 +567,7 @@
     this.breakCtx = saveBreak;
     this.frames.pop();
     var rv = r && r.ret ? coerce(r.ret, m.ret) : null;
-    if (!rv && m.ret !== 'void') throw new RuntimeErr('MissingReturn', m.name + '() reached its end without a return statement.');
+    if (!rv && m.ret !== 'void' && !m.isCtor) throw new RuntimeErr('MissingReturn', m.name + '() reached its end without a return statement.');
     this.rec('back', callLine, 'Back where ' + m.name + '() was called' + (rv ? ', with the answer ' + L(rv) + '.' : '.'));
     return rv;
   };
@@ -747,11 +796,20 @@
     var self = this;
     this.frames.push({ name: 'main', scopes: [[]], method: prog.main });
     prog.fields.forEach(function (f) {
+      if (!f.isStatic) return;
       f.decls.forEach(function (d) {
-        var v = d.init ? coerce(self.eval(d.init, null), f.type) : defaultVal(f.type);
-        self.fields.push({ id: self.nextId++, name: d.name, type: f.type, val: v, field: true });
+        self.fields.push({ id: self.nextId++, name: d.name, type: f.type, val: defaultVal(f.type), field: true });
       });
     });
+    prog.fields.forEach(function (f) {
+      if (!f.isStatic) return;
+      f.decls.forEach(function (d) { if (d.init) self.set(d.name, self.eval(d.init, null)); });
+    });
+    if (!prog.main.isStatic) {
+      var ctors = prog.ctors.filter(function (c) { return !c.params.length; });
+      if (prog.ctors.length && !ctors.length) throw new RuntimeErr('Unsupported', 'BlueJ needs an existing object to run this main(). Use a static main() to create the object with constructor arguments.');
+      this.frame().object = this.objectOf(this.createObject(ctors[0] || null, [], prog.main.line, true));
+    }
     var first = prog.main.body.body[0];
     this.rec('start', null, 'The program starts. Java begins at the first line inside main() and goes down one line at a time.', { nextLine: first ? first.line : null });
     this.changed = {};

@@ -9,7 +9,11 @@
     add: function (stage) {
       stage.cards.forEach(function (c, i) { if (!c.id) c.id = stage.id + '-' + (i + 1); });
       stages.push(stage);
-      stages.sort(function (a, b) { return a.n - b.n; });
+      stages.sort(function (a, b) {
+        var am = parseInt((a.milestone || 'M1').slice(1), 10);
+        var bm = parseInt((b.milestone || 'M1').slice(1), 10);
+        return am === bm ? a.n - b.n : am - bm;
+      });
     },
     list: function () { return stages; },
     get: function (id) { return stages.filter(function (s) { return s.id === id; })[0]; },

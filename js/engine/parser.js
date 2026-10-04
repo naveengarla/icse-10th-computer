@@ -157,7 +157,7 @@
       nt = this.ident('variable name');
     }
     this.expect(';');
-    prog.fields.push({ kind: 'VarDecl', type: type, decls: decls, line: startTok.line });
+    prog.fields.push({ kind: 'VarDecl', type: type, decls: decls, line: startTok.line, isStatic: !!mods.static });
   };
 
   P.parseParams = function () {

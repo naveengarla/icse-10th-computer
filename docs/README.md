@@ -26,7 +26,7 @@ These docs are for a **coding agent (or developer) taking over this project**. R
   - No build step, no modules, no dependencies.
   - Must keep working when `index.html` is opened from `file://`, and on GitHub Pages.
 - **Live:** https://naveengarla.github.io/icse-10th-computer/ (repo `naveengarla/icse-10th-computer`, branch `main`, Pages served from the root).
-- **Status:** milestone 1 (Foundations: 8 stages plus a checkpoint) is complete and published. The next step is a pilot with the student, followed by milestone 2 (objects, methods and constructors).
+- **Status:** milestone 1 (Foundations: 8 stages plus a checkpoint) is complete and published. M2 engine support and the 14-card Stage 11 pilot are available for pilot review. Remaining M2 stages are pending.
 - **Before finishing any change:**
   1. `node tests/run.js`
   2. `node tests/run.js --jdk` (if a JDK is available)

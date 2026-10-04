@@ -8,7 +8,7 @@ _Last updated: 2026-10-04._
 |---|---|
 | **M1 Foundations** (8 stages + checkpoint) | ✅ Built, tested and published |
 | Pilot of Stages 1–3 with the student | ⏳ **Next.** The owner runs it and then reports what to change |
-| M2 Objects, methods, constructors | ⬜ Not started |
+| M2 Objects, methods, constructors | 🟡 Engine support + Stage 11 pilot ready; owner review pending |
 | M3 Number-logic program bank | ⬜ Not started |
 | M4 Strings + library classes | ⬜ Not started |
 | M5 Exam simulator | ⬜ Not started |
@@ -46,7 +46,7 @@ Detailed specs for each future milestone are in [06-roadmap.md](06-roadmap.md). 
 
 1. **Pilot feedback.** The owner will run Stages 1–3 with the student, look at Insights, and report problems or changes. Treat those reports as top priority.
 2. **M2: Objects and methods.** These cover exam Q3, Q4, Q7 and Q8 and most marks.
-   - The engine already runs static helper methods with frames and a call step that says values are COPIED. `new` / objects are **not supported**: the engine raises "Creating objects is covered in the next part of the course."
+   - The engine now creates independent objects, runs field initializers and constructors, and invokes instance methods on the correct receiver. Method/constructor overload selection uses the most-specific signature and rejects ambiguous calls. Stage 11 is a 14-card, 35-minute pilot. Stages 9–10, 12–13 and the M2 checkpoint are pending.
    - Planned content:
      - call/return with frames
      - actual vs formal parameters
@@ -107,3 +107,35 @@ Whatever comes next, the scope rules in [01-problem-statement.md](01-problem-sta
   - `explore.tryThis` must be an array.
   - Code font ligatures disabled (so `<=` doesn't render as `≤`).
   - Digit-machine code keeps its indentation (`white-space: pre`).
+
+## M2 pilot handover (2026-10-04)
+
+The owner approved the recommended 88-card / 260-minute plan. Build engine support and Stage 11 first, show the pilot, then continue the remaining stages after review. The owner authorized committing and pushing the pilot to main on 2026-10-04.
+
+| Stage | Cards | Minutes | Exam | Status |
+|---|---:|---:|---|---|
+| 9 Methods | 16 | 40 | Q1/Q2; Q3/Q4/Q7 foundation | pending |
+| 10 Method overloading | 14 | 35 | Q4; Q1/Q2 | pending |
+| 11 Classes and objects | 14 | 35 | Q3/Q7; Q1/Q2 | pilot built |
+| 12 Class-specification answers | 18 | 55 | Q3/Q7 | pending |
+| 13 Constructors | 18 | 45 | Q8; Q1/Q2 | pending |
+| M2 checkpoint | 8 | 50 | Q1/Q2/Q3/Q4/Q7/Q8 | pending |
+
+- Pilot route: `#/stage/s11/1`. The journey groups M1 and M2 and keeps the Foundations checkpoint before M2. Existing browser progress and storage key remain compatible.
+- Each object's fields are shown in a separate labelled bundle. Reference boxes point to an object number; method frames name their receiver. Snapshots preserve past object values for Back. Qualified prediction/trace names such as `a.amt` are supported.
+- Regression fixtures cover all 11 M2 practical solutions, plus independence, parameter copies, initialization order, constructor selection, method selection, ambiguous calls, static-context rejection, and snapshot history.
+- School corrections in runnable fixtures: sales computes `net`; Bank checks the balance after withdrawal; digit roots are labelled; pattern output includes spaces. Original transcriptions are unchanged.
+- Scope decisions: 00-exam-scope wins over the outdated exclusions in 01. No dedicated pure/impure, reference-passing or shared-static-field lesson is included in the pilot. Static-field runtime support exists to verify the school's static_demo, without adding syllabus content.
+- Checkpoint recommendation: untimed, with suggested minutes.
+
+Change history: object runtime, Java-correct overload resolution, object memory view, qualified trace values, Stage 11 pilot, milestone journey grouping, and gate validation that detects references queried before assignment.
+
+### Pilot verification
+
+- Node: 289 passed, 0 failed.
+- Java 21: 499 passed, 0 failed (full suite, including school fixtures).
+- Browser: SMOKE OK, 160 routes. Pilot opens over HTTP and file:// without page errors.
+- Visual review: separate object bundles, references and receiver frames, prediction gate before output, and notebook task.
+- W3Schools launcher: three constructor/static/non-static scenarios compiled and agreed with Java 21.
+- Stage completion keeps Stage 8 → Foundations checkpoint → Stage 11, using milestone order in the content registry.
+- Full M2 coverage remains incomplete; chapter-note and worksheet regression coverage and the remaining stages are still pending.

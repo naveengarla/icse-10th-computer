@@ -113,6 +113,7 @@
   function lit(val) {
     if (val == null) return '?';
     if (val.v === null) return 'null';
+    if (val.v && val.v.objectId) return '→ object #' + val.v.objectId;
     switch (val.t) {
       case 'char': return "'" + escChar(String.fromCharCode(val.v)) + "'";
       case 'String': return '"' + val.v.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\t/g, '\\t') + '"';
@@ -121,6 +122,7 @@
     }
   }
   function escChar(c) {
+    if (c === '\u0000') return '\\u0000';
     if (c === '\n') return '\\n';
     if (c === '\t') return '\\t';
     if (c === "'") return "\\'";

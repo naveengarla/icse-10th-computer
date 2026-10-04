@@ -63,7 +63,7 @@ When done, stop the server **by its PID**. Don't kill all `python.exe` processes
 ## Adding content: checklist
 
 1. Edit or add `js/content/stage-*.js`. A new stage file goes into `index.html` **and** `tests/smoke.html`.
-2. Use school code style (see [03-method.md](03-method.md)) and only in-scope constructs.
+2. Use school code style (see [03-method.md](03-method.md)) and only in-scope constructs. Model the questions on [school-material/](school-material/README.md).
 3. Never type an answer key by hand:
    - use `answer:'output'`, `ask`, `trace` or `gates`
    - let the engine compute the answer

@@ -76,11 +76,12 @@ On paper she must then **predict output**, **trace variables**, **evaluate expre
 
 ## Source material
 
-The school PDFs live in `Sources/`. This folder is **deliberately git-ignored and must never be published**, because the files are school material.
+**Use [school-material/](school-material/README.md).** It holds Markdown transcriptions of every school PDF, with identifying details removed:
+- chapter notes for Ch 2, 3, 4, 5 and 8
+- practical-exercise solutions for iterations, data members/methods, overloading, constructors and strings
+- the worksheet bundle, including the Section-A practice paper
 
-The folder contains chapter PDFs (Ch 2, 3, 4, 5, 8), practical-exercise solutions (iterations, data members/methods, overloading, constructors, strings) and a worksheet set. The two "Chapter-8 String Handling" PDFs are duplicates.
-
-If you are working in a fresh clone without `Sources/`, ask the owner for the files before writing new exam-style content.
+The original PDFs are only on the owner's machine, in `Sources/`. That folder is git-ignored and must never be committed, because it contains the school's name.
 
 ### What the school material showed, which sets depth and style
 - **Section-A favourites:**
@@ -100,7 +101,11 @@ If you are working in a fresh clone without `Sources/`, ask the owner for the fi
   - flag + `break`
   - if-else-if slabs
   - nested-loop patterns
-- **The student's real mistakes on a practice paper**, which the content targets:
-  - Thinks `Math.round` returns `1.0`/`8.0` (it returns an integer type).
+- **The student's real mistakes on the Section-A practice paper** (worksheets.md, section 5), which the content targets:
+  - Thinks `Math.round` returns `1.0`/`8.0`/`-3.0`. It returns an integer type, so it prints `1`, `8`, `-3`. She does this consistently.
   - Drops brackets when converting formulas (`Math.sqrt(a)+Math.sqrt(b)/(a-b)`).
-  - Counted a loop as 3 passes instead of 4.
+  - Counted the `for(a=34,b=5;a<=50;a+=b)` loop as 3 passes instead of 4.
+  - Gave `Math.min('x','X')` as 87. It is 88: chars become int codes.
+  - With nested calls, `Math.cbrt(Math.floor(8.2))`, she stopped after the inner call and wrote 8.0 instead of 2.0.
+  - Wrote a "constant" as `double a = 14.22;` without `final`.
+  - She tends to answer "how many times does the loop run" but skip "what is the output".

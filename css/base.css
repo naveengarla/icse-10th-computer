@@ -1,0 +1,87 @@
+:root {
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --ink: #1d2433;
+  --muted: #667085;
+  --line: #e3e6ee;
+  --brand: #3b5bdb;
+  --brand-soft: #e7ecff;
+  --ok: #1f9d55;
+  --ok-soft: #e3f6ec;
+  --no: #d64545;
+  --no-soft: #fde8e8;
+  --warn: #c77c02;
+  --warn-soft: #fff4dc;
+  --cur: #fff2b3;
+  --next: #eef3ff;
+  --code-bg: #fbfbfd;
+  --t-int: #3b82f6;
+  --t-double: #8b5cf6;
+  --t-char: #f59e0b;
+  --t-boolean: #10b981;
+  --t-String: #ec4899;
+  --radius: 12px;
+  --mono: ui-monospace, "Cascadia Code", "JetBrains Mono", Consolas, "Courier New", monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.5; }
+a { color: var(--brand); }
+/* no ligatures: <= must look like the two characters she has to write on paper */
+code, pre, kbd, textarea, input { font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+code, pre, kbd { font-family: var(--mono); }
+h1 { font-size: 1.9rem; margin: .2em 0 .4em; letter-spacing: -.01em; }
+h2 { font-size: 1.3rem; margin: 1.2em 0 .5em; }
+h3 { font-size: 1.05rem; margin: 1.2em 0 .4em; }
+p { margin: .5em 0; }
+
+.topbar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 10px 24px; background: #fff; border-bottom: 1px solid var(--line); }
+.brand { font-weight: 700; color: var(--ink); text-decoration: none; font-size: 1.05rem; }
+.logo { display: inline-block; background: var(--brand); color: #fff; border-radius: 8px; padding: 1px 7px; font-family: var(--mono); margin-right: 6px; }
+.topnav { display: flex; gap: 4px; }
+.topnav a { padding: 6px 12px; border-radius: 8px; text-decoration: none; color: var(--muted); font-weight: 500; }
+.topnav a.active, .topnav a:hover { background: var(--brand-soft); color: var(--brand); }
+
+.main { max-width: 1280px; margin: 0 auto; padding: 20px 24px 80px; }
+
+.muted { color: var(--muted); }
+.small { font-size: .85rem; }
+.center { text-align: center; }
+.lead { font-size: 1.1rem; color: #3a4357; max-width: 60em; }
+
+.btn { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: .95rem; font-weight: 500; padding: 7px 14px;
+  border-radius: 9px; border: 1px solid var(--line); background: #fff; color: var(--ink); cursor: pointer; text-decoration: none; white-space: nowrap; }
+.btn:hover:not(:disabled) { border-color: #c5cbe0; background: #fafbff; }
+.btn:disabled { opacity: .45; cursor: default; }
+.btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+.btn.primary:hover:not(:disabled) { background: #2f4bc4; }
+.btn.ghost { background: transparent; }
+.btn.big { padding: 11px 20px; font-size: 1.05rem; }
+.btn.tiny { padding: 3px 9px; font-size: .82rem; }
+.btn.danger { color: var(--no); }
+.btn.pulse { animation: pulse 1.6s ease-in-out 2; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(59, 91, 219, .25); } }
+
+input.answer, textarea.answer { font-family: var(--mono); font-size: 1rem; padding: 7px 10px; border: 1.5px solid #cfd5e3; border-radius: 8px; min-width: 12em; }
+textarea.answer { width: 100%; max-width: 32em; resize: vertical; }
+input.answer.short { min-width: 5em; width: 7em; }
+input.answer:focus, textarea.answer:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-soft); }
+
+.bar { height: 8px; background: #e6e9f2; border-radius: 99px; overflow: hidden; min-width: 120px; flex: 1; }
+.bar.small { height: 5px; min-width: 70px; max-width: 120px; }
+.bar .fill { height: 100%; background: var(--ok); border-radius: 99px; }
+
+table.data { border-collapse: collapse; width: 100%; background: #fff; border-radius: var(--radius); overflow: hidden; font-size: .92rem; }
+table.data th, table.data td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+table.data th { background: #f1f3f9; font-weight: 600; }
+table.data tr.warn td { background: var(--warn-soft); }
+
+@media (max-width: 700px) {
+  .main { padding: 14px 12px 60px; }
+  .topbar { padding: 8px 12px; }
+  .brand { font-size: .95rem; }
+  .topnav a { padding: 5px 8px; font-size: .9rem; }
+}

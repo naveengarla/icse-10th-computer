@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>smoke</title>
+  <!-- Browser smoke test: renders every page and card and clicks through them, collecting errors.
+       Run: chrome --headless --dump-dom --virtual-time-budget=60000 file:///.../tests/smoke.html -->
+  <!-- same CSS as the real page, so visibility checks see what she sees -->
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <script defer src="../js/core/ns.js"></script>
+  <script defer src="../js/core/dom.js"></script>
+  <script defer src="../js/core/store.js"></script>
+  <script defer src="../js/core/router.js"></script>
+
+  <script defer src="../js/engine/values.js"></script>
+  <script defer src="../js/engine/lexer.js"></script>
+  <script defer src="../js/engine/parser.js"></script>
+  <script defer src="../js/engine/library.js"></script>
+  <script defer src="../js/engine/checker.js"></script>
+  <script defer src="../js/engine/interpreter.js"></script>
+
+  <script defer src="../js/ui/answer.js"></script>
+  <script defer src="../js/ui/try-w3.js"></script>
+  <script defer src="../js/ui/code-view.js"></script>
+  <script defer src="../js/ui/memory-view.js"></script>
+  <script defer src="../js/ui/console-view.js"></script>
+  <script defer src="../js/ui/calc-view.js"></script>
+  <script defer src="../js/ui/trace-table.js"></script>
+  <script defer src="../js/ui/stepper.js"></script>
+  <script defer src="../js/ui/cards.js"></script>
+  <script defer src="../js/ui/paper-task.js"></script>
+  <script defer src="../js/ui/digit-tiles.js"></script>
+
+  <script defer src="../js/content/stage-1-sequence.js"></script>
+  <script defer src="../js/content/stage-2-boxes.js"></script>
+  <script defer src="../js/content/stage-3-types.js"></script>
+  <script defer src="../js/content/stage-4-expressions.js"></script>
+  <script defer src="../js/content/stage-5-shortcuts.js"></script>
+  <script defer src="../js/content/stage-6-decisions.js"></script>
+  <script defer src="../js/content/stage-7-loops.js"></script>
+  <script defer src="../js/content/stage-8-digits.js"></script>
+  <script defer src="../js/content/checkpoint.js"></script>
+
+  <script defer src="../js/pages/journey.js"></script>
+  <script defer src="../js/pages/stage.js"></script>
+  <script defer src="../js/pages/play.js"></script>
+  <script defer src="../js/pages/insights.js"></script>
+  <script defer src="smoke.js"></script>
+</head>
+<body>
+  <nav id="topnav"></nav>
+  <main id="main" class="main"></main>
+  <pre id="result">running</pre>
+</body>
+</html>

@@ -4,6 +4,7 @@ These docs are for a **coding agent (or developer) taking over this project**. R
 
 | File | Read it for |
 |---|---|
+| [00-exam-scope.md](00-exam-scope.md) | **The authority for WHAT is examinable** (the owner's verbatim scope and paper pattern), plus the scope → milestone coverage map |
 | [01-problem-statement.md](01-problem-statement.md) | Who this is for, the exam, the hard constraints and the **scope rules** (non-negotiable) |
 | [02-progress.md](02-progress.md) | What is built, what is pending, the roadmap and the decision log |
 | [03-method.md](03-method.md) | Teaching method: the misconceptions targeted, the stage arc, card types and exam code style |

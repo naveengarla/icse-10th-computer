@@ -43,6 +43,8 @@ On paper she must then **predict output**, **trace variables**, **evaluate expre
 
 ## Exam portion (First Term)
 
+> Summary only. The **authoritative, detailed scope** is in [00-exam-scope.md](00-exam-scope.md), the owner's verbatim text. It gives a chapter-by-chapter topic list for Ch 2/3/4/5/8 and number-based logic. If this summary and that file ever disagree, 00-exam-scope.md wins.
+
 | Ch | Topic |
 |---|---|
 | 1 | Revision of Class IX syntax (Java foundations) |

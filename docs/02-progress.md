@@ -42,6 +42,8 @@ _Last updated: 2026-10-04._
 
 Detailed specs for each future milestone are in [06-roadmap.md](06-roadmap.md). This list is the summary.
 
+**Coverage tracking:** every examinable item is listed in the "Scope → milestone map" at the end of [00-exam-scope.md](00-exam-scope.md). Tick items there as milestones are completed.
+
 1. **Pilot feedback.** The owner will run Stages 1–3 with the student, look at Insights, and report problems or changes. Treat those reports as top priority.
 2. **M2: Objects and methods.** These cover exam Q3, Q4, Q7 and Q8 and most marks.
    - The engine already runs static helper methods with frames and a call step that says values are COPIED. `new` / objects are **not supported**: the engine raises "Creating objects is covered in the next part of the course."
@@ -54,8 +56,28 @@ Detailed specs for each future milestone are in [06-roadmap.md](06-roadmap.md). 
      - constructors running on `new`
      - overloading: choosing a version by its parameter list
    - Use the school PDFs (Ch 2, 3, 4 and their practical solutions) for depth and style.
-3. **M3: Number-logic bank.** Paper-mode programs such as Pronic, Armstrong, palindrome/EvenPal, Fibonacci, series, and others found in the iterations practical. Covers Q5.
-4. **M4: Strings and library classes.** char vs String, indexing, traversal, Character and String methods, wrapper conversions as far as Ch 5 and 8 go. Covers Q6 and parts of Section A.
+3. **M3: Number-logic bank.** Paper-mode programs for exactly the scope list:
+   - number series and the Fibonacci series
+   - Pronic
+   - palindrome/reversal and EvenPal
+   - Armstrong
+   - min/max digit
+   - digit extraction
+   - sums, products and counts of selected digits
+   - other iteration logic from the practicals
+
+   Covers Q5.
+4. **M4: Strings and library classes.**
+   - char vs String, indexing and traversal
+   - the String methods prescribed in the ch08 notes
+   - String from a literal vs `new`
+   - all 8 wrapper classes (the engine still lacks Byte, Short and Boolean)
+   - `parseX`, `valueOf` and `toString`
+   - Character methods
+   - static vs non-static library methods
+   - System, `java.lang` and `java.util`
+
+   Covers Q6 and parts of Section A.
    - The engine already has a few String methods (`length`, `charAt`, `indexOf`, …) and Scanner (`nextInt`, `nextDouble`, `next`, `nextLine`, `next().charAt(0)`).
 5. **M5: Exam simulator.** Timed Section A and a Section B paper with self-marking rubrics.
 

@@ -7,7 +7,8 @@ This is "Java in your head", a static self-learning portal for an ICSE Class 10 
 Rules that must never be broken:
 
 1. **Scope:**
-   - The school exam portion decides *what* is taught, and the school material decide *depth and style*. The material is transcribed in [docs/school-material/](docs/school-material/README.md); the original PDFs in `Sources/` stay local.
+   - The school exam portion decides *what* is taught. It is recorded verbatim in [docs/00-exam-scope.md](docs/00-exam-scope.md), which wins over every other doc.
+   - The school material decides *depth and style*. The material is transcribed in [docs/school-material/](docs/school-material/README.md); the original PDFs in `Sources/` stay local.
    - Never widen scope from generic Java (no java.io, arrays and so on).
    - Ask the owner when unsure.
 2. **Answers come from the engine** (`js/engine/`), never hand-typed answer keys.

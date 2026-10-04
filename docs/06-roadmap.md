@@ -1,6 +1,10 @@
 # 6. Roadmap: future milestones (detailed handover specs)
 
-This is the build plan for milestones M2–M5. Each milestone is meant to be picked up by a coding agent on its own. Read [01](01-problem-statement.md)–[05](05-workflow.md) first, because **all their rules apply**:
+This is the build plan for milestones M2–M5. Each milestone is meant to be picked up by a coding agent on its own.
+
+**The authoritative list of what is examinable is [00-exam-scope.md](00-exam-scope.md).** Every item in its "Scope → milestone map" must be covered by the milestone it is assigned to. Tick it there when that is done.
+
+Read [00](00-exam-scope.md)–[05](05-workflow.md) first, because **all their rules apply**:
 - scope
 - engine-computed answers
 - static files
@@ -34,6 +38,17 @@ This is the build plan for milestones M2–M5. Each milestone is meant to be pic
 - Keep `localStorage` progress compatible: keep the key and only add fields.
 
 **Exam-time priority:** if time is short, build M2 first, then M3. They unlock 4 of the 6 Section-B questions.
+
+**Design requirement for every milestone (from the "Exam-preparation implication" in [00-exam-scope.md](00-exam-scope.md)).** Each milestone must train both of these:
+- **A. Concept and trace knowledge (Section A).** Cover terminology, expressions, statements, conversions, method and library behaviour, and output tracing, all reasoned *without running the code*. Build this with MCQ, predict, reduce, trace and quiz cards in the Q1/Q2 style.
+- **B. Handwritten programs (Section B).** Every Section-B type the milestone feeds needs:
+  - `paper` cards she writes in her notebook
+  - reorder, fill and bug cards on the full program skeleton
+  - a self-check list that includes the `/** */` variable comments
+
+  There is no IDE, compiler or autocomplete in the exam, so the paper cards are the real test.
+
+A milestone that only teaches concepts, or only shows programs, is not done.
 
 ---
 
@@ -97,11 +112,11 @@ This is the build plan for milestones M2–M5. Each milestone is meant to be pic
 
 | n | Stage | Mental model | School source |
 |---|---|---|---|
-| 9 | **Methods: machines you write** | call → jump → parameters are *copies* → run → `return` value comes back → continue; void vs returning; local boxes vanish at return; actual vs formal parameters | ch03 notes |
-| 10 | **Same name, different inputs (overloading)** | Java picks the version by the *parameter list* (count, types, order); return type alone is not enough | ch03 practical, worksheets §4 |
-| 11 | **Class and object** | class = blueprint, object = a bundle of boxes; `new`; the dot operator; two objects with independent data; default values | ch02 notes |
-| 12 | **The class-specification answer** | spec → data members with `/** */` → `accept()` (Scanner) → `calculate()` → `display()` → `main` creates the object and calls the methods in order | practical-2, worksheets §1/§7 |
-| 13 | **Constructors** | runs automatically on `new`; default vs parameterised; constructor overloading; constructor vs method (no return type, same name as class) | ch04 notes + practical |
+| 9 | **Methods: machines you write** | purpose of methods; call → jump → parameters are *copies* → run → `return` value comes back → continue; **header / prototype / signature / body** (label each part on real code); access specifiers and **static vs non-static** as far as ch03 goes; return type and `void`; **formal vs actual parameters**; the **4 kinds** (no return + no params, no return + params, return + params, return + no params); local boxes vanish at return | ch03 notes |
+| 10 | **Same name, different inputs (overloading)** | Java picks the version by the *parameter list* (count, types, order); return type alone is not enough; selecting/invoking the right version | ch03 practical, worksheets §4 |
+| 11 | **Class and object** | **primitive vs reference (non-primitive/composite/user-defined) data types**; intro to OOP concepts; class = blueprint/prototype, object = instance; **state** (data members / instance variables) and **behaviour** (member methods); `new`; the dot operator; multiple objects with **independent state**; default values | ch02 notes |
+| 12 | **The class-specification answer** | spec → data members with `/** */` → `input()/accept()` (Scanner) → `calculate()/compute()` → `display()/print()` → `main` creates the object and calls the methods in order | practical-2, worksheets §1/§7 |
+| 13 | **Constructors** | purpose (initialise data members); same name as the class; no return type; invoked automatically on object creation; default / no-argument vs parameterised; **constructor overloading**, i.e. different objects calling different constructors; constructor vs ordinary method | ch04 notes + practical |
 | 199 | **M2 checkpoint** | Section-B style: one Q3/Q7 class spec, one Q4 overloading and one Q8 constructor question on paper, plus Section-A theory and output MCQs | all of the above |
 
 **Card ideas:**
@@ -120,13 +135,17 @@ This is the build plan for milestones M2–M5. Each milestone is meant to be pic
   - `main` creates an object and calls the methods in order
   - the output is labelled
 
-**Theory points** come from the chapter notes and are for MCQs, not long essays:
-- class vs object
-- data members vs member methods
+**Theory points** are for Section A: MCQs and Q2 one-liners, not long essays. Take them from the Ch 2/3/4 lists in [00-exam-scope.md](00-exam-scope.md), worded the way the chapter notes word them. Examples:
+- class vs object; state vs behaviour
+- primitive vs reference data types
+- header / prototype / signature
+- formal vs actual parameters
 - the access specifiers only as far as ch03 covers them
 - static vs non-static (ch03 has a `static_demo` example)
-- pure vs impure methods, and call by value, only if the notes include them
 - constructor vs method
+- default vs parameterised constructor
+
+Pure vs impure methods and call by value or reference are **not** in the scope list. Include them only if the ch03 notes explicitly cover them; check first.
 
 ### Done when
 - Every program in the five M2 school-material files runs in the engine with output identical to `--jdk`, except where the school's code has a bug. Note any such bugs, but don't copy them into content.
@@ -147,11 +166,14 @@ This is the build plan for milestones M2–M5. Each milestone is meant to be pic
 Probably none. Foundations already covers loops, `%`/`/`, flags and `break`. If the programs are written as class + method (an exam-style answer), that needs M2 objects. Otherwise use static methods or snippets, and decide this with the owner.
 
 ### Content
-- **One "family" stage per pattern:**
-  - digit extraction (sum, product, count, reverse, palindrome, Armstrong, "Clarit")
-  - factors and divisors (perfect, prime, composite, twin-prime only if in the material)
-  - series and sums
-  - special numbers (Pronic, Niven/Harshad, Spy, Neon, Automorphic, Duck, EvenPal). **Include only the ones that appear in the school material, or that the owner confirms are taught.**
+- **One "family" stage per pattern.** The list comes from the "Number-based programming" section of [00-exam-scope.md](00-exam-scope.md):
+  - **digit extraction and processing:** sum, product and count of digits; sums, products and counts of *selected* digits (for example even or odd digits); **minimum and maximum digit**
+  - **palindrome and reversal** based logic, and **EvenPal**
+  - **Armstrong number**
+  - **Pronic number**
+  - **number series and the Fibonacci series**
+  - other iteration-based number logic that appears in `practical-1` and the worksheets, such as the school's "Clarit number"
+- **Do not add special numbers** (Niven, Spy, Neon, Automorphic, Duck, perfect/prime, …) unless they appear in the school material or the owner confirms they are taught.
 - **Each program follows the arc:** definition with a worked example → `digits`/`trace` card on that number → `fill` the key lines → `paper` (full program from the spec) → checklist.
 - Add a **"definition first" pattern card**. She must turn an English definition into a loop.
 - A **mixed timed bank** at the end: pick a random spec, write it on paper, then reveal the solution and run it with her own inputs.
@@ -172,6 +194,7 @@ Probably none. Foundations already covers loops, `%`/`/`, flags and `break`. If 
 - `ch08-string-handling.md`
 - `ch08-practical-string-handling-solutions.md` (12 programs)
 - `ch05-library-classes.md` (wrappers, autoboxing, `parseX`/`valueOf`/`toString`, Character methods)
+- The Ch 5 and Ch 8 lists in [00-exam-scope.md](00-exam-scope.md)
 
 ### What already exists in the engine
 - **String methods:** `length`, `charAt`, `indexOf`, `lastIndexOf`, `substring`, `equals`, `equalsIgnoreCase`, `compareTo`, `compareToIgnoreCase`, `toUpperCase`, `toLowerCase`, `trim`, `startsWith`, `endsWith`, `concat`, `replace`, and `String.valueOf`.
@@ -186,15 +209,30 @@ Probably none. Foundations already covers loops, `%`/`/`, flags and `break`. If 
   - `indexOf(ch, from)`
   - out-of-range `charAt` and `substring`, which throw `StringIndexOutOfBoundsException`
 - Add only methods that the notes list. Nothing from generic Java.
-- **Autoboxing and unboxing:** support it only as far as ch05 shows, as assignment between `int` and `Integer`. A wrapper value can be displayed as a plain value with an "(Integer object)" label.
+- **Wrapper classes: all eight are in scope:** Byte, Short, Integer, Long, Float, Double, Boolean, Character.
+  - The engine currently has `Integer`, `Long`, `Double`, `Float` and `Character`.
+  - Add `Byte`, `Short` and `Boolean` (`parseByte`, `parseShort`, `parseBoolean`, `valueOf`, `toString`) **only for the methods that ch05 shows**.
+  - Keep `parseX` vs `valueOf` vs `toString` exactly as the notes describe them.
+- **Autoboxing and unboxing:** support it only as far as ch05 shows, as assignment between a primitive and its wrapper. A wrapper value can be displayed as a plain value with an "(Integer object)" label.
+- **Static vs non-static library methods** is an explicit scope item. Show which calls go through the class name (`Math.sqrt`, `Character.isDigit`, `Integer.parseInt`) and which go through an object (`s.length()`, `sc.nextInt()`). One sorting or classification card is enough.
+- **Strings from a literal vs `new String(...)`** is in scope. The engine already supports both. Teach `==` vs `equals` only if the ch08 notes mention it.
 - **A string-index visual:** a new UI piece that shows a String as indexed tiles (0…length−1). `charAt` and `substring` highlight the chosen tiles. This is the string version of the digit tiles.
 - **Immutability:** `s.toUpperCase()` without assigning the result leaves `s` unchanged. This is a must-have predict gate.
 
 ### Content
-- **Stage: String as indexed tiles.** `length`, `charAt`, and traversal with `for (i = 0; i < s.length(); i++)`.
+- **Stage: String as indexed tiles.** A String is a sequence of characters and an object of class String, created from a literal or with `new`. Cover `length`, `charAt`, and traversal with `for (i = 0; i < s.length(); i++)`.
 - **Stage: method machine room.** Each method's syntax, return type and an example, with predict cards. Section A asks for many outputs.
+  - **Which String methods:** exactly the prescribed list in `ch08-string-handling.md`. The scope document names `length`, `charAt`, `indexOf`, `lastIndexOf`, `startsWith`, `endsWith` and `equals`, then defers to the ch08 notes for the rest.
+  - Do not add String APIs that the notes don't list.
 - **Stage: building strings.** Accumulate with `+=`, reverse, count vowels/words, change case, replace.
-- **Stage: Character class.** Classify characters; char ↔ code; wrapper conversions (`Integer.parseInt`) from ch05.
+- **Stage: library classes (ch05).** Cover:
+  - what a library class and a package are (`java.lang` and `java.util` only)
+  - the System, Math, String, Scanner and wrapper classes
+  - the Character methods (classify characters, char ↔ code)
+  - `parseX`, `valueOf` and `toString` conversions
+  - static vs non-static library methods
+
+  Math was taught in M1 stage 4, so here just recap it in the library-class framing.
 - **Programs:** the 12 ch08 practical programs as paper cards, each with a trace.
 - **Checkpoint:** a Q6-style paper question plus a Section-A method-output quiz.
 

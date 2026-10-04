@@ -268,6 +268,8 @@ Probably none. Foundations already covers loops, `%`/`/`, flags and `break`. If 
 
 ## M2 pilot status (2026-10-04)
 
-The owner approved the stage plan recorded in 02-progress. Stage 11 is built as the agreed pilot; remaining stages wait for pilot review. Engine items 1–5 are implemented and covered by regression cases. All 11 school practical programs have runnable fixtures; chapter-note and worksheet coverage still needs completion before M2 can be declared done. The journey is grouped by milestone and storage remains compatible.
+The owner approved the stage plan recorded in 02-progress. Stage 11 is built as the agreed pilot. The owner subsequently approved Stage 9; its 16-card / 40-minute methods lesson is built. Stages 10, 12–13 and the checkpoint remain pending. Engine items 1–5 are implemented and covered by regression cases. All 11 school practical programs have runnable fixtures; chapter-note and worksheet coverage still needs completion before M2 can be declared done. The journey is grouped by milestone and storage remains compatible.
 
 The six-file completion criterion also requires the listed worksheet sections. No scope-map item is marked complete at this pilot boundary.
+
+Stage 9 follows the owner's exam-time priority: concise concept explanations, prediction and repair practice, then a handwritten method-and-call task. It is locally built; publication awaits instruction.

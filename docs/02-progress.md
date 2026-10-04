@@ -8,7 +8,7 @@ _Last updated: 2026-10-04._
 |---|---|
 | **M1 Foundations** (8 stages + checkpoint) | ✅ Built, tested and published |
 | Pilot of Stages 1–3 with the student | ⏳ **Next.** The owner runs it and then reports what to change |
-| M2 Objects, methods, constructors | 🟡 Engine support + Stage 11 pilot ready; owner review pending |
+| M2 Objects, methods, constructors | 🟡 Engine support, Stage 11 pilot and Stage 9 built; remaining stages pending |
 | M3 Number-logic program bank | ⬜ Not started |
 | M4 Strings + library classes | ⬜ Not started |
 | M5 Exam simulator | ⬜ Not started |
@@ -46,7 +46,7 @@ Detailed specs for each future milestone are in [06-roadmap.md](06-roadmap.md). 
 
 1. **Pilot feedback.** The owner will run Stages 1–3 with the student, look at Insights, and report problems or changes. Treat those reports as top priority.
 2. **M2: Objects and methods.** These cover exam Q3, Q4, Q7 and Q8 and most marks.
-   - The engine now creates independent objects, runs field initializers and constructors, and invokes instance methods on the correct receiver. Method/constructor overload selection uses the most-specific signature and rejects ambiguous calls. Stage 11 is a 14-card, 35-minute pilot. Stages 9–10, 12–13 and the M2 checkpoint are pending.
+   - The engine now creates independent objects, runs field initializers and constructors, and invokes instance methods on the correct receiver. Method/constructor overload selection uses the most-specific signature and rejects ambiguous calls. Stage 11 is a 14-card, 35-minute pilot. Stage 9 is now built. Stage 10, stages 12–13 and the M2 checkpoint are pending.
    - Planned content:
      - call/return with frames
      - actual vs formal parameters
@@ -114,7 +114,7 @@ The owner approved the recommended 88-card / 260-minute plan. Build engine suppo
 
 | Stage | Cards | Minutes | Exam | Status |
 |---|---:|---:|---|---|
-| 9 Methods | 16 | 40 | Q1/Q2; Q3/Q4/Q7 foundation | pending |
+| 9 Methods | 16 | 40 | Q1/Q2; Q3/Q4/Q7 foundation | built, publication pending |
 | 10 Method overloading | 14 | 35 | Q4; Q1/Q2 | pending |
 | 11 Classes and objects | 14 | 35 | Q3/Q7; Q1/Q2 | pilot built |
 | 12 Class-specification answers | 18 | 55 | Q3/Q7 | pending |
@@ -139,3 +139,21 @@ Change history: object runtime, Java-correct overload resolution, object memory 
 - W3Schools launcher: three constructor/static/non-static scenarios compiled and agreed with Java 21.
 - Stage completion keeps Stage 8 → Foundations checkpoint → Stage 11, using milestone order in the content registry.
 - Full M2 coverage remains incomplete; chapter-note and worksheet regression coverage and the remaining stages are still pending.
+
+## Stage 9: exam-focused methods (2026-10-04)
+
+The owner approved continuing with Stage 9 and emphasized quick concept learning with enough understanding to answer handwritten exam questions. The stage uses 16 cards / 40 suggested minutes, including an 8-minute notebook task. It covers method purpose, header/prototype/signature/body, actual/formal parameters, call/return frames, printing versus returning, all four method kinds, primitive parameter copies, access specifiers, and static versus instance calls. Program answers remain engine-computed. No engine or storage changes were needed.
+
+School-source corrections in explanations: protected access is described correctly despite the notes' public/protected typo; return ends a call and need not be the final textual statement of every method; signature excludes return type and parameter names. No inheritance program, reference-passing lesson, or pure/impure lesson was added. Those broader scope decisions remain pending.
+
+Stage 9 is registered in both entry points. The journey now describes the two available M2 stages. Commit and push still require owner instruction.
+
+### Separate reading guide (owner-directed addition)
+
+The owner requested keeping the existing work and adding a large, scrollable HTML learning path. `guides/methods.html` is a separate Chapter 3 guide, reached through the new Read & practise navigation link. It covers the examinable methods topics in 18 sections, with nine complete runnable examples, computed output reveals, experiment prompts, school/BlueJ versions, short recall answers, a complete school-style compute overloading program, notebook practice and quick revision. The W3Schools launcher is clearly separated from exam code. It does not use or change localStorage progress.
+
+The existing stages and engine remain intact. No dedicated pure/impure or shared-static-field lesson or reference-passing program has been added; scope remains governed by 00-exam-scope. The new guide examples are included in tests/run.js and its Java comparison. Publication still awaits owner instruction.
+
+Stage 9 verification: Node 300/300, Java 21 520/520, browser 177 routes, file opening and visual review passed.
+
+Reading-guide verification: Node 309 passed; full Java 21 suite 538 passed; existing browser smoke 177 routes. All nine copied W3Schools launchers compiled and ran with identical output. Clipboard contents, output reveal, navigation, file:// opening, desktop and 390px layout passed with no page errors or mobile horizontal overflow.

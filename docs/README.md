@@ -26,10 +26,12 @@ These docs are for a **coding agent (or developer) taking over this project**. R
   - No build step, no modules, no dependencies.
   - Must keep working when `index.html` is opened from `file://`, and on GitHub Pages.
 - **Live:** https://naveengarla.github.io/icse-10th-computer/ (repo `naveengarla/icse-10th-computer`, branch `main`, Pages served from the root).
-- **Status:** milestone 1 (Foundations: 8 stages plus a checkpoint) is complete and published. M2 engine support and the 14-card Stage 11 pilot are available for pilot review. Remaining M2 stages are pending.
+- **Status:** milestone 1 (Foundations: 8 stages plus a checkpoint) is complete and published. M2 engine support, the 14-card Stage 11 pilot and the 16-card Stage 9 methods lesson are built. Stages 10, 12–13 and the M2 checkpoint are pending.
 - **Before finishing any change:**
   1. `node tests/run.js`
   2. `node tests/run.js --jdk` (if a JDK is available)
   3. the headless browser smoke test
 
   See [05-workflow.md](05-workflow.md).
+
+A separate Read & practise path starts at `guides/methods.html`: one scrollable Chapter 3 guide with runnable examples and notebook tasks. It complements the stages and does not change stored progress.

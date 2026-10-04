@@ -27,6 +27,7 @@
     start: function () {
       var nav = document.getElementById('topnav');
       nav.appendChild(h('a', { href: '#/', 'data-page': 'journey' }, 'Journey'));
+      nav.appendChild(h('a', { href: 'guides/methods.html', 'data-page': 'read' }, 'Read & practise'));
       nav.appendChild(h('a', { href: '#/play', 'data-page': 'play' }, 'Playground'));
       nav.appendChild(h('a', { href: '#/insights', 'data-page': 'insights' }, 'For parents'));
       window.addEventListener('hashchange', render);

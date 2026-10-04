@@ -29,7 +29,7 @@
         if (group !== milestone) {
           if (milestone !== null) main.appendChild(path);
           main.appendChild(h('h2', group === 'M1' ? 'M1 · Foundations' : group === 'M2' ? 'M2 · Objects, methods and constructors' : group));
-          if (group === 'M2') main.appendChild(h('p.muted', 'Stage 11 pilot is ready for review. Stages 9–10, 12–13 and the M2 checkpoint are still being prepared.'));
+          if (group === 'M2') main.appendChild(h('p.muted', 'Stages 9 (methods) and 11 (classes and objects) are ready. Stage 10, stages 12–13 and the M2 checkpoint are still being prepared.'));
           path = h('ol.journey');
           milestone = group;
         }

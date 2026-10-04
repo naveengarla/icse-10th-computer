@@ -8,6 +8,7 @@ These docs are for a **coding agent (or developer) taking over this project**. R
 | [02-progress.md](02-progress.md) | What is built, what is pending, the roadmap and the decision log |
 | [03-method.md](03-method.md) | Teaching method: the misconceptions targeted, the stage arc, card types and exam code style |
 | [04-architecture.md](04-architecture.md) | How the code works: engine, step records, stepper, cards, content format, storage and routes |
+| [06-roadmap.md](06-roadmap.md) | **Detailed specs for future milestones M2–M5**: engine work, proposed stages, school sources, done-criteria and the protocol for running a milestone |
 | [school-material/](school-material/README.md) | Transcriptions of all school notes, practicals and worksheets. This is the reference for exam depth and style |
 | [05-workflow.md](05-workflow.md) | How to test, verify, publish and take instructions from the owner, plus known gotchas |
 

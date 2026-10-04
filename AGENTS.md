@@ -2,7 +2,7 @@
 
 This is "Java in your head", a static self-learning portal for an ICSE Class 10 student preparing for a **handwritten** Java (BlueJ) exam.
 
-**Before doing anything, read [docs/README.md](docs/README.md) and the five docs it links.** They cover the problem, progress, teaching method, architecture and workflow.
+**Before doing anything, read [docs/README.md](docs/README.md) and the docs it links.** They cover the problem, progress, teaching method, architecture and workflow. If you are starting a new milestone, follow the protocol and spec in [docs/06-roadmap.md](docs/06-roadmap.md).
 
 Rules that must never be broken:
 

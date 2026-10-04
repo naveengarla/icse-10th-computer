@@ -40,6 +40,8 @@ _Last updated: 2026-10-04._
 
 ## Pending and next tasks (in priority order)
 
+Detailed specs for each future milestone are in [06-roadmap.md](06-roadmap.md). This list is the summary.
+
 1. **Pilot feedback.** The owner will run Stages 1–3 with the student, look at Insights, and report problems or changes. Treat those reports as top priority.
 2. **M2: Objects and methods.** These cover exam Q3, Q4, Q7 and Q8 and most marks.
    - The engine already runs static helper methods with frames and a call step that says values are COPIED. `new` / objects are **not supported**: the engine raises "Creating objects is covered in the next part of the course."

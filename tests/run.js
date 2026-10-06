@@ -20,7 +20,7 @@ var E = ctx.JP.engine;
 
 load('js/guides/methods-data.js');
 var CASES = require('./cases.js').concat(require('./m2-school-cases.js'));
-CASES = CASES.concat(ctx.JP.guides.methods.examples.map(function (ex) { return {name:'guide methods '+ex.id, src:ex.code}; }));
+CASES = CASES.concat(ctx.JP.guides.methods.examples.map(function (ex) { return {name:'guide methods '+ex.id, src:ex.code, compileError:ex.expectCompileError}; }));
 var useJdk = process.argv.indexOf('--jdk') >= 0;
 var only = process.argv.filter(function (a) { return a.indexOf('--only=') === 0; }).map(function (a) { return a.slice(7); })[0];
 

@@ -34,4 +34,4 @@ These docs are for a **coding agent (or developer) taking over this project**. R
 
   See [05-workflow.md](05-workflow.md).
 
-A separate Read & practise path starts at `guides/methods.html`: one scrollable Chapter 3 guide with runnable examples and notebook tasks. It complements the stages and does not change stored progress.
+A separate Read & practise path starts at `guides/methods.html`: one scrollable Chapter 3 practice-first guide with 27 tasks, runnable checks and notebook programs. It complements the stages and does not change stored progress.

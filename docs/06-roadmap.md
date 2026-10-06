@@ -273,3 +273,5 @@ The owner approved the stage plan recorded in 02-progress. Stage 11 is built as 
 The six-file completion criterion also requires the listed worksheet sections. No scope-map item is marked complete at this pilot boundary.
 
 Stage 9 follows the owner's exam-time priority: concise concept explanations, prediction and repair practice, then a handwritten method-and-call task. It is locally built; publication awaits instruction.
+
+2026-10-06: The separate Methods guide has been revised to practice-first batches under owner instruction. Existing interactive stages remain intact. PYQs from the owner will calibrate later practice; this is not a claim of full M2 completion.

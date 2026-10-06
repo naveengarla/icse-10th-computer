@@ -1,0 +1,3376 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>User-defined Methods — Learn by doing</title><style>
+:root{color-scheme:light;--ink:#172a46;--muted:#54647a;--accent:#3854d9;--line:#dce3ef}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}body{margin:0;color:var(--ink);background:#f5f7fb;font:18px/1.65 system-ui,sans-serif}a{color:var(--accent)}header{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;gap:20px;align-items:center;padding:14px 4%;background:white;border-bottom:1px solid var(--line)}header>a{text-decoration:none;font-weight:800}header nav{display:flex;gap:14px;font-size:15px}header nav a{padding:6px 10px;text-decoration:none}.active{background:#eef1ff;border-radius:8px}.layout{max-width:1440px;margin:auto;display:grid;grid-template-columns:260px minmax(0,1fr);gap:28px;padding:30px 28px}.contents{position:sticky;top:90px;max-height:calc(100vh - 110px);overflow:auto;font-size:14px;align-self:start;padding:16px;background:white;border:1px solid var(--line);border-radius:12px}.contents p{color:var(--muted)}.contents nav a{display:block;text-decoration:none;padding:7px 0;border-bottom:1px solid #eef1f6}.contents button{margin-top:18px}main{min-width:0}section{background:white;padding:32px;margin-bottom:26px;border:1px solid var(--line);border-radius:14px;scroll-margin-top:80px}h1{font-size:42px;line-height:1.15;margin:16px 0}h2{font-size:27px;line-height:1.3;margin-top:0}h3{font-size:21px;line-height:1.4}.eyebrow{color:var(--accent);font-size:14px;font-weight:750;letter-spacing:.04em}.lead{font-size:24px}.routine,section aside{padding:18px 22px;background:#fff7e4;border-left:4px solid #dfaa3c;border-radius:8px;margin:20px 0}.routine ol{margin-bottom:0}p{margin:14px 0}li{margin:8px 0}code{font-family:Consolas,'Liberation Mono',monospace;font-size:.91em;font-variant-ligatures:none;overflow-wrap:anywhere}p code,td code{background:#f0f3f9;padding:2px 4px;border-radius:4px}pre{background:#f2f5fb;border:1px solid var(--line);padding:20px;overflow:auto;line-height:1.5;tab-size:4}pre code{overflow-wrap:normal;font-size:15px;white-space:pre}table{border-collapse:collapse;width:100%;font-size:16px;display:block;overflow:auto}th,td{border:1px solid var(--line);text-align:left;padding:12px;vertical-align:top}th{background:#edf1fa}details{padding:16px 20px;border:1px solid var(--line);border-radius:8px;margin:15px 0;background:#fafbff}summary{cursor:pointer;font-weight:700}button,.editor{display:inline-block;padding:10px 16px;border:1px solid var(--accent);border-radius:8px;background:var(--accent);color:white;font:600 15px system-ui;cursor:pointer;text-decoration:none}.actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.status{font-size:14px;color:var(--muted)}.example{border-top:2px solid #e6ebf5;margin-top:26px;padding-top:10px}.output pre{background:#edf8ef}.try{background:#edf3ff;border-left:4px solid var(--accent);padding:16px 20px}.version{font-size:14px;color:var(--muted)}footer{padding:20px;font-size:16px}@media(max-width:900px){.layout{display:block;padding:16px}.contents{position:static;max-height:none;margin-bottom:20px}.contents nav{columns:2}section{padding:22px}header{position:static;flex-wrap:wrap}h1{font-size:34px}}@media(max-width:500px){.contents nav{columns:1}body{font-size:17px}section{padding:18px}pre{padding:12px}}@media print{header,.contents,.actions,.status,button,.editor{display:none}.layout{display:block;padding:0}body{font-size:11pt;background:white}section{border:0;padding:10px 0;margin:0}h1{font-size:25pt}h2{font-size:18pt}pre{white-space:pre-wrap;overflow:visible;break-inside:avoid}pre code{white-space:pre-wrap;font-size:9pt}details{display:block}table{display:table;font-size:10pt}h2,h3{break-after:avoid}a{color:inherit}footer{font-size:10pt}}
+
+.exercise{padding:28px 0;border-top:1px solid var(--line)}.exercise:first-of-type{border-top:0}.exercise h3{margin:10px 0}.batch-meta{color:var(--muted);font-size:15px}.attempt-controls{margin:18px 0;display:grid;gap:12px}.answer-label{font-size:15px;font-weight:650}.attempt-controls textarea{width:100%;padding:12px;border:1px solid #a7b6ce;border-radius:8px;font:16px/1.5 Consolas,monospace;background:white;color:var(--ink)}.answer-reveal{margin:20px 0;padding:20px;background:#f0f7f2;border-left:4px solid #438558;border-radius:8px}.answer-reveal[hidden]{display:none}.answer-reveal h4{margin:0 0 12px;font-size:17px}.rule{font-weight:650}.variation{padding-top:12px;border-top:1px solid #ccdcd0}.retry{font-size:15px}.feedback{font-size:15px}.checklist{display:grid;gap:12px;margin-top:20px}.checklist label{display:block}.checklist input{width:18px;height:18px;vertical-align:middle}.verify{font-size:16px}.hint{font-size:16px}.reference{margin-top:30px}@media print{.attempt-controls,.answer-reveal,.verify,.hint,.reference,.batch-meta,.hero details{display:none!important}.exercise{break-inside:auto}.exercise h3{break-after:avoid}pre{break-inside:auto}.hero .routine{display:none}.exercise:after{content:"Answer: __________________________________________________________";display:block;margin:18px 0 24px}.exercise textarea{display:none}.layout aside{display:none}}
+
+</style>
+
+</head><body>
+<header><a href="../index.html#/">{ } Java in your head</a><nav><a href="../index.html#/">Interactive lessons</a><a class="active" href="methods.html" aria-current="page">Read & practise</a></nav></header>
+<div class="layout"><aside class="contents"><strong>Chapter 3 · Methods</strong><p>Seven batches. Paper first.</p><nav id="contents" aria-label="Chapter contents"></nav><button type="button" id="print">Print questions only</button></aside><main>
+<section class="hero"><span class="eyebrow">ICSE Class 10 · Methods · Q1 / Q2 → Q4</span><h1>Learn methods by doing</h1><p class="lead">Predict on paper. Check. Change one thing. Try again.</p><p>27 short tasks in seven batches. Start with calls; finish by writing your own methods. About 50 minutes for the core path; W3Schools experiments are optional.</p><div class="routine"><strong>Your answer sheet comes first</strong><ol><li>Attempt each question in your notebook, or type your prediction.</li><li>Reveal the computed answer and the brief reason.</li><li>If needed, use W3Schools to verify or explore a variation.</li><li>Finish the two notebook tasks without a computer or visible solution.</li></ol></div><details><summary>Using W3Schools</summary><p>Open the optional check under an exercise, copy the runnable code, replace all code in W3Schools, and Run. The displayed exercise uses school / BlueJ structure; the copied version adds a launcher for the web editor.</p></details></section><div id="sections"></div>
+<footer><p>Practise on paper after running. Explain the output and reconstruct the program.</p><a href="#">Back to top ↑</a> · <a href="../index.html#/">Return to interactive lessons</a></footer></main></div><noscript>Enable JavaScript to display the guide and calculate example outputs.</noscript>
+<script>
+/* Shared namespace + content registry. Content files call JP.content.add({...stage}). */
+(function () {
+  var JP = (globalThis.JP = globalThis.JP || {});
+  JP.ui = JP.ui || {};
+  JP.pages = JP.pages || {};
+
+  var stages = [];
+  JP.content = {
+    add: function (stage) {
+      stage.cards.forEach(function (c, i) { if (!c.id) c.id = stage.id + '-' + (i + 1); });
+      stages.push(stage);
+      stages.sort(function (a, b) {
+        var am = parseInt((a.milestone || 'M1').slice(1), 10);
+        var bm = parseInt((b.milestone || 'M1').slice(1), 10);
+        return am === bm ? a.n - b.n : am - bm;
+      });
+    },
+    list: function () { return stages; },
+    get: function (id) { return stages.filter(function (s) { return s.id === id; })[0]; },
+
+    // Every runnable program inside a card (used by tests and by the cards themselves).
+    programsOf: function (card) {
+      var out = [];
+      switch (card.type) {
+        case 'watch':
+        case 'explore':
+        case 'predict':
+        case 'trace':
+          out.push({ src: card.code, input: card.input });
+          break;
+        case 'mcq':
+          if (card.code && card.answer === 'output') out.push({ src: card.code, input: card.input });
+          break;
+        case 'bug':
+          out.push({ src: card.code, input: card.input, expectCompileError: !card.line, jdk: false });
+          if (card.fixed) out.push({ src: card.fixed, input: card.input });
+          break;
+        case 'reorder':
+          out.push({ src: card.lines.join('\n'), input: card.input });
+          break;
+        case 'fill':
+          out.push({ src: JP.content.fillSolution(card.code), input: card.input });
+          break;
+        case 'paper':
+          out.push({ src: card.solution, input: card.input });
+          break;
+        case 'quiz':
+          card.items.forEach(function (it) { out = out.concat(JP.content.programsOf(it)); });
+          break;
+      }
+      return out;
+    },
+    exprsOf: function (card) {
+      if (card.type === 'reduce') return [{ expr: card.expr, vars: card.vars }];
+      if (card.type === 'quiz') {
+        var r = [];
+        card.items.forEach(function (it) { r = r.concat(JP.content.exprsOf(it)); });
+        return r;
+      }
+      return [];
+    },
+    // "x = [[5]];" -> "x = 5;"   ([[a|b]] lists accepted alternatives, the first is used)
+    fillSolution: function (code) {
+      return code.replace(/\[\[(.*?)\]\]/g, function (m, alts) { return alts.split('|')[0]; });
+    }
+  };
+})();
+
+</script>
+<script>
+/* Tiny DOM helper: h('div.card#x', {on:{click:fn}, title:'..'}, child, [children], 'text') */
+(function () {
+  var JP = globalThis.JP;
+
+  function h(sel, attrs) {
+    var m = sel.match(/^([a-z0-9]+)?((?:[.#][\w-]+)*)$/i);
+    var el = document.createElement((m && m[1]) || 'div');
+    if (m && m[2]) {
+      m[2].replace(/([.#])([\w-]+)/g, function (_, k, v) {
+        if (k === '.') el.classList.add(v); else el.id = v;
+      });
+    }
+    var start = 1;
+    if (attrs && typeof attrs === 'object' && !(attrs instanceof Node) && !Array.isArray(attrs)) {
+      start = 2;
+      for (var k in attrs) {
+        var v = attrs[k];
+        if (v === undefined || v === null || v === false) continue;
+        if (k === 'on') for (var ev in v) el.addEventListener(ev, v[ev]);
+        else if (k === 'html') el.innerHTML = v;
+        else if (k === 'text') el.textContent = v;
+        else if (k === 'class') el.className += ' ' + v;
+        else if (k === 'style' && typeof v === 'object') Object.assign(el.style, v);
+        else if (k in el && typeof v !== 'string') el[k] = v;
+        else el.setAttribute(k, v === true ? '' : v);
+      }
+    }
+    for (var i = start; i < arguments.length; i++) add(el, arguments[i]);
+    return el;
+  }
+  function add(el, c) {
+    if (c === null || c === undefined || c === false) return;
+    if (Array.isArray(c)) { c.forEach(function (x) { add(el, x); }); return; }
+    el.appendChild(c instanceof Node ? c : document.createTextNode(String(c)));
+  }
+  function clear(el) { while (el.firstChild) el.removeChild(el.firstChild); return el; }
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; });
+  }
+
+  // Java-ish syntax colouring for display (returns HTML for one line)
+  var KW = /\b(int|long|double|float|char|boolean|byte|short|void|if|else|while|do|for|switch|case|default|break|continue|return|class|public|private|static|new|true|false|null|import)\b/g;
+  function highlight(line) {
+    var out = '';
+    // split into strings/chars/comments vs code
+    var re = /("(?:[^"\\]|\\.)*"?|'(?:[^'\\]|\\.)*'?|\/\/.*$|\/\*.*?(?:\*\/|$))/g, m, last = 0;
+    while ((m = re.exec(line))) {
+      out += code(line.slice(last, m.index));
+      var t = m[0];
+      var cls = t[0] === '/' ? 'tk-com' : t[0] === "'" ? 'tk-chr' : 'tk-str';
+      out += '<span class="' + cls + '">' + esc(t) + '</span>';
+      last = m.index + t.length;
+    }
+    out += code(line.slice(last));
+    return out;
+    function code(s) {
+      return esc(s)
+        .replace(KW, '<span class="tk-kw">$1</span>')
+        .replace(/\b(\d+(?:\.\d+)?[LlFfDd]?)\b/g, '<span class="tk-num">$1</span>')
+        .replace(/\b(String|Scanner|Math|System|Character|Integer|Double)\b/g, '<span class="tk-cls">$1</span>');
+    }
+  }
+
+  JP.dom = { h: h, clear: clear, esc: esc, highlight: highlight };
+})();
+
+</script>
+<script>
+/* Java value model: every runtime value is {t: type, v: jsValue}. */
+(function () {
+  var JP = (globalThis.JP = globalThis.JP || {});
+  var E = (JP.engine = JP.engine || {});
+
+  var NUMERIC = { byte: 1, short: 2, char: 2, int: 3, long: 4, float: 5, double: 6 };
+  var INTEGRAL = { byte: 1, short: 1, char: 1, int: 1, long: 1 };
+
+  function isNumeric(t) { return Object.prototype.hasOwnProperty.call(NUMERIC, t); }
+  function isIntegral(t) { return Object.prototype.hasOwnProperty.call(INTEGRAL, t); }
+
+  // Binary numeric promotion (JLS 5.6.2).
+  function promote2(a, b) {
+    if (a === 'double' || b === 'double') return 'double';
+    if (a === 'float' || b === 'float') return 'float';
+    if (a === 'long' || b === 'long') return 'long';
+    return 'int';
+  }
+  function promote1(a) {
+    return a === 'byte' || a === 'short' || a === 'char' ? 'int' : a;
+  }
+
+  // Widening primitive conversion allowed without a cast?
+  var WIDEN = {
+    byte: ['short', 'int', 'long', 'float', 'double'],
+    short: ['int', 'long', 'float', 'double'],
+    char: ['int', 'long', 'float', 'double'],
+    int: ['long', 'float', 'double'],
+    long: ['float', 'double'],
+    float: ['double'],
+    double: []
+  };
+  function canWiden(from, to) {
+    return from === to || (WIDEN[from] || []).indexOf(to) >= 0;
+  }
+
+  function toInt32(x) { return x | 0; }
+
+  function dToIntegral(x, lo, hi) {
+    if (isNaN(x)) return 0;
+    if (x >= hi) return hi;
+    if (x <= lo) return lo;
+    return Math.trunc(x);
+  }
+
+  // Convert a raw JS number of type `from` into type `to` (cast semantics).
+  function convert(v, from, to) {
+    if (from === to) return v;
+    var x = v;
+    if (from === 'double' || from === 'float') {
+      if (to === 'double') return x;
+      if (to === 'float') return Math.fround(x);
+      if (to === 'long') return dToIntegral(x, -9223372036854775808, 9223372036854775807);
+      x = dToIntegral(x, -2147483648, 2147483647);
+      from = 'int';
+    }
+    switch (to) {
+      case 'double': return x;
+      case 'float': return Math.fround(x);
+      case 'long': return Math.trunc(x);
+      case 'int': return toInt32(x);
+      case 'char': return toInt32(x) & 0xffff;
+      case 'short': return (toInt32(x) << 16) >> 16;
+      case 'byte': return (toInt32(x) << 24) >> 24;
+    }
+    return x;
+  }
+
+  // Java's Double.toString
+  function fmtDouble(x) {
+    if (isNaN(x)) return 'NaN';
+    if (x === Infinity) return 'Infinity';
+    if (x === -Infinity) return '-Infinity';
+    if (x === 0) return Object.is(x, -0) ? '-0.0' : '0.0';
+    var a = Math.abs(x);
+    if (a >= 1e-3 && a < 1e7) {
+      var s = String(x);
+      if (s.indexOf('e') >= 0) s = x.toFixed(20).replace(/0+$/, '');
+      if (s.indexOf('.') < 0) s += '.0';
+      return s;
+    }
+    var ex = x.toExponential(); // e.g. "1.2345e+7"
+    var parts = ex.split('e');
+    var mant = parts[0];
+    if (mant.indexOf('.') < 0) mant += '.0';
+    return mant + 'E' + parseInt(parts[1], 10);
+  }
+
+  function fmtFloat(x) {
+    if (!isFinite(x) || x === 0) return fmtDouble(x);
+    var s = String(x);
+    for (var p = 1; p <= 9; p++) {
+      s = x.toPrecision(p);
+      if (Math.fround(parseFloat(s)) === x) break;
+    }
+    return fmtDouble(parseFloat(s));
+  }
+
+  // How the value prints (System.out.print / string concatenation).
+  function str(val) {
+    if (val == null || val.v === null) return 'null';
+    switch (val.t) {
+      case 'double': return fmtDouble(val.v);
+      case 'float': return fmtFloat(val.v);
+      case 'char': return String.fromCharCode(val.v);
+      case 'boolean': return val.v ? 'true' : 'false';
+      case 'String': return val.v;
+      default: return String(val.v);
+    }
+  }
+
+  // How the value is written as Java source (used in memory boxes and reductions).
+  function lit(val) {
+    if (val == null) return '?';
+    if (val.v === null) return 'null';
+    if (val.v && val.v.objectId) return '→ object #' + val.v.objectId;
+    switch (val.t) {
+      case 'char': return "'" + escChar(String.fromCharCode(val.v)) + "'";
+      case 'String': return '"' + val.v.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\t/g, '\\t') + '"';
+      case 'Scanner': return 'keyboard reader';
+      default: return str(val);
+    }
+  }
+  function escChar(c) {
+    if (c === '\u0000') return '\\u0000';
+    if (c === '\n') return '\\n';
+    if (c === '\t') return '\\t';
+    if (c === "'") return "\\'";
+    if (c === '\\') return '\\\\';
+    return c;
+  }
+
+  function V(t, v) { return { t: t, v: v }; }
+
+  E.values = {
+    isNumeric: isNumeric,
+    isIntegral: isIntegral,
+    promote2: promote2,
+    promote1: promote1,
+    canWiden: canWiden,
+    convert: convert,
+    fmtDouble: fmtDouble,
+    fmtFloat: fmtFloat,
+    str: str,
+    lit: lit,
+    V: V
+  };
+})();
+
+</script>
+<script>
+/* Tokeniser for the Java subset used in ICSE Class 10. */
+(function () {
+  var JP = (globalThis.JP = globalThis.JP || {});
+  var E = (JP.engine = JP.engine || {});
+
+  function CompileError(msg, line) {
+    this.message = msg;
+    this.line = line;
+  }
+  E.CompileError = CompileError;
+
+  var KEYWORDS = {};
+  ('int long double float char boolean byte short void if else while do for switch case default ' +
+    'break continue return class public private protected static new true false null import final')
+    .split(' ')
+    .forEach(function (k) { KEYWORDS[k] = true; });
+  E.KEYWORDS = KEYWORDS;
+
+  var OPS = ['>>>=', '<<=', '>>=', '>>>', '++', '--', '+=', '-=', '*=', '/=', '%=', '==', '!=', '<=', '>=',
+    '&&', '||', '<<', '>>', '+', '-', '*', '/', '%', '=', '<', '>', '!', '?', ':', ';', ',', '.', '(', ')',
+    '{', '}', '[', ']', '&', '|', '^', '~'];
+
+  var ESC = { n: '\n', t: '\t', b: '\b', r: '\r', f: '\f', '0': '\0', "'": "'", '"': '"', '\\': '\\' };
+
+  E.lex = function (src) {
+    var toks = [];
+    var i = 0, line = 1, n = src.length;
+
+    function adv(k) {
+      for (var j = 0; j < k; j++) {
+        if (src[i] === '\n') line++;
+        i++;
+      }
+    }
+
+    function readEscape(qline) {
+      // at backslash
+      var c = src[i + 1];
+      if (c === 'u') {
+        var hex = src.substr(i + 2, 4);
+        if (!/^[0-9a-fA-F]{4}$/.test(hex)) throw new CompileError('Bad \\u escape: it needs exactly 4 hex digits, like \\u0041.', qline);
+        adv(6);
+        return String.fromCharCode(parseInt(hex, 16));
+      }
+      if (ESC.hasOwnProperty(c)) { adv(2); return ESC[c]; }
+      throw new CompileError('Unknown escape \\' + c + ' — Java knows \\n, \\t, \\\', \\", \\\\.', qline);
+    }
+
+    while (i < n) {
+      var c = src[i];
+      if (c === ' ' || c === '\t' || c === '\r' || c === '\n') { adv(1); continue; }
+      if (c === '/' && src[i + 1] === '/') { while (i < n && src[i] !== '\n') adv(1); continue; }
+      if (c === '/' && src[i + 1] === '*') {
+        var cl = line;
+        adv(2);
+        while (i < n && !(src[i] === '*' && src[i + 1] === '/')) adv(1);
+        if (i >= n) throw new CompileError('This comment /* ... is never closed with */', cl);
+        adv(2);
+        continue;
+      }
+      var start = i, sline = line;
+
+      if (/[A-Za-z_$]/.test(c)) {
+        while (i < n && /[A-Za-z0-9_$]/.test(src[i])) adv(1);
+        var w = src.slice(start, i);
+        toks.push({ k: KEYWORDS[w] ? 'kw' : 'id', v: w, line: sline, s: start, e: i });
+        continue;
+      }
+
+      if (/[0-9]/.test(c) || (c === '.' && /[0-9]/.test(src[i + 1] || ''))) {
+        var isFloat = false;
+        while (i < n && /[0-9]/.test(src[i])) adv(1);
+        if (src[i] === '.' && !/[A-Za-z_]/.test(src[i + 1] || '')) {
+          isFloat = true;
+          adv(1);
+          while (i < n && /[0-9]/.test(src[i])) adv(1);
+        }
+        if (src[i] === 'e' || src[i] === 'E') {
+          var save = i;
+          adv(1);
+          if (src[i] === '+' || src[i] === '-') adv(1);
+          if (!/[0-9]/.test(src[i] || '')) { i = save; } else {
+            isFloat = true;
+            while (i < n && /[0-9]/.test(src[i])) adv(1);
+          }
+        }
+        var text = src.slice(start, i);
+        var t = isFloat ? 'double' : 'int';
+        var suf = src[i];
+        if (suf === 'L' || suf === 'l') { if (isFloat) throw new CompileError('A decimal number cannot end in L.', sline); t = 'long'; adv(1); }
+        else if (suf === 'f' || suf === 'F') { t = 'float'; adv(1); }
+        else if (suf === 'd' || suf === 'D') { t = 'double'; adv(1); }
+        var val = parseFloat(text);
+        if (t === 'int' && val > 2147483648) throw new CompileError('integer number too large: ' + text + ' (an int can hold at most 2147483647)', sline);
+        if (t === 'float') val = Math.fround(val);
+        if (/[A-Za-z_]/.test(src[i] || '')) throw new CompileError('A name cannot start with a digit: ' + src.slice(start, i + 1) + '…', sline);
+        toks.push({ k: 'num', t: t, v: val, text: text, line: sline, s: start, e: i });
+        continue;
+      }
+
+      if (c === "'") {
+        adv(1);
+        var ch;
+        if (src[i] === "'") throw new CompileError("Empty character literal ''. A char must hold exactly one character, like 'A'.", sline);
+        if (src[i] === '\\') ch = readEscape(sline);
+        else if (src[i] === '\n' || i >= n) throw new CompileError("Character literal not closed — add the closing '.", sline);
+        else { ch = src[i]; adv(1); }
+        if (src[i] !== "'") {
+          throw new CompileError("A char holds exactly ONE character between single quotes, like 'A'. For text with many characters use double quotes: \"…\" (a String).", sline);
+        }
+        adv(1);
+        toks.push({ k: 'char', v: ch.charCodeAt(0), line: sline, s: start, e: i });
+        continue;
+      }
+
+      if (c === '"') {
+        adv(1);
+        var s = '';
+        while (true) {
+          if (i >= n || src[i] === '\n') throw new CompileError('This text (String) is not closed — add the closing ".', sline);
+          if (src[i] === '"') { adv(1); break; }
+          if (src[i] === '\\') { s += readEscape(sline); continue; }
+          s += src[i];
+          adv(1);
+        }
+        toks.push({ k: 'str', v: s, line: sline, s: start, e: i });
+        continue;
+      }
+
+      var op = null;
+      for (var j = 0; j < OPS.length; j++) {
+        if (src.substr(i, OPS[j].length) === OPS[j]) { op = OPS[j]; break; }
+      }
+      if (!op) {
+        if (c === '“' || c === '”') throw new CompileError('Curly quotes “ ” are not allowed in Java. Use the straight quote ".', sline);
+        throw new CompileError('Java does not understand the symbol ' + c, sline);
+      }
+      adv(op.length);
+      toks.push({ k: 'op', v: op, line: sline, s: start, e: i });
+    }
+    toks.push({ k: 'eof', v: '<end>', line: line, s: n, e: n });
+    return toks;
+  };
+})();
+
+</script>
+<script>
+/* Recursive-descent parser for the ICSE Java subset. Produces an AST with line numbers and source offsets. */
+(function () {
+  var JP = (globalThis.JP = globalThis.JP || {});
+  var E = (JP.engine = JP.engine || {});
+  var CompileError = E.CompileError;
+
+  var PRIMS = { int: 1, long: 1, double: 1, float: 1, char: 1, boolean: 1, byte: 1, short: 1 };
+  E.PRIMS = PRIMS;
+
+  var BIN_PREC = {
+    '||': 1, '&&': 2,
+    '==': 6, '!=': 6,
+    '<': 7, '>': 7, '<=': 7, '>=': 7,
+    '+': 9, '-': 9,
+    '*': 10, '/': 10, '%': 10
+  };
+  E.BIN_PREC = BIN_PREC;
+  var ASSIGN_OPS = { '=': 1, '+=': 1, '-=': 1, '*=': 1, '/=': 1, '%=': 1 };
+  var UNSUPPORTED = {
+    '&': 'Use && for "and" (the single & is not used in our syllabus).',
+    '|': 'Use || for "or" (the single | is not used in our syllabus).',
+    '^': 'The ^ operator is not "power" in Java. Use Math.pow(a, b).',
+    '<<': 'Shift operators are not part of the syllabus.',
+    '>>': 'Shift operators are not part of the syllabus.',
+    '>>>': 'Shift operators are not part of the syllabus.',
+    '~': 'The ~ operator is not part of the syllabus.',
+    '[': 'Arrays are not covered in this part of the course.'
+  };
+
+  function Parser(src, toks) {
+    this.src = src;
+    this.toks = toks;
+    this.p = 0;
+  }
+  var P = Parser.prototype;
+
+  P.peek = function (o) { return this.toks[this.p + (o || 0)]; };
+  P.next = function () { return this.toks[this.p++]; };
+  P.prev = function () { return this.toks[this.p - 1]; };
+  P.is = function (v, o) {
+    var t = this.peek(o);
+    return (t.k === 'op' || t.k === 'kw') && t.v === v;
+  };
+  P.accept = function (v) {
+    if (this.is(v)) return this.next();
+    return null;
+  };
+  P.fail = function (msg, tok) {
+    throw new CompileError(msg, (tok || this.peek()).line);
+  };
+  P.expect = function (v, what) {
+    if (this.is(v)) return this.next();
+    var t = this.peek();
+    if (v === ';') {
+      var pl = this.prev() ? this.prev().line : t.line;
+      throw new CompileError('Missing ; at the end of this line. Every Java statement ends with a semicolon.', pl);
+    }
+    if (t.k === 'op' && UNSUPPORTED[t.v]) this.fail(UNSUPPORTED[t.v]);
+    this.fail('Expected ' + (what || "'" + v + "'") + ' but found ' + describe(t) + '.');
+  };
+  P.ident = function (what) {
+    var t = this.peek();
+    if (t.k === 'id') return this.next();
+    if (t.k === 'kw') this.fail("'" + t.v + "' is a Java keyword, so it cannot be used as a " + (what || 'name') + '.');
+    this.fail('Expected a ' + (what || 'name') + ' but found ' + describe(t) + '.');
+  };
+
+  function describe(t) {
+    if (t.k === 'eof') return 'the end of the program (is a } missing?)';
+    if (t.k === 'str') return 'the text "' + t.v + '"';
+    if (t.k === 'char') return 'a character';
+    if (t.k === 'num') return 'the number ' + t.text;
+    return "'" + t.v + "'";
+  }
+
+  function node(kind, tok, extra) {
+    var n = { kind: kind, line: tok.line, s: tok.s, e: tok.e };
+    for (var k in extra) n[k] = extra[k];
+    return n;
+  }
+  P.end = function (n) {
+    n.e = this.prev().e;
+    return n;
+  };
+
+  // ---------- program ----------
+  P.parseProgram = function () {
+    while (this.is('import')) {
+      this.next();
+      while (!this.is(';') && this.peek().k !== 'eof') this.next();
+      this.expect(';');
+    }
+    var save = this.p;
+    while (this.is('public') || this.is('final')) this.next();
+    if (this.is('class')) return this.parseClass();
+    this.p = save;
+    // Snippet: plain statements, treated as the body of main().
+    var first = this.peek();
+    var body = [];
+    while (this.peek().k !== 'eof') body.push(this.parseStatement());
+    var block = { kind: 'Block', body: body, line: first.line, s: first.s, e: this.peek().e };
+    var main = { kind: 'Method', name: 'main', ret: 'void', params: [], body: block, line: first.line, isStatic: true, synthetic: true };
+    return { kind: 'Program', snippet: true, className: null, fields: [], methods: [main], ctors: [], main: main };
+  };
+
+  P.parseClass = function () {
+    this.expect('class');
+    var name = this.ident('class name').v;
+    this.expect('{');
+    var prog = { kind: 'Program', snippet: false, className: name, fields: [], methods: [], ctors: [] };
+    while (!this.is('}')) {
+      if (this.peek().k === 'eof') this.fail('The class is missing its closing }.');
+      this.parseMember(prog);
+    }
+    this.expect('}');
+    if (this.peek().k !== 'eof') this.fail('Unexpected ' + describe(this.peek()) + ' after the end of the class.');
+    var mains = prog.methods.filter(function (m) { return m.name === 'main'; });
+    if (!mains.length) throw new CompileError('There is no main() method, so the program has nowhere to start.', 1);
+    prog.main = mains[0];
+    return prog;
+  };
+
+  P.parseMember = function (prog) {
+    var startTok = this.peek();
+    var mods = {};
+    while (this.is('public') || this.is('private') || this.is('protected') || this.is('static') || this.is('final')) {
+      mods[this.next().v] = true;
+    }
+    var t = this.peek();
+    // constructor
+    if (t.k === 'id' && t.v === prog.className && this.is('(', 1)) {
+      this.next();
+      var params = this.parseParams();
+      var body = this.parseBlock();
+      prog.ctors.push({ kind: 'Method', name: t.v, isCtor: true, ret: null, params: params, body: body, line: t.line, mods: mods });
+      return;
+    }
+    var type;
+    if (this.accept('void')) type = 'void';
+    else type = this.parseType();
+    var nameTok = this.ident('method or variable name');
+    if (this.is('(')) {
+      var ps = this.parseParams();
+      var b = this.parseBlock();
+      prog.methods.push({ kind: 'Method', name: nameTok.v, ret: type, params: ps, body: b, line: startTok.line, isStatic: !!mods.static, mods: mods });
+      return;
+    }
+    if (type === 'void') this.fail('A variable cannot have type void.');
+    // field(s)
+    var decls = [];
+    var nt = nameTok;
+    while (true) {
+      var init = null;
+      if (this.accept('=')) init = this.parseExpr();
+      decls.push({ name: nt.v, init: init, line: nt.line });
+      if (!this.accept(',')) break;
+      nt = this.ident('variable name');
+    }
+    this.expect(';');
+    prog.fields.push({ kind: 'VarDecl', type: type, decls: decls, line: startTok.line, isStatic: !!mods.static });
+  };
+
+  P.parseParams = function () {
+    this.expect('(');
+    var ps = [];
+    if (!this.is(')')) {
+      do {
+        var ty = this.parseType(true);
+        var nm = this.ident('parameter name');
+        if (this.accept('[')) { this.expect(']'); ty += '[]'; }
+        ps.push({ type: ty, name: nm.v, line: nm.line });
+      } while (this.accept(','));
+    }
+    this.expect(')');
+    return ps;
+  };
+
+  P.parseType = function (allowArray) {
+    var t = this.peek();
+    var ty;
+    if (t.k === 'kw' && PRIMS[t.v]) { this.next(); ty = t.v; }
+    else if (t.k === 'id') { this.next(); ty = t.v; }
+    else this.fail('Expected a data type (like int, double, char, String) but found ' + describe(t) + '.');
+    if (this.is('[')) {
+      if (!allowArray) this.fail(UNSUPPORTED['[']);
+      this.next();
+      this.expect(']');
+      ty += '[]';
+    }
+    return ty;
+  };
+
+  P.isDeclStart = function () {
+    var t = this.peek();
+    if (t.k === 'kw' && PRIMS[t.v]) return true;
+    if (this.is('final')) return true;
+    if (t.k === 'id') {
+      var n = this.peek(1);
+      if (n.k === 'id') return true;
+    }
+    return false;
+  };
+
+  // ---------- statements ----------
+  P.parseBlock = function () {
+    var open = this.expect('{');
+    var body = [];
+    while (!this.is('}')) {
+      if (this.peek().k === 'eof') throw new CompileError('A { here is never closed with a matching }.', open.line);
+      body.push(this.parseStatement());
+    }
+    this.next();
+    return { kind: 'Block', body: body, line: open.line, s: open.s, e: this.prev().e };
+  };
+
+  P.parseVarDecl = function () {
+    var startTok = this.peek();
+    this.accept('final');
+    var type = this.parseType();
+    var decls = [];
+    do {
+      var nt = this.ident('variable name');
+      if (this.is('[')) this.fail(UNSUPPORTED['[']);
+      var init = null;
+      if (this.accept('=')) init = this.parseExpr();
+      decls.push({ name: nt.v, init: init, line: nt.line });
+    } while (this.accept(','));
+    return { kind: 'VarDecl', type: type, decls: decls, line: startTok.line, s: startTok.s, e: this.prev().e };
+  };
+
+  P.parseStatement = function () {
+    var t = this.peek();
+    if (this.is('{')) return this.parseBlock();
+    if (this.is(';')) { this.next(); return node('Empty', t, {}); }
+    if (t.k === 'kw') {
+      switch (t.v) {
+        case 'if': return this.parseIf();
+        case 'while': {
+          this.next();
+          this.expect('(');
+          var c = this.parseExpr();
+          this.expect(')');
+          var body = this.parseStatement();
+          return { kind: 'While', cond: c, body: body, line: t.line, s: t.s, e: this.prev().e };
+        }
+        case 'do': {
+          this.next();
+          var b = this.parseStatement();
+          var w = this.expect('while', "'while' after the do-block");
+          this.expect('(');
+          var dc = this.parseExpr();
+          this.expect(')');
+          this.expect(';');
+          return { kind: 'DoWhile', body: b, cond: dc, condLine: w.line, line: t.line, s: t.s, e: this.prev().e };
+        }
+        case 'for': return this.parseFor();
+        case 'switch': return this.parseSwitch();
+        case 'break': this.next(); this.expect(';'); return node('Break', t, {});
+        case 'continue': this.next(); this.expect(';'); return node('Continue', t, {});
+        case 'return': {
+          this.next();
+          var ex = null;
+          if (!this.is(';')) ex = this.parseExpr();
+          this.expect(';');
+          return { kind: 'Return', expr: ex, line: t.line, s: t.s, e: this.prev().e };
+        }
+        case 'else': this.fail("This 'else' has no matching 'if'. Check for a stray ; after the if (…) or a missing { }.");
+        case 'case':
+        case 'default': this.fail("'" + t.v + "' can only appear inside a switch block.");
+      }
+    }
+    if (this.isDeclStart()) {
+      var d = this.parseVarDecl();
+      this.expect(';');
+      d.e = this.prev().e;
+      return d;
+    }
+    var expr = this.parseExpr();
+    if (!(expr.kind === 'Assign' || expr.kind === 'Update' || expr.kind === 'Call' || expr.kind === 'New')) {
+      throw new CompileError('This line calculates a value but does nothing with it ("not a statement"). Store it in a variable or print it.', t.line);
+    }
+    this.expect(';');
+    return { kind: 'ExprStmt', expr: expr, line: t.line, s: t.s, e: this.prev().e };
+  };
+
+  P.parseIf = function () {
+    var t = this.next();
+    this.expect('(');
+    var c = this.parseExpr();
+    this.expect(')');
+    var th = this.parseStatement();
+    var el = null, elseLine = null;
+    if (this.is('else')) {
+      elseLine = this.next().line;
+      el = this.parseStatement();
+    }
+    return { kind: 'If', cond: c, then: th, els: el, elseLine: elseLine, line: t.line, s: t.s, e: this.prev().e };
+  };
+
+  P.parseFor = function () {
+    var t = this.next();
+    this.expect('(');
+    var init = [];
+    if (!this.is(';')) {
+      if (this.isDeclStart()) init.push(this.parseVarDecl());
+      else {
+        do {
+          var ie = this.parseExpr();
+          init.push({ kind: 'ExprStmt', expr: ie, line: ie.line, s: ie.s, e: ie.e });
+        } while (this.accept(','));
+      }
+    }
+    this.expect(';');
+    var cond = null;
+    if (!this.is(';')) cond = this.parseExpr();
+    this.expect(';');
+    var upd = [];
+    if (!this.is(')')) {
+      do { upd.push(this.parseExpr()); } while (this.accept(','));
+    }
+    this.expect(')');
+    var body = this.parseStatement();
+    return { kind: 'For', init: init, cond: cond, update: upd, body: body, line: t.line, s: t.s, e: this.prev().e };
+  };
+
+  P.parseSwitch = function () {
+    var t = this.next();
+    this.expect('(');
+    var disc = this.parseExpr();
+    this.expect(')');
+    this.expect('{');
+    var cases = [];
+    var cur = null;
+    while (!this.is('}')) {
+      var ct = this.peek();
+      if (this.accept('case')) {
+        var lab = this.parseExpr();
+        this.expect(':', "':' after the case value");
+        if (!cur || cur.body.length) { cur = { labels: [], body: [], line: ct.line }; cases.push(cur); }
+        cur.labels.push(lab);
+      } else if (this.accept('default')) {
+        this.expect(':', "':' after default");
+        if (!cur || cur.body.length) { cur = { labels: [], body: [], line: ct.line }; cases.push(cur); }
+        cur.labels.push('default');
+      } else {
+        if (!cur) this.fail('Inside a switch, statements must come after a case label.');
+        if (ct.k === 'eof') this.fail('The switch block is missing its closing }.');
+        cur.body.push(this.parseStatement());
+      }
+    }
+    this.next();
+    return { kind: 'Switch', disc: disc, cases: cases, line: t.line, s: t.s, e: this.prev().e };
+  };
+
+  // ---------- expressions ----------
+  P.parseExpr = function () { return this.parseAssign(); };
+
+  P.parseAssign = function () {
+    var lhs = this.parseTernary();
+    var t = this.peek();
+    if (t.k === 'op' && ASSIGN_OPS[t.v]) {
+      if (lhs.kind !== 'Name') this.fail('The left side of ' + t.v + ' must be a variable (a box to store into).');
+      this.next();
+      var rhs = this.parseAssign();
+      return { kind: 'Assign', op: t.v, target: lhs, value: rhs, line: lhs.line, s: lhs.s, e: rhs.e };
+    }
+    return lhs;
+  };
+
+  P.parseTernary = function () {
+    var c = this.parseBinary(1);
+    if (this.is('?')) {
+      this.next();
+      var a = this.parseAssign();
+      this.expect(':', "':' in the ternary operator ( ? : )");
+      var b = this.parseTernary();
+      return { kind: 'Cond', test: c, a: a, b: b, line: c.line, s: c.s, e: b.e };
+    }
+    return c;
+  };
+
+  P.parseBinary = function (minPrec) {
+    var left = this.parseUnary();
+    while (true) {
+      var t = this.peek();
+      if (t.k !== 'op') break;
+      if (UNSUPPORTED[t.v] && t.v !== '[' && t.v !== '~') this.fail(UNSUPPORTED[t.v]);
+      var prec = BIN_PREC[t.v];
+      if (!prec || prec < minPrec) break;
+      this.next();
+      var right = this.parseBinary(prec + 1);
+      left = { kind: 'Bin', op: t.v, l: left, r: right, line: left.line, opLine: t.line, s: left.s, e: right.e };
+    }
+    return left;
+  };
+
+  P.parseUnary = function () {
+    var t = this.peek();
+    if (t.k === 'op') {
+      if (t.v === '+' || t.v === '-' || t.v === '!') {
+        this.next();
+        var arg = this.parseUnary();
+        return { kind: 'Unary', op: t.v, arg: arg, line: t.line, s: t.s, e: arg.e };
+      }
+      if (t.v === '~') this.fail(UNSUPPORTED['~']);
+      if (t.v === '++' || t.v === '--') {
+        this.next();
+        var a2 = this.parseUnary();
+        if (a2.kind !== 'Name') this.fail(t.v + ' can only be used on a variable.');
+        return { kind: 'Update', op: t.v, prefix: true, arg: a2, line: t.line, s: t.s, e: a2.e };
+      }
+      if (t.v === '(') {
+        var n1 = this.peek(1), n2 = this.peek(2);
+        if (n1.k === 'kw' && PRIMS[n1.v] && n2.k === 'op' && n2.v === ')') {
+          this.next(); this.next(); this.next();
+          var ca = this.parseUnary();
+          return { kind: 'Cast', type: n1.v, arg: ca, line: t.line, s: t.s, e: ca.e };
+        }
+      }
+    }
+    return this.parsePostfix();
+  };
+
+  P.parseArgs = function () {
+    this.expect('(');
+    var args = [];
+    if (!this.is(')')) {
+      do { args.push(this.parseExpr()); } while (this.accept(','));
+    }
+    this.expect(')', "')' to close the brackets");
+    return args;
+  };
+
+  P.parsePostfix = function () {
+    var e = this.parsePrimary();
+    while (true) {
+      var t = this.peek();
+      if (this.is('.')) {
+        this.next();
+        var nm = this.ident('method or field name');
+        if (this.is('(')) {
+          var args = this.parseArgs();
+          e = { kind: 'Call', obj: e, name: nm.v, args: args, line: e.line, s: e.s, e: this.prev().e };
+        } else {
+          e = { kind: 'Field', obj: e, name: nm.v, line: e.line, s: e.s, e: nm.e };
+        }
+      } else if (this.is('++') || this.is('--')) {
+        if (e.kind !== 'Name') this.fail(t.v + ' can only be used on a variable.');
+        this.next();
+        e = { kind: 'Update', op: t.v, prefix: false, arg: e, line: e.line, s: e.s, e: t.e };
+      } else if (this.is('[')) {
+        this.fail(UNSUPPORTED['[']);
+      } else break;
+    }
+    return e;
+  };
+
+  P.parsePrimary = function () {
+    var t = this.peek();
+    switch (t.k) {
+      case 'num': this.next(); return node('Lit', t, { t: t.t, v: t.v, text: t.text });
+      case 'char': this.next(); return node('Lit', t, { t: 'char', v: t.v });
+      case 'str': this.next(); return node('Lit', t, { t: 'String', v: t.v });
+      case 'id':
+        this.next();
+        if (this.is('(')) {
+          var args = this.parseArgs();
+          return { kind: 'Call', obj: null, name: t.v, args: args, line: t.line, s: t.s, e: this.prev().e };
+        }
+        return node('Name', t, { name: t.v });
+      case 'kw':
+        if (t.v === 'true' || t.v === 'false') { this.next(); return node('Lit', t, { t: 'boolean', v: t.v === 'true' }); }
+        if (t.v === 'null') { this.next(); return node('Lit', t, { t: 'null', v: null }); }
+        if (t.v === 'new') {
+          this.next();
+          var ty = this.ident('class name after new');
+          var a = this.parseArgs();
+          return { kind: 'New', type: ty.v, args: a, line: t.line, s: t.s, e: this.prev().e };
+        }
+        if (PRIMS[t.v]) this.fail("A data type like '" + t.v + "' can't be used here. (Declarations must be on their own line, like: " + t.v + ' x = 5;)');
+        break;
+      case 'op':
+        if (t.v === '(') {
+          this.next();
+          var ex = this.parseExpr();
+          this.expect(')', "')' to close the bracket");
+          ex.paren = (ex.paren || 0) + 1;
+          ex.s = t.s;
+          ex.e = this.prev().e;
+          return ex;
+        }
+        if (UNSUPPORTED[t.v]) this.fail(UNSUPPORTED[t.v]);
+        break;
+    }
+    if (t.k === 'eof') this.fail('The program ended too early — something is unfinished.');
+    this.fail('Unexpected ' + describe(t) + ' here.');
+  };
+
+  E.parse = function (src) {
+    var toks = E.lex(src);
+    var p = new Parser(src, toks);
+    var prog = p.parseProgram();
+    prog.src = src;
+    return prog;
+  };
+
+  E.parseExpression = function (src) {
+    var toks = E.lex(src);
+    var p = new Parser(src, toks);
+    var ex = p.parseExpr();
+    if (p.peek().k !== 'eof') p.fail('Unexpected ' + describe(p.peek()) + ' after the expression.');
+    return ex;
+  };
+})();
+
+</script>
+<script>
+/* Library classes in the ICSE syllabus: Math, Character, wrapper parse/toString, String methods, Scanner.
+   Each entry: check(argTypes) -> return type or an error string; call(args, rt) -> value. */
+(function () {
+  var JP = (globalThis.JP = globalThis.JP || {});
+  var E = (JP.engine = JP.engine || {});
+  var Vs = E.values;
+  var V = Vs.V;
+
+  function RuntimeErr(name, msg) {
+    this.javaName = name;
+    this.message = msg;
+  }
+  E.RuntimeErr = RuntimeErr;
+
+  var num = Vs.isNumeric;
+
+  function oneNum(ret) {
+    return function (ts) {
+      if (ts.length !== 1) return 'needs exactly 1 value inside the brackets';
+      if (!num(ts[0])) return 'needs a number, not a ' + ts[0];
+      return ret;
+    };
+  }
+  function n(a) { return a.v; }
+  function fixZero(x) { return x === 0 ? 0 : x; }
+
+  var MathLib = {
+    sqrt: { check: oneNum('double'), call: function (a) { return V('double', Math.sqrt(n(a[0]))); } },
+    cbrt: { check: oneNum('double'), call: function (a) { return V('double', Math.cbrt(n(a[0]))); } },
+    ceil: { check: oneNum('double'), call: function (a) { return V('double', Math.ceil(n(a[0]))); } },
+    floor: { check: oneNum('double'), call: function (a) { return V('double', Math.floor(n(a[0]))); } },
+    log: { check: oneNum('double'), call: function (a) { return V('double', Math.log(n(a[0]))); } },
+    exp: { check: oneNum('double'), call: function (a) { return V('double', Math.exp(n(a[0]))); } },
+    rint: {
+      check: oneNum('double'),
+      call: function (a) {
+        var x = n(a[0]), f = Math.floor(x), d = x - f, r;
+        if (d < 0.5) r = f; else if (d > 0.5) r = f + 1; else r = f % 2 === 0 ? f : f + 1;
+        return V('double', r === 0 && x < 0 ? -0 : r);
+      }
+    },
+    pow: {
+      check: function (ts) {
+        if (ts.length !== 2) return 'needs exactly 2 values: Math.pow(base, power)';
+        if (!num(ts[0]) || !num(ts[1])) return 'needs two numbers';
+        return 'double';
+      },
+      call: function (a) { return V('double', Math.pow(n(a[0]), n(a[1]))); }
+    },
+    round: {
+      check: function (ts) {
+        var r = oneNum('x')(ts);
+        if (r !== 'x') return r;
+        return ts[0] === 'double' ? 'long' : 'int';
+      },
+      call: function (a) {
+        var x = n(a[0]);
+        var t = a[0].t === 'double' ? 'long' : 'int';
+        if (isNaN(x)) return V(t, 0);
+        var r = fixZero(Math.round(x));
+        return V(t, t === 'int' ? Vs.convert(r, 'double', 'int') : r);
+      }
+    },
+    abs: {
+      check: function (ts) {
+        var r = oneNum('x')(ts);
+        return r === 'x' ? Vs.promote1(ts[0]) : r;
+      },
+      call: function (a) {
+        var t = Vs.promote1(a[0].t);
+        var x = Math.abs(n(a[0]));
+        return V(t, t === 'int' ? x | 0 : x);
+      }
+    },
+    max: {
+      check: twoNum,
+      call: function (a) { var t = Vs.promote2(a[0].t, a[1].t); return V(t, Math.max(n(a[0]), n(a[1]))); }
+    },
+    min: {
+      check: twoNum,
+      call: function (a) { var t = Vs.promote2(a[0].t, a[1].t); return V(t, Math.min(n(a[0]), n(a[1]))); }
+    },
+    random: {
+      check: function (ts) { return ts.length ? 'takes no values' : 'double'; },
+      call: function () { return V('double', Math.random()); }
+    }
+  };
+  function twoNum(ts) {
+    if (ts.length !== 2) return 'needs exactly 2 values';
+    if (!num(ts[0]) || !num(ts[1])) return 'needs two numbers';
+    return Vs.promote2(ts[0], ts[1]);
+  }
+
+  // ----- Character -----
+  function ch(a) { return String.fromCharCode(a.v); }
+  function charPred(fn) {
+    return {
+      check: function (ts) {
+        if (ts.length !== 1) return 'needs exactly 1 character';
+        if (ts[0] !== 'char' && ts[0] !== 'int') return 'needs a char, not a ' + ts[0];
+        return 'boolean';
+      },
+      call: function (a) { return V('boolean', fn(ch(a[0]), a[0].v)); }
+    };
+  }
+  function charConv(up) {
+    return {
+      check: function (ts) {
+        if (ts.length !== 1) return 'needs exactly 1 character';
+        if (ts[0] !== 'char' && ts[0] !== 'int') return 'needs a char, not a ' + ts[0];
+        return ts[0];
+      },
+      call: function (a) {
+        var c = ch(a[0]);
+        var r = up ? c.toUpperCase() : c.toLowerCase();
+        var code = r.length === 1 ? r.charCodeAt(0) : a[0].v;
+        return V(a[0].t, code);
+      }
+    };
+  }
+  var CharacterLib = {
+    isLetter: charPred(function (c) { return /\p{L}/u.test(c); }),
+    isDigit: charPred(function (c) { return /\p{Nd}/u.test(c); }),
+    isLetterOrDigit: charPred(function (c) { return /[\p{L}\p{Nd}]/u.test(c); }),
+    isWhitespace: charPred(function (c, code) {
+      if (code === 0xa0 || code === 0x2007 || code === 0x202f) return false;
+      return /[ \t\n\x0B\f\r\x1C-\x1F]/.test(c) || /[\p{Zs}\p{Zl}\p{Zp}]/u.test(c);
+    }),
+    isUpperCase: charPred(function (c) { return /\p{Lu}/u.test(c); }),
+    isLowerCase: charPred(function (c) { return /\p{Ll}/u.test(c); }),
+    toUpperCase: charConv(true),
+    toLowerCase: charConv(false)
+  };
+
+  // ----- wrappers -----
+  function parser(t, re, label) {
+    return {
+      check: function (ts) {
+        if (ts.length !== 1) return 'needs exactly 1 value';
+        if (ts[0] !== 'String') return 'needs a String (text), not a ' + ts[0];
+        return t;
+      },
+      call: function (a) {
+        var s = a[0].v;
+        if (s === null || !re.test(s)) throw new RuntimeErr('NumberFormatException', 'For input string: "' + s + '" — this text is not a valid ' + label + '.');
+        var x = parseFloat(s);
+        if (t === 'int' && (x > 2147483647 || x < -2147483648)) throw new RuntimeErr('NumberFormatException', 'For input string: "' + s + '" — too big for an int.');
+        return V(t, t === 'float' ? Math.fround(x) : x);
+      }
+    };
+  }
+  var INT_RE = /^[+-]?\d+$/;
+  var DEC_RE = /^\s*[+-]?(\d+\.?\d*([eE][+-]?\d+)?|\.\d+([eE][+-]?\d+)?)[fFdD]?\s*$/;
+  function toStr(fromTypes) {
+    return {
+      check: function (ts) {
+        if (ts.length !== 1) return 'needs exactly 1 value';
+        if (fromTypes.indexOf(ts[0]) < 0 && !(fromTypes[0] === 'any')) return 'cannot convert a ' + ts[0] + ' here';
+        return 'String';
+      },
+      call: function (a) { return V('String', Vs.str(a[0])); }
+    };
+  }
+  var IntegerLib = { parseInt: parser('int', INT_RE, 'int'), valueOf: parser('int', INT_RE, 'int'), toString: toStr(['int', 'char', 'short', 'byte']) };
+  var LongLib = { parseLong: parser('long', INT_RE, 'long'), valueOf: parser('long', INT_RE, 'long'), toString: toStr(['long', 'int', 'char', 'short', 'byte']) };
+  var DoubleLib = { parseDouble: parser('double', DEC_RE, 'double'), valueOf: parser('double', DEC_RE, 'double'), toString: toStr(['double', 'float', 'long', 'int', 'char', 'short', 'byte']) };
+  var FloatLib = { parseFloat: parser('float', DEC_RE, 'float'), valueOf: parser('float', DEC_RE, 'float'), toString: toStr(['float', 'long', 'int', 'char', 'short', 'byte']) };
+  var CharacterStatic = Object.assign({ toString: toStr(['char']) }, CharacterLib);
+  var StringStatic = { valueOf: toStr(['any']) };
+
+  var STATIC_FIELDS = {
+    Math: { PI: V('double', Math.PI), E: V('double', Math.E) },
+    Integer: { MAX_VALUE: V('int', 2147483647), MIN_VALUE: V('int', -2147483648) }
+  };
+
+  // ----- String instance methods -----
+  function S(retOrFn, argSpec, impl) {
+    return {
+      check: function (ts) { return checkSig(ts, argSpec, retOrFn); },
+      call: impl
+    };
+  }
+  // argSpec: array of alternative signatures, each an array of allowed-type-lists
+  function checkSig(ts, sigs, ret) {
+    for (var i = 0; i < sigs.length; i++) {
+      var sig = sigs[i];
+      if (sig.length !== ts.length) continue;
+      var ok = true;
+      for (var j = 0; j < sig.length; j++) {
+        if (sig[j].indexOf(ts[j]) < 0 && sig[j].indexOf('*') < 0) { ok = false; break; }
+      }
+      if (ok) return typeof ret === 'function' ? ret(ts) : ret;
+    }
+    var want = sigs.map(function (s) { return '(' + s.map(function (a) { return a[0]; }).join(', ') + ')'; }).join(' or ');
+    return 'expects ' + want + ', but got (' + ts.join(', ') + ')';
+  }
+  var INTISH = ['int', 'char', 'short', 'byte'];
+  var CHARISH = ['char', 'int'];
+  var STR = ['String'];
+
+  function idx(s, i, len) {
+    if (i < 0 || i >= len) throw new RuntimeErr('StringIndexOutOfBoundsException', 'index ' + i + ' is outside the string "' + s + '" (valid positions are 0 to ' + (len - 1) + ').');
+  }
+  function sub(s, b, e) {
+    if (b < 0 || e > s.length || b > e) throw new RuntimeErr('StringIndexOutOfBoundsException', 'substring(' + b + ', ' + e + ') does not fit in "' + s + '" (length ' + s.length + ').');
+    return s.substring(b, e);
+  }
+  function needle(a) { return a.t === 'String' ? a.v : String.fromCharCode(a.v); }
+  function cmp(a, b, fold) {
+    var n1 = a.length, n2 = b.length, lim = Math.min(n1, n2);
+    for (var k = 0; k < lim; k++) {
+      var c1 = a.charCodeAt(k), c2 = b.charCodeAt(k);
+      if (fold) {
+        c1 = String.fromCharCode(c1).toUpperCase().toLowerCase().charCodeAt(0);
+        c2 = String.fromCharCode(c2).toUpperCase().toLowerCase().charCodeAt(0);
+      }
+      if (c1 !== c2) return c1 - c2;
+    }
+    return n1 - n2;
+  }
+
+  var StringMethods = {
+    length: S('int', [[]], function (a, self) { return V('int', self.length); }),
+    charAt: S('char', [[INTISH]], function (a, self) { idx(self, a[0].v, self.length); return V('char', self.charCodeAt(a[0].v)); }),
+    indexOf: S('int', [[CHARISH.concat(STR)], [CHARISH.concat(STR), INTISH]], function (a, self) {
+      return V('int', self.indexOf(needle(a[0]), a.length > 1 ? Math.max(0, a[1].v) : 0));
+    }),
+    lastIndexOf: S('int', [[CHARISH.concat(STR)], [CHARISH.concat(STR), INTISH]], function (a, self) {
+      return V('int', a.length > 1 ? (a[1].v < 0 ? -1 : self.lastIndexOf(needle(a[0]), a[1].v)) : self.lastIndexOf(needle(a[0])));
+    }),
+    substring: S('String', [[INTISH], [INTISH, INTISH]], function (a, self) {
+      return V('String', sub(self, a[0].v, a.length > 1 ? a[1].v : self.length));
+    }),
+    equals: S('boolean', [[['*']]], function (a, self) { return V('boolean', a[0].t === 'String' && a[0].v === self); }),
+    equalsIgnoreCase: S('boolean', [[STR]], function (a, self) {
+      return V('boolean', a[0].v !== null && a[0].v.length === self.length && cmp(self, a[0].v, true) === 0);
+    }),
+    compareTo: S('int', [[STR]], function (a, self) { return V('int', cmp(self, a[0].v, false)); }),
+    compareToIgnoreCase: S('int', [[STR]], function (a, self) { return V('int', cmp(self, a[0].v, true)); }),
+    toUpperCase: S('String', [[]], function (a, self) { return V('String', self.toUpperCase()); }),
+    toLowerCase: S('String', [[]], function (a, self) { return V('String', self.toLowerCase()); }),
+    trim: S('String', [[]], function (a, self) { return V('String', self.replace(/^[\x00-\x20]+|[\x00-\x20]+$/g, '')); }),
+    startsWith: S('boolean', [[STR]], function (a, self) { return V('boolean', self.startsWith(a[0].v)); }),
+    endsWith: S('boolean', [[STR]], function (a, self) { return V('boolean', self.endsWith(a[0].v)); }),
+    concat: S('String', [[STR]], function (a, self) { return V('String', self + a[0].v); }),
+    replace: S('String', [[['char'], ['char']], [STR, STR]], function (a, self) {
+      return V('String', self.split(needle(a[0])).join(needle(a[1])));
+    })
+  };
+
+  // ----- Scanner -----
+  function scan(name, t) {
+    return {
+      check: function (ts) { return ts.length ? 'takes nothing inside the brackets' : t; },
+      call: function (a, self, rt) { return rt.input.read(name); }
+    };
+  }
+  var ScannerMethods = {
+    nextInt: scan('nextInt', 'int'),
+    nextLong: scan('nextLong', 'long'),
+    nextDouble: scan('nextDouble', 'double'),
+    nextFloat: scan('nextFloat', 'float'),
+    nextBoolean: scan('nextBoolean', 'boolean'),
+    next: scan('next', 'String'),
+    nextLine: scan('nextLine', 'String')
+  };
+
+  // Input tape that behaves like java.util.Scanner on System.in.
+  function InputTape(text) {
+    this.text = text || '';
+    this.pos = 0;
+    this.log = [];
+  }
+  InputTape.prototype.read = function (kind) {
+    var s = this.text, p = this.pos;
+    if (kind === 'nextLine') {
+      if (p >= s.length) throw new RuntimeErr('NoInput', 'The program is waiting for you to type a line, but the input box is empty. Add more input and run again.');
+      var nl = s.indexOf('\n', p);
+      var line = nl < 0 ? s.slice(p) : s.slice(p, nl);
+      this.pos = nl < 0 ? s.length : nl + 1;
+      line = line.replace(/\r$/, '');
+      this.log.push({ kind: kind, text: line });
+      return V('String', line);
+    }
+    while (p < s.length && /\s/.test(s[p])) p++;
+    if (p >= s.length) throw new RuntimeErr('NoInput', 'The program is waiting for input (' + kind + '), but there is nothing left in the input box. Add another value and run again.');
+    var q = p;
+    while (q < s.length && !/\s/.test(s[q])) q++;
+    var tok = s.slice(p, q);
+    var val;
+    switch (kind) {
+      case 'nextInt':
+      case 'nextLong':
+        if (!INT_RE.test(tok)) throw new RuntimeErr('InputMismatchException', kind + '() expected a whole number but the next input is "' + tok + '".');
+        val = V(kind === 'nextInt' ? 'int' : 'long', parseInt(tok, 10));
+        break;
+      case 'nextDouble':
+      case 'nextFloat':
+        if (!DEC_RE.test(tok) || /[fFdD]$/.test(tok)) throw new RuntimeErr('InputMismatchException', kind + '() expected a number but the next input is "' + tok + '".');
+        val = V(kind === 'nextDouble' ? 'double' : 'float', kind === 'nextFloat' ? Math.fround(parseFloat(tok)) : parseFloat(tok));
+        break;
+      case 'nextBoolean':
+        if (!/^(true|false)$/i.test(tok)) throw new RuntimeErr('InputMismatchException', 'nextBoolean() expected true or false but got "' + tok + '".');
+        val = V('boolean', tok.toLowerCase() === 'true');
+        break;
+      default:
+        val = V('String', tok);
+    }
+    this.pos = q;
+    this.log.push({ kind: kind, text: tok });
+    return val;
+  };
+  E.InputTape = InputTape;
+
+  E.lib = {
+    staticClasses: {
+      Math: MathLib,
+      Character: CharacterStatic,
+      Integer: IntegerLib,
+      Long: LongLib,
+      Double: DoubleLib,
+      Float: FloatLib,
+      String: StringStatic
+    },
+    staticFields: STATIC_FIELDS,
+    instance: { String: StringMethods, Scanner: ScannerMethods }
+  };
+})();
+
+</script>
+<script>
+/* Static checks: the things javac would refuse to compile, explained for a beginner. Annotates expr.type. */
+(function () {
+  var JP = (globalThis.JP = globalThis.JP || {});
+  var E = (JP.engine = JP.engine || {});
+  var Vs = E.values;
+  var CompileError = E.CompileError;
+  var num = Vs.isNumeric;
+
+  var KNOWN_TYPES = { int: 1, long: 1, double: 1, float: 1, char: 1, boolean: 1, byte: 1, short: 1, String: 1, Scanner: 1 };
+  var RANGE = { byte: [-128, 127], short: [-32768, 32767], char: [0, 65535] };
+
+  function err(msg, line) { throw new CompileError(msg, line); }
+
+  // Compile-time constant value of an int/char expression made only of literals, or undefined.
+  function constInt(e) {
+    switch (e.kind) {
+      case 'Lit':
+        return e.t === 'int' || e.t === 'char' ? e.v : undefined;
+      case 'Unary': {
+        var a = constInt(e.arg);
+        if (a === undefined) return undefined;
+        return e.op === '-' ? -a : e.op === '+' ? a : undefined;
+      }
+      case 'Bin': {
+        var l = constInt(e.l), r = constInt(e.r);
+        if (l === undefined || r === undefined) return undefined;
+        switch (e.op) {
+          case '+': return (l + r) | 0;
+          case '-': return (l - r) | 0;
+          case '*': return Math.imul(l, r);
+          case '/': return r === 0 ? undefined : (l / r) | 0;
+          case '%': return r === 0 ? undefined : l % r;
+        }
+        return undefined;
+      }
+      case 'Cast': {
+        var c = constInt(e.arg);
+        return c === undefined ? undefined : Vs.convert(c, 'int', e.type);
+      }
+    }
+    return undefined;
+  }
+  E.constInt = constInt;
+
+  // Can a value of type `from` (from expression e) be stored in a box of type `to`?
+  function assignable(to, from, e) {
+    if (to === from) return true;
+    if (from === 'null') return !Vs.isNumeric(to) && to !== 'boolean';
+    if (num(to) && num(from)) {
+      if (Vs.canWiden(from, to)) return true;
+      if (RANGE[to] && (from === 'int' || from === 'char' || from === 'short' || from === 'byte') && e) {
+        var c = constInt(e);
+        if (c !== undefined && c >= RANGE[to][0] && c <= RANGE[to][1]) return true;
+      }
+    }
+    return false;
+  }
+  E.assignable = assignable;
+
+  function badAssignMsg(to, from, e) {
+    if (num(to) && num(from)) {
+      var hint = '';
+      if ((from === 'double' || from === 'float') && Vs.isIntegral(to)) hint = ' An ' + to + ' box holds whole numbers only. If you really want to drop the decimal part, write a cast: (' + to + ')';
+      else if (to === 'char') hint = ' A char box takes a char; an ' + from + ' expression needs a cast: (char)';
+      else hint = ' Use a cast like (' + to + ') if you are sure.';
+      return 'Type mismatch: possible lossy conversion from ' + from + ' to ' + to + '.' + hint;
+    }
+    if (to === 'String' && from === 'char') return "Type mismatch: a char (single quotes) cannot go into a String box. Use double quotes for a String: \"A\" not 'A'.";
+    if (to === 'char' && from === 'String') return "Type mismatch: a String (double quotes) cannot go into a char box. Use single quotes for one character: 'A' not \"A\".";
+    if (from === 'String' && num(to)) return 'Type mismatch: text (String) cannot go into a ' + to + ' box. (Text in quotes is not a number, even if it looks like one.)';
+    if (to === 'boolean') return 'Type mismatch: a boolean box holds only true or false, not a ' + from + '.';
+    if (from === 'boolean') return 'Type mismatch: true/false (boolean) cannot go into a ' + to + ' box.';
+    if (from === 'void') return 'This method gives back nothing (void), so there is no value to store.';
+    return 'Type mismatch: a ' + from + ' cannot be stored in a ' + to + ' box.';
+  }
+
+  function Checker(prog) {
+    this.prog = prog;
+    this.scopes = [];
+    this.method = null;
+    this.breakable = [];
+    this.methods = {};
+    this.instanceFields = {};
+    var self = this;
+    prog.methods.forEach(function (m) {
+      (self.methods[m.name] = self.methods[m.name] || []).push(m);
+    });
+  }
+  var C = Checker.prototype;
+
+  C.lookup = function (name) {
+    for (var i = this.scopes.length - 1; i >= 0; i--) {
+      if (Object.prototype.hasOwnProperty.call(this.scopes[i].vars, name)) {
+        if (this.scopes[i].isFieldScope && this.method && this.method.isStatic && this.instanceFields[name]) {
+          err("The instance field '" + name + "' belongs to an object. A static method needs an object and the dot operator to access it.", this.method.line);
+        }
+        return this.scopes[i].vars[name];
+      }
+    }
+    return null;
+  };
+  C.declare = function (name, type, line, isField) {
+    if (!KNOWN_TYPES[type]) {
+      if (type === 'string') err("Java is case-sensitive: write String with a capital S.", line);
+      if (type === 'Int' || type === 'Double' || type === 'Char') err("Data types are lowercase in Java: write " + type.toLowerCase() + '.', line);
+      if (type !== this.prog.className) err("Unknown data type '" + type + "'.", line);
+    }
+    var top = this.scopes[this.scopes.length - 1];
+    if (!isField) {
+      for (var i = this.scopes.length - 1; i >= 0 && !this.scopes[i].isFieldScope; i--) {
+        if (Object.prototype.hasOwnProperty.call(this.scopes[i].vars, name)) {
+          err("A variable called '" + name + "' already exists here. You can't create two boxes with the same name — just use the existing one (without writing the type again).", line);
+        }
+      }
+    } else if (Object.prototype.hasOwnProperty.call(top.vars, name)) {
+      err("'" + name + "' is declared twice.", line);
+    }
+    top.vars[name] = type;
+  };
+
+  C.checkProgram = function () {
+    var prog = this.prog;
+    var fieldScope = { vars: {}, isFieldScope: true };
+    this.scopes.push(fieldScope);
+    var self = this;
+    var signatures = {};
+    prog.methods.concat(prog.ctors).forEach(function (m) {
+      var key = (m.isCtor ? 'constructor:' : 'method:') + m.name + '(' + m.params.map(function (p) { return p.type; }).join(',') + ')';
+      if (signatures[key]) err('Two methods or constructors have the same parameter list. Changing only the return type does not create an overload.', m.line);
+      signatures[key] = true;
+    });
+    prog.fields.forEach(function (f) {
+      f.decls.forEach(function (d) {
+        self.method = { isStatic: f.isStatic, line: d.line };
+        if (d.init) self.expectAssignable(f.type, d.init, d.line);
+        self.declare(d.name, f.type, d.line, true);
+        if (!f.isStatic) self.instanceFields[d.name] = true;
+        self.method = null;
+      });
+    });
+    prog.methods.forEach(function (m) { self.checkMethod(m); });
+    prog.ctors.forEach(function (m) { self.checkMethod(m); });
+  };
+
+  C.checkMethod = function (m) {
+    this.method = m;
+    this.scopes.push({ vars: {} });
+    var self = this;
+    m.params.forEach(function (p) {
+      if (p.type === 'String[]') { self.scopes[self.scopes.length - 1].vars[p.name] = 'String[]'; return; }
+      self.declare(p.name, p.type, p.line);
+    });
+    this.block(m.body.body);
+    this.scopes.pop();
+    this.method = null;
+  };
+
+  C.block = function (stmts) {
+    this.scopes.push({ vars: {} });
+    for (var i = 0; i < stmts.length; i++) this.stmt(stmts[i]);
+    this.scopes.pop();
+  };
+
+  C.cond = function (e, what) {
+    var t = this.expr(e);
+    if (t !== 'boolean') {
+      if (e.kind === 'Assign' && e.op === '=') err('The condition of ' + what + " must be true/false. You wrote = (store). To compare, use == (two equals signs).", e.line);
+      err('The condition of ' + what + ' must be true or false (a boolean), but this is a ' + t + '.', e.line);
+    }
+  };
+
+  C.stmt = function (s) {
+    var self = this;
+    switch (s.kind) {
+      case 'Block': this.block(s.body); break;
+      case 'Empty': break;
+      case 'VarDecl':
+        s.decls.forEach(function (d) {
+          if (d.init) self.expectAssignable(s.type, d.init, d.line);
+          self.declare(d.name, s.type, d.line);
+        });
+        break;
+      case 'ExprStmt': this.expr(s.expr); break;
+      case 'If':
+        this.cond(s.cond, 'if');
+        this.sub(s.then);
+        if (s.els) this.sub(s.els);
+        break;
+      case 'While':
+        this.cond(s.cond, 'while');
+        this.breakable.push('loop');
+        this.sub(s.body);
+        this.breakable.pop();
+        break;
+      case 'DoWhile':
+        this.breakable.push('loop');
+        this.sub(s.body);
+        this.breakable.pop();
+        this.cond(s.cond, 'do-while');
+        break;
+      case 'For':
+        this.scopes.push({ vars: {} });
+        s.init.forEach(function (st) { self.stmt(st); });
+        if (s.cond) this.cond(s.cond, 'for');
+        s.update.forEach(function (u) {
+          self.expr(u);
+          if (!(u.kind === 'Assign' || u.kind === 'Update' || u.kind === 'Call')) err('The update part of a for loop must change something, e.g. i++ or i = i + 2.', u.line);
+        });
+        this.breakable.push('loop');
+        this.sub(s.body);
+        this.breakable.pop();
+        this.scopes.pop();
+        break;
+      case 'Switch': {
+        var dt = this.expr(s.disc);
+        if (['int', 'char', 'String', 'byte', 'short'].indexOf(dt) < 0) err('switch works with int, char or String values — not ' + dt + '.', s.line);
+        var seen = {};
+        this.breakable.push('switch');
+        this.scopes.push({ vars: {} });
+        s.cases.forEach(function (c) {
+          c.labels.forEach(function (l) {
+            if (l === 'default') {
+              if (seen.default) err('A switch can have only one default.', c.line);
+              seen.default = true;
+              return;
+            }
+            var lt = self.expr(l);
+            var key;
+            if (dt === 'String') {
+              if (l.kind !== 'Lit' || lt !== 'String') err('In a switch on a String, each case needs a text in double quotes, like case "Apple":', l.line);
+              key = 's:' + l.v;
+            } else {
+              var cv = constInt(l);
+              if (cv === undefined) err('Each case needs a fixed value (a constant), like case 3: or case \'A\':', l.line);
+              if (!assignable(dt, lt, l)) err('This case value (' + lt + ') does not match the switch value type (' + dt + ').', l.line);
+              key = 'n:' + cv;
+            }
+            if (seen[key]) err('Duplicate case label: two cases have the same value.', l.line);
+            seen[key] = true;
+          });
+          c.body.forEach(function (st) { self.stmt(st); });
+        });
+        this.scopes.pop();
+        this.breakable.pop();
+        break;
+      }
+      case 'Break':
+        if (!this.breakable.length) err('break can only be used inside a loop or a switch.', s.line);
+        break;
+      case 'Continue':
+        if (this.breakable.indexOf('loop') < 0) err('continue can only be used inside a loop.', s.line);
+        break;
+      case 'Return': {
+        var m = this.method;
+        var rt = m.isCtor ? 'void' : m.ret;
+        if (s.expr) {
+          if (rt === 'void') err((m.isCtor ? 'A constructor' : 'A void method') + ' cannot return a value.', s.line);
+          this.expectAssignable(rt, s.expr, s.line, 'return');
+        } else if (rt !== 'void') {
+          err('This method must return a ' + rt + ' value: write return followed by a value.', s.line);
+        }
+        break;
+      }
+      default:
+        err('Unsupported statement', s.line);
+    }
+  };
+
+  // A single statement used as a branch/body: a declaration there is illegal in Java.
+  C.sub = function (s) {
+    if (s.kind === 'VarDecl') err('A declaration cannot be the only statement of an if/loop. Put it inside { } or move it before.', s.line);
+    this.stmt(s);
+  };
+
+  C.expectAssignable = function (to, e, line, ctx) {
+    var t = this.expr(e);
+    if (!assignable(to, t, e)) {
+      var m = badAssignMsg(to, t, e);
+      if (ctx === 'return') m = 'The method promises to return a ' + to + '. ' + m;
+      err(m, e.line || line);
+    }
+  };
+
+  C.expr = function (e) {
+    var t = this.type(e);
+    e.type = t;
+    return t;
+  };
+
+  C.type = function (e) {
+    var self = this;
+    switch (e.kind) {
+      case 'Lit': return e.t;
+      case 'Name': {
+        var t = this.lookup(e.name);
+        if (!t) {
+          if (/^(Math|System|Character|Integer|Double|Long|Float|String)$/.test(e.name)) err(e.name + ' is a class, not a variable. Use it like ' + e.name + '.something(...).', e.line);
+          var lower = e.name.toLowerCase();
+          var near = this.allNames().filter(function (n) { return n.toLowerCase() === lower; });
+          var hint = near.length ? " Did you mean '" + near[0] + "'? Java is case-sensitive." : ' Did you forget to declare it, e.g. int ' + e.name + ';';
+          err("Java doesn't know any variable called '" + e.name + "'." + hint, e.line);
+        }
+        return t;
+      }
+      case 'Field': {
+        if (e.obj.kind === 'Name' && !this.lookup(e.obj.name)) {
+          var cn = e.obj.name;
+          if (cn === 'System' && (e.name === 'out' || e.name === 'in')) return 'System.' + e.name;
+          var sf = E.lib.staticFields[cn];
+          if (sf && sf[e.name]) return sf[e.name].t;
+        }
+        var ot = this.expr(e.obj);
+        if (ot === this.prog.className) {
+          var fieldType = null;
+          this.prog.fields.forEach(function (f) { f.decls.forEach(function (d) { if (d.name === e.name) { fieldType = f.type; e.isStaticField = f.isStatic; } }); });
+          if (fieldType) return fieldType;
+        }
+        if (ot === 'String' && e.name === 'length') err('For a String, length is a method: write length() with brackets.', e.line);
+        err("Unknown field '" + e.name + "'.", e.line);
+        break;
+      }
+      case 'Bin': {
+        var l = this.expr(e.l), r = this.expr(e.r);
+        var op = e.op;
+        if (l === 'void' || r === 'void') err('A void method gives back nothing, so it cannot be used inside a calculation.', e.line);
+        if (op === '+') {
+          if (l === 'String' || r === 'String') return 'String';
+          if (num(l) && num(r)) return Vs.promote2(l, r);
+          err("+ can add numbers or join text, but not " + l + ' + ' + r + '.', e.line);
+        }
+        if (op === '-' || op === '*' || op === '/' || op === '%') {
+          if (num(l) && num(r)) return Vs.promote2(l, r);
+          err('The ' + op + ' operator works only on numbers (here: ' + l + ' ' + op + ' ' + r + ').', e.line);
+        }
+        if (op === '<' || op === '>' || op === '<=' || op === '>=') {
+          if (num(l) && num(r)) return 'boolean';
+          if (l === 'String' && r === 'String') err("Strings can't be compared with " + op + '. Use s1.compareTo(s2).', e.line);
+          err(op + ' compares numbers only (here: ' + l + ' ' + op + ' ' + r + ').', e.line);
+        }
+        if (op === '==' || op === '!=') {
+          if ((num(l) && num(r)) || (l === 'boolean' && r === 'boolean')) return 'boolean';
+          if ((l === 'String' || l === 'null') && (r === 'String' || r === 'null')) return 'boolean';
+          err('Cannot compare a ' + l + ' with a ' + r + ' using ' + op + '.', e.line);
+        }
+        if (op === '&&' || op === '||') {
+          if (l === 'boolean' && r === 'boolean') return 'boolean';
+          err(op + ' joins two true/false conditions, e.g. (a > 0 ' + op + ' b > 0). Here it got ' + l + ' and ' + r + '.', e.line);
+        }
+        err('Unknown operator ' + op, e.line);
+        break;
+      }
+      case 'Unary': {
+        var at = this.expr(e.arg);
+        if (e.op === '!') {
+          if (at !== 'boolean') err('! (not) works only on true/false values.', e.line);
+          return 'boolean';
+        }
+        if (!num(at)) err('Unary ' + e.op + ' needs a number.', e.line);
+        return Vs.promote1(at);
+      }
+      case 'Update': {
+        var ut = this.expr(e.arg);
+        if (!num(ut)) err(e.op + ' works only on number or char variables.', e.line);
+        return ut;
+      }
+      case 'Assign': {
+        var tt = this.expr(e.target);
+        if (e.op === '=') {
+          this.expectAssignable(tt, e.value, e.line);
+          return tt;
+        }
+        var vt = this.expr(e.value);
+        if (e.op === '+=' && tt === 'String') {
+          if (vt === 'void') err('Cannot add a void value.', e.line);
+          return tt;
+        }
+        if (!num(tt) || !num(vt)) err(e.op + ' works on numbers' + (e.op === '+=' ? ' (or to add text to a String)' : '') + ', not ' + tt + ' ' + e.op + ' ' + vt + '.', e.line);
+        return tt;
+      }
+      case 'Cond': {
+        var ct = this.expr(e.test);
+        if (ct !== 'boolean') err('The part before ? must be a true/false condition.', e.line);
+        var a = this.expr(e.a), b = this.expr(e.b);
+        if (a === b) return a;
+        if (num(a) && num(b)) {
+          if (a === 'char' && b === 'int' && constInt(e.b) !== undefined && constInt(e.b) >= 0 && constInt(e.b) <= 65535) return 'char';
+          if (b === 'char' && a === 'int' && constInt(e.a) !== undefined && constInt(e.a) >= 0 && constInt(e.a) <= 65535) return 'char';
+          return Vs.promote2(a, b);
+        }
+        if (a === 'null' && b !== 'boolean' && !num(b)) return b;
+        if (b === 'null' && a !== 'boolean' && !num(a)) return a;
+        err('The two choices of ? : must be the same kind of value (got ' + a + ' and ' + b + ').', e.line);
+        break;
+      }
+      case 'Cast': {
+        var xt = this.expr(e.arg);
+        if (!num(xt) || !num(e.type)) err('Cannot cast a ' + xt + ' to ' + e.type + '.', e.line);
+        return e.type;
+      }
+      case 'New': {
+        if (e.type === 'Scanner') {
+          if (e.args.length !== 1 || this.type(e.args[0]) !== 'System.in') err('Create the Scanner like this: new Scanner(System.in)', e.line);
+          return 'Scanner';
+        }
+        if (e.type === 'String') {
+          var ats = e.args.map(function (x) { return self.expr(x); });
+          if (ats.length > 1 || (ats.length === 1 && ats[0] !== 'String')) err('new String(...) takes one String.', e.line);
+          return 'String';
+        }
+        if (e.type === this.prog.className) return this.checkUserCall(e, this.prog.ctors, true);
+        err("Unknown class '" + e.type + "'.", e.line);
+        break;
+      }
+      case 'Call': return this.callType(e);
+    }
+    err('Cannot understand this expression.', e.line);
+  };
+
+  C.allNames = function () {
+    var out = [];
+    this.scopes.forEach(function (s) { out = out.concat(Object.keys(s.vars)); });
+    return out;
+  };
+
+  C.callType = function (e) {
+    var self = this;
+    var argTypes = function () { return e.args.map(function (a) { return self.expr(a); }); };
+    if (!e.obj) {
+      var ms = this.methods[e.name];
+      if (!ms) {
+        if (e.name === 'println' || e.name === 'print') err('Write System.out.' + e.name + '(...) — Java needs the full name.', e.line);
+        err("There is no method called '" + e.name + "' in this program.", e.line);
+      }
+      return this.checkUserCall(e, ms, false);
+    }
+    var o = e.obj;
+    // System.out.print / println
+    if (o.kind === 'Field' && o.obj.kind === 'Name' && o.obj.name === 'System' && o.name === 'out') {
+      e.libKind = 'print';
+      var ts = argTypes();
+      if (e.name === 'println') {
+        if (ts.length > 1) err('println takes one value. Join several parts with +, e.g. println("x = " + x).', e.line);
+      } else if (e.name === 'print') {
+        if (ts.length !== 1) err('print needs exactly one value inside the brackets.', e.line);
+      } else err("System.out has print and println, not '" + e.name + "'.", e.line);
+      if (ts[0] === 'void') err('Cannot print a void method call — it gives back nothing.', e.line);
+      return 'void';
+    }
+    if (o.kind === 'Name' && o.name === 'System' && !this.lookup('System')) {
+      if (e.name === 'exit') {
+        var xs = argTypes();
+        if (xs.length !== 1 || !num(xs[0])) err('Use System.exit(0) to stop the program.', e.line);
+        e.libKind = 'exit';
+        return 'void';
+      }
+      err("System has no method '" + e.name + "' in our syllabus.", e.line);
+    }
+    if (o.kind === 'Name' && !this.lookup(o.name) && E.lib.staticClasses[o.name]) {
+      var cls = E.lib.staticClasses[o.name];
+      var m = cls[e.name];
+      if (!m) err(o.name + " has no method called '" + e.name + "'" + (o.name === 'Math' ? ' (check spelling: sqrt, cbrt, pow, abs, round, ceil, floor, max, min).' : '.'), e.line);
+      var r = m.check(argTypes());
+      if (!E.KNOWN_RET[r]) err(o.name + '.' + e.name + ' ' + r + '.', e.line);
+      e.libKind = 'static';
+      e.lib = m;
+      return r;
+    }
+    if (o.kind === 'Name' && o.name === this.prog.className && !this.lookup(o.name)) {
+      return this.checkUserCall(e, this.methods[e.name], false, true);
+    }
+    var objT = this.expr(o);
+    if (objT === this.prog.className) return this.checkUserCall(e, this.methods[e.name], false);
+    var table = E.lib.instance[objT];
+    if (!table) err("A " + objT + " value has no methods to call with a dot.", e.line);
+    var im = table[e.name];
+    if (!im) {
+      if (objT === 'String' && e.name === 'size') err('For a String use length(), not size().', e.line);
+      err('A ' + objT + " has no method called '" + e.name + "'.", e.line);
+    }
+    var rr = im.check(argTypes());
+    if (!E.KNOWN_RET[rr]) err(objT + '.' + e.name + ' ' + rr + '.', e.line);
+    e.libKind = 'instance';
+    e.lib = im;
+    return rr;
+  };
+
+  C.checkUserCall = function (e, cands, isCtor, classCall) {
+    var self = this;
+    var ts = e.args.map(function (a) { return self.expr(a); });
+    var applicable = (cands || []).filter(function (m) {
+      if (m.params.length !== ts.length) return false;
+      for (var i = 0; i < ts.length; i++) if (!(m.params[i].type === ts[i] || (ts[i] === 'null' && !num(m.params[i].type) && m.params[i].type !== 'boolean') || (num(ts[i]) && num(m.params[i].type) && Vs.canWiden(ts[i], m.params[i].type)))) return false;
+      return true;
+    });
+    if (!applicable.length) {
+      if (isCtor && !(cands || []).length && !ts.length) { e.target = null; return this.prog.className; }
+      err('No ' + (isCtor ? 'constructor' : "version of '" + e.name + "'") + ' takes (' + ts.join(', ') + ').', e.line);
+    }
+    // A most-specific signature must be convertible to every other applicable one.
+    var best = applicable.filter(function (a) {
+      return applicable.every(function (b) {
+        return a.params.every(function (p, i) { return p.type === b.params[i].type || (num(p.type) && num(b.params[i].type) && Vs.canWiden(p.type, b.params[i].type)); });
+      });
+    });
+    if (best.length !== 1) err('Ambiguous call: more than one version matches, and neither parameter list is more specific.', e.line);
+    e.target = best[0];
+    if (!isCtor && !e.target.isStatic && (classCall || (!e.obj && this.method && this.method.isStatic))) {
+      err('An instance method needs an object. Create an object and call ' + e.name + ' through it.', e.line);
+    }
+    e.classCall = !!classCall;
+    return isCtor ? this.prog.className : e.target.ret;
+  };
+
+  E.KNOWN_RET = { int: 1, long: 1, double: 1, float: 1, char: 1, boolean: 1, String: 1, void: 1, short: 1, byte: 1 };
+
+  E.check = function (prog) {
+    new Checker(prog).checkProgram();
+    return prog;
+  };
+
+  // Type-check a standalone expression against a set of variables {name: type}.
+  E.checkExpression = function (expr, varTypes, fakeProg) {
+    var c = new Checker(fakeProg || { methods: [], ctors: [], fields: [], className: null });
+    c.scopes.push({ vars: Object.assign({}, varTypes) });
+    return c.expr(expr);
+  };
+})();
+
+</script>
+<script>
+/* Runs a checked program and records every step (memory snapshot, output, note, expression reduction).
+   E.run(src, {input, maxSteps}) -> {ok, error, steps, output, prog} */
+(function () {
+  var JP = (globalThis.JP = globalThis.JP || {});
+  var E = (JP.engine = JP.engine || {});
+  var Vs = E.values;
+  var V = Vs.V;
+  var RuntimeErr = E.RuntimeErr;
+
+  var MARK_A = '\u0001', MARK_B = '\u0002';
+  E.MARK_A = MARK_A;
+  E.MARK_B = MARK_B;
+
+  function ExitSignal() {}
+  function StepLimit() {}
+
+  var DEFAULTS = { int: 0, long: 0, short: 0, byte: 0, double: 0, float: 0, char: 0, boolean: false };
+  function defaultVal(t) {
+    if (Object.prototype.hasOwnProperty.call(DEFAULTS, t)) return V(t, DEFAULTS[t]);
+    return V(t, null);
+  }
+
+  function coerce(val, to) {
+    if (!val || val.t === to) return val;
+    if (Vs.isNumeric(to) && Vs.isNumeric(val.t)) return V(to, Vs.convert(val.v, val.t, to));
+    if (val.t === 'null') return V(to, null);
+    return val;
+  }
+
+  // ---------- arithmetic ----------
+  function arith(op, t, x, y) {
+    switch (t) {
+      case 'int':
+        switch (op) {
+          case '+': return (x + y) | 0;
+          case '-': return (x - y) | 0;
+          case '*': return Math.imul(x, y);
+          case '/': if (y === 0) throw divZero(); return (x / y) | 0;
+          case '%': if (y === 0) throw divZero(); return (x % y) | 0;
+        }
+        break;
+      case 'long':
+        switch (op) {
+          case '+': return x + y;
+          case '-': return x - y;
+          case '*': return x * y;
+          case '/': if (y === 0) throw divZero(); return Math.trunc(x / y);
+          case '%': if (y === 0) throw divZero(); return (x % y) || 0;
+        }
+        break;
+      case 'float':
+      case 'double': {
+        var r;
+        switch (op) {
+          case '+': r = x + y; break;
+          case '-': r = x - y; break;
+          case '*': r = x * y; break;
+          case '/': r = x / y; break;
+          case '%': r = x % y; break;
+        }
+        return t === 'float' ? Math.fround(r) : r;
+      }
+    }
+    throw new Error('bad arith ' + op + ' ' + t);
+  }
+  function divZero() {
+    return new RuntimeErr('ArithmeticException', '/ by zero — Java cannot divide a whole number by 0, so the program crashes here.');
+  }
+
+  function binop(op, a, b) {
+    if (op === '+' && (a.t === 'String' || b.t === 'String')) return V('String', Vs.str(a) + Vs.str(b));
+    if (op === '+' || op === '-' || op === '*' || op === '/' || op === '%') {
+      var t = Vs.promote2(a.t, b.t);
+      return V(t, arith(op, t, a.v, b.v));
+    }
+    switch (op) {
+      case '<': return V('boolean', a.v < b.v);
+      case '>': return V('boolean', a.v > b.v);
+      case '<=': return V('boolean', a.v <= b.v);
+      case '>=': return V('boolean', a.v >= b.v);
+      case '==': return V('boolean', a.v === b.v);
+      case '!=': return V('boolean', a.v !== b.v);
+    }
+    throw new Error('bad op ' + op);
+  }
+  E.binop = binop;
+
+  // ---------- notes that explain each little calculation ----------
+  var L = Vs.lit;
+  function noteBin(op, a, b, r) {
+    var base = L(a) + ' ' + op + ' ' + L(b) + ' → ' + L(r);
+    if (op === '+' && r.t === 'String') {
+      return 'Joining text: ' + base + '. When one side of + is a String, + glues text together instead of adding.';
+    }
+    var charNote = '';
+    if (a.t === 'char' || b.t === 'char') {
+      var c = a.t === 'char' ? a : b;
+      charNote = ' (' + L(c) + ' is a char; in calculations Java uses its code number ' + c.v + '.)';
+    }
+    if (op === '/' && Vs.isIntegral(a.t) && Vs.isIntegral(b.t)) {
+      var exact = a.v / b.v;
+      if (exact !== r.v) return base + '. Both are whole numbers, so the answer is a whole number: the decimal part (.' + String(exact).split('.')[1] + ') is thrown away.' + charNote;
+      return base + '.' + charNote;
+    }
+    if (op === '%') return base + ' (the remainder when ' + L(a) + ' is divided by ' + L(b) + ').' + charNote;
+    if ((r.t === 'double' || r.t === 'float') && (Vs.isIntegral(a.t) || Vs.isIntegral(b.t)) && !(Vs.isIntegral(a.t) && Vs.isIntegral(b.t))) {
+      return base + '. One side is a ' + r.t + ', so the answer is a ' + r.t + '.' + charNote;
+    }
+    if (r.t === 'boolean') return base + '.';
+    return base + '.' + charNote;
+  }
+
+  // ---------- runtime ----------
+  function Runtime(prog, opts) {
+    this.prog = prog;
+    this.src = prog.src;
+    this.opts = opts || {};
+    this.maxSteps = this.opts.maxSteps || 3000;
+    this.steps = [];
+    this.out = '';
+    this.input = new E.InputTape(this.opts.input || '');
+    this.frames = [];
+    this.fields = [];
+    this.objects = [];
+    this.nextObjectId = 1;
+    this.changed = {};
+    this.effects = [];
+    this.loops = [];
+    this.breakCtx = [];
+    this.nextId = 1;
+    var ls = [0];
+    for (var i = 0; i < this.src.length; i++) if (this.src[i] === '\n') ls.push(i + 1);
+    this.lineStarts = ls;
+  }
+  var R = Runtime.prototype;
+
+  R.lineOf = function (off) {
+    var ls = this.lineStarts, lo = 0, hi = ls.length - 1;
+    while (lo < hi) {
+      var mid = (lo + hi + 1) >> 1;
+      if (ls[mid] <= off) lo = mid; else hi = mid - 1;
+    }
+    return lo + 1;
+  };
+  R.range = function (node) {
+    if (!node) return null;
+    return { from: this.lineOf(node.s), to: this.lineOf(Math.max(node.s, node.e - 1)) };
+  };
+
+  // ----- memory -----
+  R.frame = function () { return this.frames[this.frames.length - 1]; };
+  R.pushScope = function () { this.frame().scopes.push([]); };
+  R.popScope = function () { return this.frame().scopes.pop(); };
+  R.declare = function (name, type, val) {
+    var v = { id: this.nextId++, name: name, type: type, val: val };
+    this.frame().scopes[this.frame().scopes.length - 1].push(v);
+    this.changed[v.id] = true;
+    return v;
+  };
+  R.find = function (name) {
+    var f = this.frame();
+    for (var i = f.scopes.length - 1; i >= 0; i--) {
+      var sc = f.scopes[i];
+      for (var j = 0; j < sc.length; j++) if (sc[j].name === name) return sc[j];
+    }
+    var ob = f.object;
+    if (ob) for (var j2 = 0; j2 < ob.fields.length; j2++) if (ob.fields[j2].name === name) return ob.fields[j2];
+    for (var k = 0; k < this.fields.length; k++) if (this.fields[k].name === name) return this.fields[k];
+    throw new Error('variable not found at runtime: ' + name);
+  };
+  R.get = function (name) {
+    var v = this.find(name);
+    if (v.val === undefined) {
+      throw new RuntimeErr('NoValue', "'" + name + "' is used before it has been given a value. (Java would not even compile this: \"variable " + name + ' might not have been initialized".)');
+    }
+    return v.val;
+  };
+  R.set = function (name, val) {
+    var v = this.find(name);
+    var old = v.val;
+    v.val = coerce(val, v.type);
+    this.changed[v.id] = true;
+    this.effects.push({ kind: 'assign', name: name, from: old, to: v.val });
+    return v.val;
+  };
+
+  R.snapshot = function () {
+    var self = this;
+    function box(v, depth) {
+      return {
+        id: v.id, name: v.name, type: v.type, depth: depth,
+        value: v.val === undefined ? null : v.val,
+        text: v.val === undefined ? '' : L(v.val),
+        empty: v.val === undefined,
+        changed: !!self.changed[v.id]
+      };
+    }
+    return {
+      fields: this.fields.map(function (v) { return box(v, 0); }),
+      objects: this.objects.map(function (ob) {
+        return { id: ob.id, type: ob.type, implicit: ob.implicit, fields: ob.fields.map(function (v) { return box(v, 0); }) };
+      }),
+      frames: this.frames.map(function (f) {
+        var vars = [];
+        f.scopes.forEach(function (sc, d) { sc.forEach(function (v) { vars.push(box(v, d)); }); });
+        return { name: f.name, objectId: f.object ? f.object.id : null, vars: vars };
+      })
+    };
+  };
+
+  R.rec = function (kind, line, note, extra) {
+    if (this.steps.length >= this.maxSteps) throw new StepLimit();
+    var st = {
+      i: this.steps.length,
+      kind: kind,
+      line: line,
+      note: note,
+      mem: this.snapshot(),
+      out: this.out,
+      loops: this.loops.map(function (l) { return { line: l.line, pass: l.pass }; }),
+      depth: this.frames.length,
+      inPos: this.input.pos
+    };
+    if (extra) for (var k in extra) st[k] = extra[k];
+    this.steps.push(st);
+    this.changed = {};
+    this.effects = [];
+    return st;
+  };
+
+  R.effectNote = function () {
+    var parts = [];
+    this.effects.forEach(function (ef) {
+      if (ef.kind === 'declare') {
+        parts.push(ef.val === undefined
+          ? 'Created a box called ' + ef.name + ' (' + ef.type + '). It is empty — no value yet.'
+          : 'Created a box called ' + ef.name + ' (' + ef.type + ') and stored ' + L(ef.val) + ' in it.');
+      } else if (ef.kind === 'assign') {
+        if (ef.from === undefined) parts.push(ef.name + ' gets its first value: ' + L(ef.to) + '.');
+        else if (ef.from.v === ef.to.v && ef.from.t === ef.to.t) parts.push(ef.name + ' is stored again: still ' + L(ef.to) + '.');
+        else parts.push(ef.name + ' changes from ' + L(ef.from) + ' to ' + L(ef.to) + '. (The old value ' + L(ef.from) + ' is gone.)');
+      } else if (ef.kind === 'print') {
+        if (ef.ln && ef.text === '') parts.push('Moved the cursor to a new line.');
+        else if (ef.ln) parts.push('Printed ' + JSON.stringify(ef.text) + ' and moved to a new line.');
+        else parts.push('Printed ' + JSON.stringify(ef.text) + ' — the cursor stays on the same line.');
+      } else if (ef.kind === 'input') {
+        parts.push('Read ' + JSON.stringify(ef.text) + ' from the keyboard (input).');
+      }
+    });
+    return parts.join(' ');
+  };
+
+  // ----- expression evaluation with optional reduction recording -----
+  function Rec(root, prefix) {
+    this.root = root;
+    this.prefix = prefix || '';
+    this.vals = new Map();
+    this.saved = new Map();
+    this.snaps = [];
+    this.pendingRead = false;
+    this.focus = null;
+  }
+
+  R.render = function (n, rc) {
+    var self = this;
+    var s;
+    if (rc.vals.has(n)) {
+      s = L(rc.vals.get(n));
+      if (rc.focus === n) s = MARK_A + s + MARK_B;
+      return s;
+    }
+    switch (n.kind) {
+      case 'Lit': s = n.t === 'int' || n.t === 'long' || n.t === 'double' || n.t === 'float' ? (n.text + (n.t === 'long' ? 'L' : n.t === 'float' ? 'f' : '')) : L(V(n.t, n.v)); break;
+      case 'Name': s = n.name; break;
+      case 'Bin': s = this.render(n.l, rc) + ' ' + n.op + ' ' + this.render(n.r, rc); break;
+      case 'Unary': s = n.op + this.render(n.arg, rc); break;
+      case 'Update': s = n.prefix ? n.op + n.arg.name : n.arg.name + n.op; break;
+      case 'Assign':
+        if (rc.saved.has(n)) {
+          var inner = this.render(n.value, rc);
+          var simple = rc.vals.has(n.value) || n.value.kind === 'Lit' || n.value.kind === 'Name';
+          s = n.target.name + ' = ' + L(rc.saved.get(n)) + ' ' + n.op[0] + ' ' + (simple ? inner : '(' + inner + ')');
+        } else s = n.target.name + ' ' + n.op + ' ' + this.render(n.value, rc);
+        break;
+      case 'Cond': s = this.render(n.test, rc) + ' ? ' + this.render(n.a, rc) + ' : ' + this.render(n.b, rc); break;
+      case 'Cast': s = '(' + n.type + ') ' + this.render(n.arg, rc); break;
+      case 'Call':
+        s = (n.obj ? this.render(n.obj, rc) + '.' : '') + n.name + '(' + n.args.map(function (a) { return self.render(a, rc); }).join(', ') + ')';
+        break;
+      case 'Field': s = this.render(n.obj, rc) + '.' + n.name; break;
+      case 'New': s = 'new ' + n.type + '(' + n.args.map(function (a) { return self.render(a, rc); }).join(', ') + ')'; break;
+      default: s = '?';
+    }
+    for (var p = 0; p < (n.paren || 0); p++) s = '(' + s + ')';
+    return s;
+  };
+
+  R.snap = function (rc, note, focus) {
+    if (!rc) return;
+    rc.focus = focus || null;
+    var text = rc.prefix + this.render(rc.root, rc);
+    rc.focus = null;
+    var last = rc.snaps[rc.snaps.length - 1];
+    var plain = text.replace(/[\u0001\u0002]/g, '');
+    if (last && last.plain === plain) { if (note && !last.note) last.note = note; return; }
+    rc.snaps.push({ text: text, plain: plain, note: note || '' });
+  };
+  R.flushReads = function (rc) {
+    if (rc && rc.pendingRead) {
+      rc.pendingRead = false;
+      var before = rc.snaps.length;
+      this.snap(rc, 'Look inside the boxes: replace each variable name with the value stored in it.');
+      if (rc.snaps.length > before) rc.snaps[rc.snaps.length - 1].reads = true;
+    }
+  };
+  // A recorder that starts with the expression exactly as written.
+  R.newRec = function (root, prefix) {
+    var rc = new Rec(root, prefix);
+    this.snap(rc, '');
+    return rc;
+  };
+  R.done = function (n, val, rc, note, keep) {
+    if (rc) {
+      this.flushReads(rc);
+      rc.vals.set(n, val);
+      var last = rc.snaps[rc.snaps.length - 1];
+      if (!keep && n === rc.root && n.kind === 'Assign' && n.op === '=' && last) {
+        // "x = 5" already shows the value; just say it is stored
+        last.note = (last.note ? last.note + ' ' : '') + 'Store it in ' + n.target.name + '.';
+      } else this.snap(rc, note, n);
+    }
+    return val;
+  };
+
+  R.eval = function (n, rc) {
+    var self = this;
+    switch (n.kind) {
+      case 'Lit':
+        return V(n.t, n.v);
+      case 'Name': {
+        var v = this.get(n.name);
+        if (rc) { rc.vals.set(n, v); rc.pendingRead = true; }
+        return v;
+      }
+      case 'Field': {
+        var sf = E.lib.staticFields[n.obj.name];
+        if (sf && sf[n.name]) {
+          var fv = sf[n.name];
+          return this.done(n, fv, rc, n.obj.name + '.' + n.name + ' is ' + L(fv) + '.');
+        }
+        if (n.obj.name === 'System' && n.name === 'in') return V('System.in', null);
+        var ref = this.eval(n.obj, rc);
+        if (ref.v === null && !n.isStaticField) throw new RuntimeErr('NullPointerException', 'This variable holds null, so it has no fields.');
+        var fields = n.isStaticField ? this.fields : this.objectOf(ref).fields;
+        for (var fi = 0; fi < fields.length; fi++) if (fields[fi].name === n.name) return this.done(n, fields[fi].val, rc, 'Read ' + n.name + ' from ' + L(ref) + '.');
+        throw new Error('field not found: ' + n.name);
+      }
+      case 'Bin': {
+        var op = n.op;
+        var a = this.eval(n.l, rc);
+        if (op === '&&' || op === '||') {
+          if ((op === '&&' && !a.v) || (op === '||' && a.v)) {
+            var sc = V('boolean', a.v);
+            return this.done(n, sc, rc, op === '&&'
+              ? 'false && … is always false, so Java does not even look at the right side (short-circuit).'
+              : 'true || … is always true, so Java does not even look at the right side (short-circuit).');
+          }
+          var b2 = this.eval(n.r, rc);
+          return this.done(n, V('boolean', b2.v), rc, L(a) + ' ' + op + ' ' + L(b2) + ' → ' + L(V('boolean', b2.v)) + '.');
+        }
+        var b = this.eval(n.r, rc);
+        this.flushReads(rc);
+        var r = binop(op, a, b);
+        return this.done(n, r, rc, noteBin(op, a, b, r));
+      }
+      case 'Unary': {
+        var x = this.eval(n.arg, rc);
+        var res;
+        if (n.op === '!') res = V('boolean', !x.v);
+        else {
+          var t = Vs.promote1(x.t);
+          var xv = Vs.convert(x.v, x.t, t);
+          res = V(t, n.op === '-' ? (t === 'int' ? (-xv) | 0 : -xv) : xv);
+        }
+        return this.done(n, res, rc, n.op === '!' ? '! flips ' + L(x) + ' to ' + L(res) + '.' : n.op + L(x) + ' → ' + L(res) + '.');
+      }
+      case 'Update': {
+        var name = n.arg.name;
+        var old = this.get(name);
+        var pt = Vs.promote1(old.t);
+        var nv = arith(n.op === '++' ? '+' : '-', pt, Vs.convert(old.v, old.t, pt), 1);
+        var newVal = V(old.t, Vs.convert(nv, pt, old.t));
+        this.set(name, newVal);
+        var result = n.prefix ? newVal : old;
+        var note = n.prefix
+          ? n.op + name + ': first ' + name + ' becomes ' + L(newVal) + ', then that NEW value ' + L(newVal) + ' is used.'
+          : name + n.op + ': the OLD value ' + L(old) + ' is used here, then ' + name + ' becomes ' + L(newVal) + '.';
+        return this.done(n, result, rc, note);
+      }
+      case 'Assign': {
+        var tn = n.target.name;
+        var cur = this.find(tn);
+        if (n.op === '=') {
+          var val = this.eval(n.value, rc);
+          this.flushReads(rc);
+          var stored = coerce(val, cur.type);
+          this.set(tn, stored);
+          var an = tn + ' gets ' + L(stored) + '.';
+          var conv = stored.t !== val.t && Vs.isNumeric(val.t);
+          if (conv) an = L(val) + ' is ' + (val.t === 'int' ? 'an ' : 'a ') + val.t + '; stored in the ' + cur.type + ' box ' + tn + ' it becomes ' + L(stored) + '.';
+          return this.done(n, stored, rc, an, conv);
+        }
+        var saved = this.get(tn);
+        if (rc) {
+          rc.saved.set(n, saved);
+          this.snap(rc, n.op + ' first saves the current value of ' + tn + ' (' + L(saved) + '), then works out the right side.');
+        }
+        var rv = this.eval(n.value, rc);
+        this.flushReads(rc);
+        var raw = n.op === '+=' && saved.t === 'String' ? V('String', Vs.str(saved) + Vs.str(rv)) : binop(n.op[0], saved, rv);
+        var fin = coerce(raw, cur.type);
+        if (rc) {
+          // show "x = saved op value" as one line before storing
+          rc.vals.set(n.value, rv);
+          this.snap(rc, '');
+        }
+        this.set(tn, fin);
+        var cn = L(saved) + ' ' + n.op[0] + ' ' + L(rv) + ' → ' + L(raw) + '; ' + tn + ' is now ' + L(fin) + '.';
+        if (fin.t !== raw.t) cn += ' (The result is converted back to ' + cur.type + ' automatically — compound operators like ' + n.op + ' do that.)';
+        return this.done(n, fin, rc, cn);
+      }
+      case 'Cond': {
+        var tv = this.eval(n.test, rc);
+        this.flushReads(rc);
+        if (rc) this.snap(rc, 'The condition is ' + L(tv) + ', so Java picks the ' + (tv.v ? 'first' : 'second') + ' choice (' + (tv.v ? 'after ?' : 'after :') + ').');
+        var chosen = this.eval(tv.v ? n.a : n.b, rc);
+        this.flushReads(rc);
+        var cv = Vs.isNumeric(n.type) ? coerce(chosen, n.type) : chosen;
+        return this.done(n, cv, rc, 'The ? : gives ' + L(cv) + '.');
+      }
+      case 'Cast': {
+        var iv = this.eval(n.arg, rc);
+        this.flushReads(rc);
+        var out = V(n.type, Vs.convert(iv.v, iv.t, n.type));
+        var cnote = '(' + n.type + ') ' + L(iv) + ' → ' + L(out) + '.';
+        if ((iv.t === 'double' || iv.t === 'float') && Vs.isIntegral(n.type)) cnote += ' A cast to ' + n.type + ' chops off the decimal part (it does not round).';
+        if (n.type === 'char') cnote += ' The number ' + iv.v + ' is the code of the character ' + L(out) + '.';
+        if (iv.t === 'char' && n.type === 'int') cnote += ' This is the code number of ' + L(iv) + '.';
+        return this.done(n, out, rc, cnote);
+      }
+      case 'New':
+        if (n.type === 'Scanner') return V('Scanner', { scanner: true });
+        if (n.type === 'String') return n.args.length ? V('String', this.eval(n.args[0], rc).v) : V('String', '');
+        var args = n.args.map(function (a) { return self.eval(a, rc); });
+        return this.done(n, this.createObject(n.target, args, n.line, false), rc, 'new creates a separate object with its own field boxes.');
+      case 'Call':
+        return this.call(n, rc);
+    }
+    throw new Error('cannot eval ' + n.kind);
+  };
+
+  R.call = function (n, rc) {
+    var self = this;
+    if (n.libKind === 'print') {
+      var arg = n.args.length ? this.eval(n.args[0], rc) : null;
+      this.flushReads(rc);
+      var text = arg ? Vs.str(arg) : '';
+      var ln = n.name === 'println';
+      this.out += text + (ln ? '\n' : '');
+      this.effects.push({ kind: 'print', text: text, ln: ln });
+      return V('void', null);
+    }
+    if (n.libKind === 'exit') {
+      this.eval(n.args[0], rc);
+      throw new ExitSignal();
+    }
+    if (n.libKind === 'static') {
+      var args = n.args.map(function (a) { return self.eval(a, rc); });
+      this.flushReads(rc);
+      var res = n.lib.call(args, null, this);
+      return this.done(n, res, rc, callNote(n, args, res));
+    }
+    if (n.libKind === 'instance') {
+      var obj = this.eval(n.obj, rc);
+      var iargs = n.args.map(function (a) { return self.eval(a, rc); });
+      this.flushReads(rc);
+      if (obj.v === null) throw new RuntimeErr('NullPointerException', 'This variable holds null (no object), so it has no methods to call.');
+      var ires = n.lib.call(iargs, obj.v, this);
+      if (obj.t === 'Scanner') {
+        this.effects.push({ kind: 'input', text: Vs.str(ires) });
+        return this.done(n, ires, rc, 'The keyboard gives ' + L(ires) + '.');
+      }
+      return this.done(n, ires, rc, L(obj) + '.' + n.name + '(' + iargs.map(L).join(', ') + ') returns ' + L(ires) + ' (a ' + ires.t + ').');
+    }
+    // user-defined method
+    var m = n.target;
+    var receiver = n.obj && !n.classCall ? this.eval(n.obj, rc) : null;
+    var vals = n.args.map(function (a) { return self.eval(a, rc); });
+    this.flushReads(rc);
+    var object = m.isStatic ? null : receiver ? this.objectOf(receiver) : this.frame().object;
+    var ret = this.invoke(m, vals, n.line, object);
+    if (m.ret === 'void') return V('void', null);
+    return this.done(n, ret, rc, n.name + '(…) returned ' + L(ret) + '.');
+  };
+
+  function callNote(n, args, res) {
+    var call = (n.obj ? n.obj.name + '.' : '') + n.name + '(' + args.map(L).join(', ') + ')';
+    var s = call + ' returns ' + L(res) + ' — a ' + res.t + '.';
+    if (n.obj && n.obj.name === 'Math') {
+      if (n.name === 'round') s += ' Math.round gives a whole number (no .0): it rounds to the nearest whole number, and .5 goes UP (towards the bigger number, so -3.5 → -3).';
+      else if (n.name === 'ceil') s += ' ceil = the smallest whole number ≥ the value, still written as a double.';
+      else if (n.name === 'floor') s += ' floor = the biggest whole number ≤ the value, still written as a double.';
+      else if (res.t === 'double' && (n.name === 'sqrt' || n.name === 'cbrt' || n.name === 'pow')) s += ' Math.' + n.name + ' always gives a double, so whole answers are written with .0';
+      else if ((n.name === 'max' || n.name === 'min') && (args[0].t === 'char' || args[1].t === 'char')) s += ' Chars are compared (and returned) as their code numbers.';
+    }
+    return s;
+  }
+
+  R.objectOf = function (ref) {
+    if (!ref || ref.v === null) throw new RuntimeErr('NullPointerException', 'This variable holds null (no object), so it has no methods to call.');
+    for (var i = 0; i < this.objects.length; i++) if (this.objects[i].id === ref.v.objectId) return this.objects[i];
+    throw new Error('unknown object reference');
+  };
+
+  R.createObject = function (ctor, vals, line, implicit) {
+    var self = this;
+    var ob = { id: this.nextObjectId++, type: this.prog.className, fields: [], implicit: !!implicit };
+    this.objects.push(ob);
+    this.prog.fields.forEach(function (f) {
+      if (f.isStatic) return;
+      f.decls.forEach(function (d) {
+        var v = { id: self.nextId++, name: d.name, type: f.type, val: defaultVal(f.type), field: true };
+        ob.fields.push(v);
+        self.changed[v.id] = true;
+      });
+    });
+    this.rec('object', line, (implicit ? 'BlueJ starts the non-static main() on ' : 'Created ') + 'object #' + ob.id + ' of ' + ob.type + '. Its fields start with default values.');
+    this.frames.push({ name: 'field initialization', scopes: [[]], object: ob });
+    try {
+      this.prog.fields.forEach(function (f) {
+        if (f.isStatic) return;
+        f.decls.forEach(function (d) {
+          if (!d.init) return;
+          self.set(d.name, coerce(self.eval(d.init, null), f.type));
+          self.rec('fieldInit', d.line, self.effectNote());
+        });
+      });
+    } finally { this.frames.pop(); }
+    if (ctor) this.invoke(ctor, vals, line, ob);
+    return V(this.prog.className, { objectId: ob.id, className: ob.type });
+  };
+
+  R.invoke = function (m, vals, callLine, object) {
+    var self = this;
+    this.frames.push({ name: m.name, scopes: [[]], method: m, object: object });
+    m.params.forEach(function (p, i) {
+      var v = self.declare(p.name, p.type, coerce(vals[i], p.type));
+      v.param = true;
+    });
+    var desc = m.params.map(function (p, i) { return p.name + ' = ' + L(coerce(vals[i], p.type)); }).join(', ');
+    this.rec(m.isCtor ? 'constructor' : 'call', m.line, (m.isCtor ? 'The constructor runs automatically for object #' + object.id + '. ' : 'Jump into ' + m.name + '(). ') + (desc ? 'The values are COPIED into its own boxes: ' + desc + '.' : ''), { callLine: callLine, signature: m.name + '(' + m.params.map(function (p) { return p.type; }).join(', ') + ')' });
+    var saveLoops = this.loops, saveBreak = this.breakCtx;
+    this.loops = [];
+    this.breakCtx = [];
+    var r = this.execBlockBody(m.body.body);
+    this.loops = saveLoops;
+    this.breakCtx = saveBreak;
+    this.frames.pop();
+    var rv = r && r.ret ? coerce(r.ret, m.ret) : null;
+    if (!rv && m.ret !== 'void' && !m.isCtor) throw new RuntimeErr('MissingReturn', m.name + '() reached its end without a return statement.');
+    this.rec('back', callLine, 'Back where ' + m.name + '() was called' + (rv ? ', with the answer ' + L(rv) + '.' : '.'));
+    return rv;
+  };
+
+  // ----- statements -----
+  R.execBlockBody = function (stmts) {
+    this.pushScope();
+    try {
+      for (var i = 0; i < stmts.length; i++) {
+        var r = this.exec(stmts[i]);
+        if (r) return r;
+      }
+    } finally {
+      this.popScope();
+    }
+    return null;
+  };
+
+  R.calcOf = function (rc) {
+    if (!rc || rc.snaps.length < 2) return null;
+    return rc.snaps.map(function (s) { return { text: s.text, note: s.note }; });
+  };
+
+  R.condCheck = function (cond, what) {
+    var rc = this.newRec(cond);
+    var v = this.eval(cond, rc);
+    this.flushReads(rc);
+    var src = this.src.slice(cond.s, cond.e);
+    // "i <= 3" becomes "4 <= 3" in the note only when all names are replaced in one go
+    var subSnaps = rc.snaps.filter(function (sn) { return sn.reads; });
+    var sub = subSnaps.length === 1 && subSnaps[0] === rc.snaps[1] ? subSnaps[0].plain : null;
+    return { v: v.v, src: src, sub: sub, calc: this.calcOf(rc) };
+  };
+
+  R.exec = function (s) {
+    var self = this;
+    switch (s.kind) {
+      case 'Block':
+        return this.execBlockBody(s.body);
+      case 'Empty':
+        this.rec('empty', s.line, 'An empty statement ; — nothing happens here.');
+        return null;
+      case 'VarDecl': {
+        for (var i = 0; i < s.decls.length; i++) {
+          var d = s.decls[i];
+          var rc = null, val = undefined;
+          if (d.init) {
+            rc = this.newRec(d.init, d.name + ' = ');
+            val = coerce(this.eval(d.init, rc), s.type);
+            this.flushReads(rc);
+          }
+          this.declare(d.name, s.type, val);
+          this.effects.unshift({ kind: 'declare', name: d.name, type: s.type, val: val });
+          var conv = '';
+          if (d.init && d.init.type && d.init.type !== s.type && Vs.isNumeric(d.init.type)) {
+            conv = ' (The ' + d.init.type + ' value is stored as a ' + s.type + ': ' + L(val) + '.)';
+          }
+          this.rec('declare', d.line, this.effectNote() + conv, { calc: this.calcOf(rc) });
+        }
+        return null;
+      }
+      case 'ExprStmt': {
+        var rc2 = this.newRec(s.expr);
+        this.eval(s.expr, rc2);
+        this.flushReads(rc2);
+        var note = this.effectNote();
+        if (!note) note = 'Ran this line.';
+        // a lone x++ needs no calculation panel: the note says it all
+        this.rec('stmt', s.line, note, { calc: s.expr.kind === 'Update' ? null : this.calcOf(rc2) });
+        return null;
+      }
+      case 'If': {
+        var c = this.condCheck(s.cond);
+        var taken = c.v ? 'then' : s.els ? 'else' : 'none';
+        var msg = 'Check the condition (' + c.src + ')' + (c.sub ? ': ' + c.sub : '') + ' → ' + c.v + '. ';
+        if (c.v) msg += s.els ? 'True, so the if-part runs and the else-part is skipped.' : 'True, so the if-part runs.';
+        else msg += s.els ? 'False, so the if-part is skipped and the else-part runs.' : 'False, so the if-part is skipped.';
+        var skip = c.v ? (s.els ? { from: s.elseLine, to: this.range(s.els).to } : null) : this.range(s.then);
+        this.rec('cond', s.line, msg, { calc: c.calc, cond: c.v, skip: skip, taken: taken });
+        if (c.v) return this.exec(s.then);
+        if (s.els) return this.exec(s.els);
+        return null;
+      }
+      case 'While':
+        return this.loop(s, 'while');
+      case 'DoWhile':
+        return this.loop(s, 'do');
+      case 'For': {
+        this.pushScope();
+        try {
+          var initDecl = false;
+          if (s.init.length) {
+            s.init.forEach(function (st) {
+              if (st.kind === 'VarDecl') {
+                initDecl = true;
+                st.decls.forEach(function (d) {
+                  var v = d.init ? coerce(self.eval(d.init, null), st.type) : undefined;
+                  self.declare(d.name, st.type, v);
+                  self.effects.push({ kind: 'declare', name: d.name, type: st.type, val: v });
+                });
+              } else self.eval(st.expr, null);
+            });
+            this.rec('forInit', s.line, 'Start of the for loop (runs once): ' + this.effectNote());
+          }
+          var r = this.loop(s, 'for');
+          return r;
+        } finally {
+          var gone = this.popScope();
+          if (gone && gone.length) {
+            this.rec('scopeEnd', s.line, 'The loop is over. The box' + (gone.length > 1 ? 'es ' : ' ') + gone.map(function (g) { return g.name; }).join(', ') + (gone.length > 1 ? ' are' : ' is') + ' removed — a variable declared in the for( ) exists only inside the loop.', { quiet: true });
+          }
+        }
+      }
+      case 'Switch':
+        return this.execSwitch(s);
+      case 'Break': {
+        var ctx = this.breakCtx[this.breakCtx.length - 1];
+        this.rec('break', s.line, ctx === 'switch' ? 'break → jump out of the switch now.' : 'break → jump out of the loop immediately. No more passes.');
+        return { brk: true };
+      }
+      case 'Continue':
+        this.rec('continue', s.line, 'continue → skip the rest of this pass and go straight to the ' + (this.loops.length && this.loops[this.loops.length - 1].kind === 'for' ? 'update part of the for' : 'loop condition') + '.');
+        return { cont: true };
+      case 'Return': {
+        var rcR = s.expr ? new Rec(s.expr, 'return ') : null;
+        var rv = s.expr ? this.eval(s.expr, rcR) : V('void', null);
+        if (rcR) this.flushReads(rcR);
+        this.rec('return', s.line, s.expr ? 'return → leave the method and give back ' + L(rv) + '.' : 'return → leave the method now.', { calc: this.calcOf(rcR) });
+        return { ret: rv };
+      }
+    }
+    throw new Error('cannot exec ' + s.kind);
+  };
+
+  R.loop = function (s, kind) {
+    var self = this;
+    var info = { line: s.line, pass: 0, kind: kind };
+    this.loops.push(info);
+    this.breakCtx.push('loop');
+    var bodyRange = this.range(s.body);
+    try {
+      if (kind === 'do') {
+        while (true) {
+          info.pass++;
+          this.rec('loopPass', s.line, 'do: run the body first (pass ' + info.pass + ') — a do-while always runs at least once.', { quiet: true });
+          var r = this.exec(s.body);
+          if (r && r.brk) break;
+          if (r && r.ret) return r;
+          var c = this.condCheck(s.cond);
+          this.rec('loopCheck', s.condLine, 'Check (' + c.src + ')' + (c.sub ? ': ' + c.sub : '') + ' → ' + c.v + (c.v ? '. True, so go back up and run the body again.' : '. False, so the loop ends here.'), { calc: c.calc, cond: c.v });
+          if (!c.v) break;
+        }
+        return null;
+      }
+      while (true) {
+        var cv = true, chk = null;
+        if (s.cond) {
+          chk = this.condCheck(s.cond);
+          cv = chk.v;
+        }
+        var msg = s.cond
+          ? 'Check (' + chk.src + ')' + (chk.sub ? ': ' + chk.sub : '') + ' → ' + cv + '. ' + (cv ? 'True, so run the body (pass ' + (info.pass + 1) + ').' : 'False, so the loop ends' + (info.pass === 0 ? ' — the body never ran at all.' : ' after ' + info.pass + ' pass' + (info.pass > 1 ? 'es' : '') + '.') + ' Jump to the line after the loop.')
+          : 'No condition in this for( ; ; ), so it counts as true.';
+        this.rec('loopCheck', s.line, msg, { calc: chk && chk.calc, cond: cv, skip: cv ? null : bodyRange });
+        if (!cv) break;
+        info.pass++;
+        var res = this.exec(s.body);
+        if (res && res.brk) break;
+        if (res && res.ret) return res;
+        if (kind === 'for' && s.update.length) {
+          s.update.forEach(function (u) { self.eval(u, null); });
+          this.rec('forUpdate', s.line, 'Update part of the for: ' + this.effectNote());
+        }
+      }
+      return null;
+    } finally {
+      this.loops.pop();
+      this.breakCtx.pop();
+    }
+  };
+
+  R.execSwitch = function (s) {
+    var rc = new Rec(s.disc);
+    var dv = this.eval(s.disc, rc);
+    this.flushReads(rc);
+    var start = -1, defIdx = -1;
+    for (var i = 0; i < s.cases.length && start < 0; i++) {
+      var labs = s.cases[i].labels;
+      for (var j = 0; j < labs.length; j++) {
+        if (labs[j] === 'default') { defIdx = i; continue; }
+        var lv = this.eval(labs[j], null);
+        var match = dv.t === 'String' ? lv.v === dv.v : lv.v === dv.v;
+        if (match) { start = i; break; }
+      }
+    }
+    var viaDefault = false;
+    if (start < 0 && defIdx >= 0) { start = defIdx; viaDefault = true; }
+    if (start < 0) {
+      this.rec('switch', s.line, 'The switch value is ' + L(dv) + '. No case matches and there is no default, so nothing inside the switch runs.', { calc: this.calcOf(rc), skip: this.range(s) && { from: s.line + 1, to: this.range(s).to } });
+      return null;
+    }
+    this.rec('switch', s.line, 'The switch value is ' + L(dv) + (viaDefault ? '. No case matches, so Java jumps to default:.' : ' → jump to the matching case.'), { calc: this.calcOf(rc), jumpTo: s.cases[start].line });
+    this.breakCtx.push('switch');
+    this.pushScope();
+    try {
+      for (var k = start; k < s.cases.length; k++) {
+        if (k > start && s.cases[k].body.length) {
+          this.rec('fall', s.cases[k].line, 'There was no break, so Java "falls through" into the next case and keeps running — it does not check this case value.', { quiet: false });
+        }
+        var body = s.cases[k].body;
+        for (var b = 0; b < body.length; b++) {
+          var r = this.exec(body[b]);
+          if (r && r.brk) return null;
+          if (r) return r;
+        }
+      }
+      return null;
+    } finally {
+      this.popScope();
+      this.breakCtx.pop();
+    }
+  };
+
+  R.runMain = function () {
+    var prog = this.prog;
+    var self = this;
+    this.frames.push({ name: 'main', scopes: [[]], method: prog.main });
+    prog.fields.forEach(function (f) {
+      if (!f.isStatic) return;
+      f.decls.forEach(function (d) {
+        self.fields.push({ id: self.nextId++, name: d.name, type: f.type, val: defaultVal(f.type), field: true });
+      });
+    });
+    prog.fields.forEach(function (f) {
+      if (!f.isStatic) return;
+      f.decls.forEach(function (d) { if (d.init) self.set(d.name, self.eval(d.init, null)); });
+    });
+    if (!prog.main.isStatic) {
+      var ctors = prog.ctors.filter(function (c) { return !c.params.length; });
+      if (prog.ctors.length && !ctors.length) throw new RuntimeErr('Unsupported', 'BlueJ needs an existing object to run this main(). Use a static main() to create the object with constructor arguments.');
+      this.frame().object = this.objectOf(this.createObject(ctors[0] || null, [], prog.main.line, true));
+    }
+    var first = prog.main.body.body[0];
+    this.rec('start', null, 'The program starts. Java begins at the first line inside main() and goes down one line at a time.', { nextLine: first ? first.line : null });
+    this.changed = {};
+    var r = this.execBlockBody(prog.main.body.body);
+    void r;
+    var endLine = this.lineOf(Math.max(0, prog.main.body.e - 1));
+    this.rec('end', prog.snippet ? null : endLine, 'The program has finished.');
+  };
+
+  E.run = function (src, opts) {
+    var prog;
+    try {
+      prog = E.parse(src);
+      E.check(prog);
+    } catch (e) {
+      if (e instanceof E.CompileError) return { ok: false, phase: 'compile', error: { line: e.line, message: e.message }, steps: [], output: '' };
+      throw e;
+    }
+    var rt = new Runtime(prog, opts);
+    var error = null;
+    try {
+      rt.runMain();
+    } catch (e) {
+      if (e instanceof ExitSignal) {
+        rt.rec('end', null, 'System.exit() stops the whole program immediately.');
+      } else if (e instanceof StepLimit) {
+        error = { message: 'Stopped after ' + rt.maxSteps + ' steps — this looks like a loop that never ends (an infinite loop).', kind: 'limit' };
+        rt.steps.push({ i: rt.steps.length, kind: 'error', line: null, note: error.message, mem: rt.snapshot(), out: rt.out, loops: [], inPos: rt.input.pos });
+      } else if (e instanceof RuntimeErr) {
+        var lastLine = rt.steps.length ? rt.steps[rt.steps.length - 1].line : null;
+        error = { name: e.javaName, message: e.message, kind: 'runtime' };
+        rt.steps.push({ i: rt.steps.length, kind: 'error', line: lastLine, note: (e.javaName === 'NoInput' || e.javaName === 'NoValue' || e.javaName === 'Unsupported' ? '' : e.javaName + ': ') + e.message, mem: rt.snapshot(), out: rt.out, loops: [], inPos: rt.input.pos });
+      } else throw e;
+    }
+    return { ok: !error, phase: error ? 'runtime' : 'done', error: error, steps: rt.steps, output: rt.out, prog: prog, inputLog: rt.input.log };
+  };
+
+  // Evaluate one expression with given variables and return its reduction steps.
+  // vars: {name: {t, v}}  -> {ok, value, type, snaps:[{text,note}], error}
+  E.reduce = function (exprSrc, vars) {
+    try {
+      var ex = E.parseExpression(exprSrc);
+      var types = {};
+      Object.keys(vars || {}).forEach(function (k) { types[k] = vars[k].t; });
+      E.checkExpression(ex, types);
+      var rt = new Runtime({ src: exprSrc, fields: [], methods: [] }, {});
+      rt.frames.push({ name: 'main', scopes: [[]] });
+      Object.keys(vars || {}).forEach(function (k) { rt.declare(k, vars[k].t, V(vars[k].t, vars[k].v)); });
+      var rc = new Rec(ex);
+      rt.snap(rc, '');
+      var v = rt.eval(ex, rc);
+      rt.flushReads(rc);
+      var after = {};
+      rt.frame().scopes[0].forEach(function (b) { after[b.name] = b.val; });
+      return { ok: true, value: v, type: v.t, snaps: rc.snaps.map(function (s) { return { text: s.text, note: s.note }; }), vars: after };
+    } catch (e) {
+      if (e instanceof E.CompileError || e instanceof RuntimeErr) return { ok: false, error: e.message };
+      throw e;
+    }
+  };
+})();
+
+</script>
+<script>
+/* "Try it in real Java": copy a W3Schools-ready version of the program and open their online compiler. */
+(function () {
+  var JP = globalThis.JP;
+  var h = JP.dom.h;
+  var URL = 'https://www.w3schools.com/java/tryjava.asp?filename=demo_helloworld';
+
+  // W3Schools runs "public class Main" with "public static void main(String[] args)".
+  JP.ui.toW3 = function (src) {
+    var prog;
+    try { prog = JP.engine.parse(src); } catch (e) { prog = null; }
+    if (!prog || prog.snippet) {
+      var body = src.split('\n').map(function (l) { return '    ' + l; }).join('\n');
+      return 'import java.util.*;\n\npublic class Main\n{\n  public static void main(String[] args)\n  {\n' + body + '\n  }\n}\n';
+    }
+    var cls = prog.className;
+    var main = prog.main;
+    var call = main.isStatic ? cls + '.main(' + (main.params.length ? 'args' : '') + ');' : 'new ' + cls + '().main();';
+    var text = src.replace(/public\s+class\s+/, 'class ');
+    if (!/import\s+java\.util/.test(text)) text = 'import java.util.*;\n' + text;
+    return text.replace(/\s*$/, '\n') + '\n// W3Schools starts here and runs the program above\npublic class Main\n{\n  public static void main(String[] args)\n  {\n    ' + call + '\n  }\n}\n';
+  };
+
+  JP.ui.tryW3Button = function (getSrc, usesInput) {
+    var msg = h('span.w3-msg');
+    var btn = h('button.btn.ghost', {
+      title: 'Copies this program (adapted for W3Schools) and opens their free online Java compiler in a new tab',
+      on: {
+        click: function () {
+          var code = JP.ui.toW3(getSrc());
+          var done = function (ok) {
+            msg.textContent = ok
+              ? 'Copied! In the W3Schools tab: click in the code, press Ctrl+A then Ctrl+V, then "Run ❯".' + (usesInput ? ' (Their site cannot take keyboard input, so programs that use Scanner will not run there.)' : '')
+              : 'Could not copy automatically — select the code yourself and copy it.';
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(function () { done(true); }, function () { done(false); });
+          else done(false);
+          window.open(URL, '_blank', 'noopener');
+        }
+      }
+    }, 'Try in real Java ↗');
+    return h('span.w3', btn, msg);
+  };
+})();
+
+</script>
+<script>
+/* Practice-first Chapter 3: original Java exercises; answers computed by the engine. */
+(function () {
+var JP=globalThis.JP=globalThis.JP||{};
+JP.guides=JP.guides||{};
+JP.guides.methods={
+  "title": "User-defined Methods",
+  "sections": [
+    {
+      "id": "purpose",
+      "title": "1. What is a method? Why use one?",
+      "body": "<p>A <strong>method</strong> is a group of statements that performs a specific task. A <strong>user-defined method</strong> is one you write. A <strong>library method</strong> is already provided, such as Math.sqrt() or System.out.println().</p><p>Think of product as a small machine: give it two numbers, let it multiply, receive one result. You can reuse the machine with new inputs.</p><ul><li>Write a task once and call it many times.</li><li>Divide a large program into smaller tasks.</li><li>Find and correct mistakes in one task at a time.</li><li>Use a task without following its internal details every time.</li></ul><aside><strong>Exam wording:</strong> A method is a group of statements that performs a specific task.</aside>"
+    },
+    {
+      "id": "parts",
+      "title": "2. Header / prototype, signature and body",
+      "body": "<pre><code>public int product(int x, int y)\n{\n    int p=x*y;\n    return p;\n}</code></pre><table><tr><th>Part</th><th>Here</th><th>What it tells you</th></tr><tr><td>Access specifier</td><td>public</td><td>Where the method can be accessed</td></tr><tr><td>Return type</td><td>int</td><td>Type of value sent back</td></tr><tr><td>Method name</td><td>product</td><td>Name used in the call</td></tr><tr><td>Formal parameters</td><td>int x, int y</td><td>Inputs received by this method</td></tr><tr><td>Header / prototype</td><td>public int product(int x, int y)</td><td>Declaration without the body, in the school terminology</td></tr><tr><td>Signature</td><td>product(int, int)</td><td>Name and parameter types in order</td></tr><tr><td>Body</td><td>Statements inside { }</td><td>Instructions executed when called</td></tr></table><p>Parameter names and the return type are <strong>not part of the signature</strong>. The optional static modifier goes between the access specifier and return type.</p><aside><strong>Recall:</strong> Cover the table. Point to each part of the header and name it aloud.</aside>"
+    },
+    {
+      "id": "arguments",
+      "title": "3. Formal parameters and actual parameters",
+      "body": "<p><code>product(int x, int y)</code> is a definition: x and y are <strong>formal parameters</strong>. Their types are written here.</p><p><code>c.product(4,5)</code> is a call: 4 and 5 are <strong>actual parameters</strong>, also called <strong>arguments</strong>.</p><table><tr><th>First argument</th><th>Second argument</th></tr><tr><td>4 → x</td><td>5 → y</td></tr></table><p>Arguments may be literals, variables or expressions. If a is 4, then <code>c.product(a, a+1)</code> passes the values 4 and 5. Arguments are evaluated before the method uses the received values.</p><aside><strong>Common mistake:</strong> Write c.product(4,5), not c.product(int 4,int 5). Types belong in the definition.</aside>"
+    },
+    {
+      "id": "return",
+      "title": "5. Return type, return statement and void",
+      "body": "<p>The <strong>return type</strong> is the promise in the header. The <strong>return statement</strong> fulfils that promise during execution.</p><ul><li><code>int product(...)</code> returns an integer value.</li><li><code>double average(...)</code> returns a double-compatible value.</li><li><code>void display()</code> returns no value.</li></ul><p>A return statement ends the current call immediately. A value-returning method must return a compatible value on every possible path. In our straight-line examples, return is the last executed statement.</p><p><code>return p;</code> sends a value to the caller. <code>System.out.println(p);</code> puts text on the screen. One does not replace the other.</p><table><tr><th>Method body</th><th>Effect</th></tr><tr><td>return x*y;</td><td>Caller receives the value; nothing is printed by this statement</td></tr><tr><td>System.out.println(x*y);</td><td>Value is printed; this statement does not return it</td></tr></table><p>Store a returned value with <code>int answer=c.product(4,5);</code>, or print it directly with <code>System.out.println(c.product(4,5));</code>. Calling <code>c.product(4,5);</code> alone discards the returned value.</p><details><summary>Fix it: int product(int x,int y) { System.out.println(x*y); }</summary><p>Add <code>return x*y;</code> if the method must return the product. Printing alone does not fulfil the int return type.</p></details>"
+    },
+    {
+      "id": "four",
+      "title": "6. The four kinds of methods",
+      "body": "<table><tr><th>Kind</th><th>Example header</th><th>Call</th></tr><tr><td>No returned value, no parameters</td><td>void welcome()</td><td>t.welcome();</td></tr><tr><td>No returned value, parameters</td><td>void showSum(int x,int y)</td><td>t.showSum(2,3);</td></tr><tr><td>Returned value, parameters</td><td>int product(int x,int y)</td><td>System.out.println(t.product(4,5));</td></tr><tr><td>Returned value, no parameters</td><td>int fixedValue()</td><td>System.out.println(t.fixedValue());</td></tr></table><p><strong>Two checks:</strong> parentheses tell you about inputs; the return type tells you about the value coming back. A method with no parameters can still use an object's fields, as the next example shows.</p>"
+    },
+    {
+      "id": "access",
+      "title": "9. Access specifiers: Section-A definitions",
+      "body": "<table><tr><th>Specifier</th><th>Accessible from</th></tr><tr><td>private</td><td>Within the declaring class</td></tr><tr><td>No specifier: default access</td><td>Within the same package</td></tr><tr><td>protected</td><td>Within the same package, and through inheritance outside the package</td></tr><tr><td>public</td><td>Anywhere</td></tr></table><p>Default access means omitting the keyword; you do not write <code>default void display()</code>. A package groups classes. For this chapter, learn the access definitions; an inheritance program is not needed.</p><p>The school notes have a public/protected wording typo. Use the definitions above.</p><details><summary>Recall: which access restricts a method to its own class?</summary><p>private.</p></details>"
+    },
+    {
+      "id": "static",
+      "title": "10. Static and non-static methods",
+      "body": "<p>A <strong>static method</strong> is a class method. It can be called without creating an object. An <strong>instance / non-static method</strong> runs on an object.</p><table><tr><th>Definition</th><th>Call from static main</th></tr><tr><td>static int twice(int n)</td><td>Twice.twice(6); within Twice, twice(6) also works</td></tr><tr><td>int product(int x,int y)</td><td>Create c with new Calculator(), then c.product(4,5)</td></tr></table><p><strong>static</strong> describes how to call a method. <strong>int / void</strong> describes what it returns. They are separate parts of the header.</p>"
+    },
+    {
+      "id": "overloading",
+      "title": "11. Method overloading: one name, different parameter lists",
+      "body": "<p><strong>Method overloading</strong> means defining two or more methods in the same class with the same name and different parameter lists. The school connects it with <strong>polymorphism</strong>: the same method name can perform different tasks for different inputs.</p><p>It improves readability: one meaningful name can be used for related tasks on different inputs.</p><table><tr><th>Difference</th><th>Valid overload example</th></tr><tr><td>Number of parameters</td><td>area(int s) and area(int l,int b)</td></tr><tr><td>Parameter types</td><td>sum(int a,int b) and sum(double a,double b)</td></tr><tr><td>Order of parameter types</td><td>show(int n,char c) and show(char c,int n)</td></tr></table><p>Changing only parameter names is insufficient: <code>sum(int x,int y)</code> and <code>sum(int a,int b)</code> have the same signature. Changing only the return type is also insufficient.</p><details><summary>Can int sum(int a,int b) and double sum(int a,int b) be overloads?</summary><p>No. Both have the same signature sum(int,int). The return type alone does not distinguish overloads.</p></details>"
+    },
+    {
+      "id": "selection",
+      "title": "12. Which overloaded method runs?",
+      "body": "<ol><li>Look at the method name.</li><li>Count the arguments.</li><li>Determine their types in order.</li><li>Match them to the method's parameter list.</li></ol><p>For these school examples, exact matches tell you the chosen version. 10 is int, 10.0 is double, and 'a' is char. If no exact match exists, Java may widen a primitive type, such as int to double. It does not automatically narrow double to int.</p>"
+    },
+    {
+      "id": "mistakes",
+      "title": "15. Common mistakes that cost marks",
+      "body": "<table><tr><th>Mistake</th><th>Correction</th></tr><tr><td>c.product(int x,int y);</td><td>Supply values: c.product(4,5);</td></tr><tr><td>int method prints but never returns</td><td>Return a compatible value on every path</td></tr><tr><td>void result stored in an int variable</td><td>A void call has no value to store</td></tr><tr><td>Method declared inside main</td><td>Define methods separately inside the class</td></tr><tr><td>Method header ends with ; before its body</td><td>Place the opening brace after the header</td></tr><tr><td>Static main calls an instance method directly</td><td>Create an object and use object.method(...)</td></tr><tr><td>Two overloads differ only in return type</td><td>Change number, types or order of parameters</td></tr><tr><td>5 used when the intended overload needs double</td><td>Use 5.0 for an exact double match</td></tr><tr><td>Assuming changing a primitive formal parameter changes the caller</td><td>Trace separate boxes; its value was copied</td></tr></table>"
+    },
+    {
+      "id": "revision",
+      "title": "18. Two-minute revision",
+      "body": "<ul><li><strong>Method:</strong> one task, reusable statements.</li><li><strong>Header / prototype:</strong> declaration without body.</li><li><strong>Signature:</strong> name + parameter types in order.</li><li><strong>Body:</strong> statements inside braces.</li><li><strong>Formal:</strong> typed input variables in the definition.</li><li><strong>Actual:</strong> arguments supplied by the call.</li><li><strong>Primitive inputs:</strong> copied into separate boxes.</li><li><strong>return:</strong> sends a value back and ends the call.</li><li><strong>void:</strong> no returned value.</li><li><strong>Four kinds:</strong> inputs yes/no × returned value yes/no.</li><li><strong>static:</strong> callable without an object; instance method needs an object.</li><li><strong>Overloading:</strong> same name, different parameter lists.</li><li><strong>Not enough for overloading:</strong> changing only return type or parameter names.</li></ul><p><strong>Ready to move on?</strong> You can trace a call, explain its inputs and return, select an overload and write the notebook program without copying.</p>"
+    }
+  ],
+  "examples": [
+    {
+      "id": "hello",
+      "title": "A method is waiting to be called",
+      "code": "class Greeting\n{\n    void welcome()\n    {\n        System.out.println(\"Welcome\");\n    }\n    static void main()\n    {\n        /** g refers to a Greeting object */\n        Greeting g=new Greeting();\n        g.welcome();\n        System.out.println(\"Done\");\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "nocall",
+      "title": "One line removed",
+      "code": "class Greeting\n{\n    void welcome()\n    {\n        System.out.println(\"Welcome\");\n    }\n    static void main()\n    {\n        /** g refers to a Greeting object */\n        Greeting g=new Greeting();\n        System.out.println(\"Done\");\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "twocalls",
+      "title": "Reuse the task",
+      "code": "class Greeting\n{\n    void welcome()\n    {\n        System.out.println(\"Welcome\");\n    }\n    static void main()\n    {\n        /** g refers to a Greeting object */\n        Greeting g=new Greeting();\n        g.welcome();\n        g.welcome();\n        System.out.println(\"Done\");\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "order-values",
+      "title": "Same method, swapped arguments",
+      "code": "class Difference\n{\n    /** x and y receive the two numbers */\n    void show(int x, int y)\n    {\n        System.out.println(x-y);\n    }\n    static void main()\n    {\n        /** d refers to a Difference object */\n        Difference d=new Difference();\n        d.show(9,4);\n        d.show(4,9);\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "expression-args",
+      "title": "Pass expressions, not just literals",
+      "code": "class Difference\n{\n    /** x and y receive the two numbers */\n    void show(int x, int y)\n    {\n        System.out.println(x-y);\n    }\n    static void main()\n    {\n        /** d refers to a Difference object */\n        Difference d=new Difference();\n        /** a stores the starting value */\n        int a=3;\n        d.show(a+2,a);\n        System.out.println(a);\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "copy",
+      "title": "Change the copy",
+      "code": "class Change\n{\n    /** n receives a copy of the argument */\n    void change(int n)\n    {\n        n=n+5;\n        System.out.println(\"Inside = \"+n);\n    }\n\n    static void main()\n    {\n        /** c refers to a Change object */\n        Change c=new Change();\n        /** x stores the original number */\n        int x=3;\n        c.change(x);\n        System.out.println(\"After = \"+x);\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "product",
+      "title": "Return to the waiting call",
+      "code": "class Calculator\n{\n    /** x and y receive the two numbers */\n    public int product(int x, int y)\n    {\n        /** p stores their product */\n        int p=x*y;\n        return p;\n    }\n\n    static void main()\n    {\n        /** c refers to a Calculator object */\n        Calculator c=new Calculator();\n        /** result stores the returned value */\n        int result=c.product(4,5);\n        System.out.println(\"Product = \"+result);\n        System.out.println(\"Back in main\");\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "discard",
+      "title": "A returned result can be ignored",
+      "code": "class Calculator\n{\n    /** x and y receive the two numbers */\n    public int product(int x, int y)\n    {\n        /** p stores their product */\n        int p=x*y;\n        return p;\n    }\n\n    static void main()\n    {\n        /** c refers to a Calculator object */\n        Calculator c=new Calculator();\n        c.product(4,5);\n        System.out.println(\"Back in main\");\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "print-return",
+      "title": "Print inside, return outside",
+      "code": "class Calculator\n{\n    /** x and y receive the two numbers */\n    public int product(int x, int y)\n    {\n        /** p stores their product */\n        int p=x*y;\n        System.out.println(\"Inside = \"+p);\n        return p;\n    }\n\n    static void main()\n    {\n        /** c refers to a Calculator object */\n        Calculator c=new Calculator();\n        /** result stores the returned value */\n        int result=c.product(4,5);\n        System.out.println(\"Product = \"+result);\n        System.out.println(\"Back in main\");\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "four",
+      "title": "All four kinds in one program",
+      "code": "class Tasks\n{\n    void welcome()\n    {\n        System.out.println(\"Welcome\");\n    }\n    /** x and y receive the numbers to add */\n    void showSum(int x, int y)\n    {\n        System.out.println(\"Sum = \"+(x+y));\n    }\n    /** x and y receive the numbers to multiply */\n    int product(int x, int y)\n    {\n        return x*y;\n    }\n    int fixedValue()\n    {\n        return 10;\n    }\n    static void main()\n    {\n        /** t refers to a Tasks object */\n        Tasks t=new Tasks();\n        t.welcome();\n        t.showSum(2,3);\n        System.out.println(t.product(4,5));\n        System.out.println(t.fixedValue());\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "empty-return",
+      "title": "Does this compile?",
+      "code": "class Calculator\n{\n    /** x and y receive the two numbers */\n    public int product(int x, int y)\n    {\n        /** p stores their product */\n        int p=x*y;\n        return;\n    }\n\n    static void main()\n    {\n        /** c refers to a Calculator object */\n        Calculator c=new Calculator();\n        /** result stores the returned value */\n        int result=c.product(4,5);\n        System.out.println(\"Product = \"+result);\n        System.out.println(\"Back in main\");\n    }\n}",
+      "expectCompileError": true
+    },
+    {
+      "id": "empty-return-fixed",
+      "title": "Does this compile? — corrected",
+      "code": "class Calculator\n{\n    /** x and y receive the two numbers */\n    public int product(int x, int y)\n    {\n        /** p stores their product */\n        int p=x*y;\n        return p;\n    }\n\n    static void main()\n    {\n        /** c refers to a Calculator object */\n        Calculator c=new Calculator();\n        /** result stores the returned value */\n        int result=c.product(4,5);\n        System.out.println(\"Product = \"+result);\n        System.out.println(\"Back in main\");\n    }\n}"
+    },
+    {
+      "id": "static",
+      "title": "A class call without an object",
+      "code": "class Twice\n{\n    /** n receives the number to double */\n    static int twice(int n)\n    {\n        return 2*n;\n    }\n    static void main()\n    {\n        System.out.println(Twice.twice(6));\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "instance-error",
+      "title": "An instance method from static main",
+      "code": "class Greeting\n{\n    void welcome()\n    {\n        System.out.println(\"Welcome\");\n    }\n    static void main()\n    {\n        /** g refers to a Greeting object */\n        Greeting g=new Greeting();\n        welcome();\n        System.out.println(\"Done\");\n    }\n}",
+      "expectCompileError": true
+    },
+    {
+      "id": "instance-error-fixed",
+      "title": "An instance method from static main — corrected",
+      "code": "class Greeting\n{\n    void welcome()\n    {\n        System.out.println(\"Welcome\");\n    }\n    static void main()\n    {\n        /** g refers to a Greeting object */\n        Greeting g=new Greeting();\n        g.welcome();\n        System.out.println(\"Done\");\n    }\n}"
+    },
+    {
+      "id": "overload",
+      "title": "Which version runs?",
+      "code": "class Sum\n{\n    /** a and b receive two integers */\n    void sum(int a, int b)\n    {\n        System.out.println(\"int: \"+(a+b));\n    }\n    /** a and b receive two doubles */\n    void sum(double a, double b)\n    {\n        System.out.println(\"double: \"+(a+b));\n    }\n    /** a and b receive two characters */\n    void sum(char a, char b)\n    {\n        System.out.println(\"char: \"+(a+b));\n    }\n    static void main()\n    {\n        /** s refers to a Sum object */\n        Sum s=new Sum();\n        s.sum(10,20);\n        s.sum(12.5,13.5);\n        s.sum('a','b');\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "type-order",
+      "title": "Type order changes the signature",
+      "code": "class Order\n{\n    /** n stores a number and c stores a character */\n    void show(int n, char c)\n    {\n        System.out.println(\"int then char\");\n    }\n    /** c stores a character and n stores a number */\n    void show(char c, int n)\n    {\n        System.out.println(\"char then int\");\n    }\n    static void main()\n    {\n        /** o refers to an Order object */\n        Order o=new Order();\n        o.show(3,'A');\n        o.show('A',3);\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "count",
+      "title": "One argument or two?",
+      "code": "class Area\n{\n    /** side stores the side of the square */\n    int area(int side)\n    {\n        return side*side;\n    }\n    /** length and breadth store rectangle dimensions */\n    int area(int length, int breadth)\n    {\n        return length*breadth;\n    }\n    static void main()\n    {\n        /** a refers to an Area object */\n        Area a=new Area();\n        System.out.println(\"Square = \"+a.area(4));\n        System.out.println(\"Rectangle = \"+a.area(5,3));\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "return-overload",
+      "title": "Only the return type changes",
+      "code": "class Invalid\n{\n    /** n receives an integer */\n    int value(int n)\n    {\n        return n;\n    }\n    /** n receives an integer */\n    double value(int n)\n    {\n        return n;\n    }\n    static void main()\n    {\n        System.out.println(\"Ready\");\n    }\n}",
+      "expectCompileError": true
+    },
+    {
+      "id": "return-overload-fixed",
+      "title": "Only the return type changes — corrected",
+      "code": "class Invalid\n{\n    /** n receives an integer */\n    int value(int n)\n    {\n        return n;\n    }\n    /** n receives a double */\n    double value(double n)\n    {\n        return n;\n    }\n    static void main()\n    {\n        System.out.println(\"Ready\");\n    }\n}"
+    },
+    {
+      "id": "widen",
+      "title": "No exact int version",
+      "code": "class Wide\n{\n    /** n receives a double value */\n    void show(double n)\n    {\n        System.out.println(n);\n    }\n    static void main()\n    {\n        /** w refers to a Wide object */\n        Wide w=new Wide();\n        w.show(5);\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "narrow",
+      "title": "Reverse the conversion",
+      "code": "class Wide\n{\n    /** n receives a integer value */\n    void show(int n)\n    {\n        System.out.println(n);\n    }\n    static void main()\n    {\n        /** w refers to a Wide object */\n        Wide w=new Wide();\n        w.show(5.5);\n    }\n}",
+      "expectCompileError": true
+    },
+    {
+      "id": "narrow-fixed",
+      "title": "Reverse the conversion — corrected",
+      "code": "class Wide\n{\n    /** n receives a integer value */\n    void show(int n)\n    {\n        System.out.println(n);\n    }\n    static void main()\n    {\n        /** w refers to a Wide object */\n        Wide w=new Wide();\n        w.show(5);\n    }\n}"
+    },
+    {
+      "id": "noargs",
+      "title": "Return without new arguments",
+      "code": "class Total\n{\n    /** x stores the first number */\n    int x;\n    /** y stores the second number */\n    int y;\n    /** a and b receive the values to store */\n    void input(int a, int b)\n    {\n        x=a;\n        y=b;\n    }\n    int sum()\n    {\n        return x+y;\n    }\n    static void main()\n    {\n        /** t refers to a Total object */\n        Total t=new Total();\n        t.input(5,6);\n        /** sm stores the returned sum */\n        int sm=t.sum();\n        System.out.println(\"Sum = \"+sm);\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "compute",
+      "title": "School Q4-style program",
+      "code": "class Compute\n{\n    /** a stores an integer and b selects square or cube */\n    void compute(int a, char b)\n    {\n        if(b=='s' || b=='S')\n        {\n            System.out.println(\"Square=\"+(a*a));\n        }\n        else\n        {\n            System.out.println(\"Cube=\"+(a*a*a));\n        }\n    }\n    /** x stores a side length and y selects volume or diagonal */\n    void compute(double x, char y)\n    {\n        if(y=='v' || y=='V')\n        {\n            System.out.println(\"Cube=\"+(x*x*x));\n        }\n        else\n        {\n            System.out.println(\"Diagonal=\"+(Math.sqrt(3)*x));\n        }\n    }\n    /** a and b store length and breadth; c selects area or perimeter */\n    void compute(int a, int b, char c)\n    {\n        if(c=='a' || c=='A')\n        {\n            System.out.println(\"Area=\"+(a*b));\n        }\n        else\n        {\n            System.out.println(\"Perimeter=\"+(2*(a+b)));\n        }\n    }\n    static void main()\n    {\n        /** obj refers to a Compute object */\n        Compute obj=new Compute();\n        obj.compute(5,'s');\n        obj.compute(3.0,'v');\n        obj.compute(10,5,'a');\n    }\n}",
+      "expectCompileError": false
+    },
+    {
+      "id": "paper-product",
+      "title": "Notebook solution",
+      "code": "class Calculator\n{\n    /** x and y receive the two numbers */\n    public int product(int x, int y)\n    {\n        /** p stores their product */\n        int p=x*y;\n        return p;\n    }\n\n    static void main()\n    {\n        /** c refers to a Calculator object */\n        Calculator c=new Calculator();\n        /** result stores the returned value */\n        int result=c.product(4,5);\n        System.out.println(\"Product = \"+result);\n        System.out.println(\"Back in main\");\n    }\n}"
+    },
+    {
+      "id": "paper-area",
+      "title": "Notebook solution",
+      "code": "class Area\n{\n    /** side stores the side of the square */\n    int area(int side)\n    {\n        return side*side;\n    }\n    /** length and breadth store rectangle dimensions */\n    int area(int length, int breadth)\n    {\n        return length*breadth;\n    }\n    static void main()\n    {\n        /** a refers to an Area object */\n        Area a=new Area();\n        System.out.println(\"Square = \"+a.area(4));\n        System.out.println(\"Rectangle = \"+a.area(5,3));\n    }\n}"
+    }
+  ],
+  "batches": [
+    {
+      "id": "calls",
+      "title": "1 · Follow the call",
+      "minutes": 6,
+      "focus": "Call order, reusable methods, and purpose",
+      "tasks": [
+        {
+          "id": "hello",
+          "title": "A method is waiting to be called",
+          "kind": "output",
+          "example": "hello",
+          "q": "Write the exact two output lines. Start at main, not at the first method definition.",
+          "why": "main calls welcome; Welcome prints. Control returns to main, which prints Done.",
+          "rule": "A method runs when called. Defining it alone does not run it.",
+          "change": "Swap the two statements g.welcome() and println(\"Done\"). Predict again."
+        },
+        {
+          "id": "nocall",
+          "title": "One line removed",
+          "kind": "output",
+          "example": "nocall",
+          "q": "The method is still defined. Its call is missing. What prints?",
+          "why": "Creating g does not call welcome. Only the remaining println runs.",
+          "rule": "Object creation and calling an ordinary method are separate actions.",
+          "change": ""
+        },
+        {
+          "id": "twocalls",
+          "title": "Reuse the task",
+          "kind": "output",
+          "example": "twocalls",
+          "q": "Write all output lines in their order.",
+          "why": "Each call executes the same method body; main then continues.",
+          "rule": "One definition can be called more than once.",
+          "change": ""
+        },
+        {
+          "id": "purpose",
+          "title": "Name what you just used",
+          "kind": "recall",
+          "q": "What is a method? State one advantage you saw in these three programs.",
+          "answer": "A method is a group of statements that performs a specific task. It can be defined once and called repeatedly; methods also split a large program into smaller tasks.",
+          "rule": "User-defined methods contain logic you write; library methods are already provided."
+        }
+      ]
+    },
+    {
+      "id": "inputs",
+      "title": "2 · Put values into parameter boxes",
+      "minutes": 7,
+      "focus": "Arguments, formal parameters, order and primitive copies",
+      "tasks": [
+        {
+          "id": "order-values",
+          "title": "Same method, swapped arguments",
+          "kind": "output",
+          "example": "order-values",
+          "q": "Write both output lines. Draw x and y boxes for each call.",
+          "why": "The first argument goes into x; the second goes into y. Swapping them changes subtraction.",
+          "rule": "Actual parameters / arguments supply values; formal parameters receive them.",
+          "change": ""
+        },
+        {
+          "id": "expression-args",
+          "title": "Pass expressions, not just literals",
+          "kind": "output",
+          "example": "expression-args",
+          "q": "What prints? Does passing a+2 change a?",
+          "why": "a+2 evaluates to 5 and is passed as a value. It does not assign 5 to a.",
+          "rule": "Evaluate argument expressions before following the method body.",
+          "change": ""
+        },
+        {
+          "id": "copy",
+          "title": "Change the copy",
+          "kind": "output",
+          "example": "copy",
+          "q": "Draw x in main and n in change. Predict Inside and After.",
+          "why": "change receives a copy of 3 in n. Increasing n leaves the caller’s x unchanged.",
+          "rule": "Primitive parameter values are copied. The school calls this call by value.",
+          "change": "Set x=10. Predict both lines before checking."
+        },
+        {
+          "id": "formal-actual",
+          "title": "Label the definition and the call",
+          "kind": "recall",
+          "q": "Name the formal parameters and the actual parameters. Write the signature.",
+          "answer": "Formal: x and y, both int. Actual: 9 and 4. Signature: show(int,int).",
+          "rule": "Types belong in the definition; values or expressions belong in the call.",
+          "fragment": "void show(int x,int y)\n// called as:\nd.show(9,4);"
+        }
+      ]
+    },
+    {
+      "id": "returns",
+      "title": "3 · Printing is different from returning",
+      "minutes": 8,
+      "focus": "Return values, void, ignored results and four method kinds",
+      "tasks": [
+        {
+          "id": "product",
+          "title": "Return to the waiting call",
+          "kind": "output",
+          "example": "product",
+          "q": "Write both output lines. Where does the returned value go?",
+          "why": "product returns its calculated p to the call. main stores that value in result, then prints it.",
+          "rule": "return sends a value back and ends the current method call.",
+          "change": ""
+        },
+        {
+          "id": "discard",
+          "title": "A returned result can be ignored",
+          "kind": "output",
+          "example": "discard",
+          "q": "The call executes, but its returned result is not stored or printed. What appears?",
+          "why": "The product is computed and returned, then discarded. Only Back in main is printed.",
+          "rule": "Returning a value does not automatically print it.",
+          "change": ""
+        },
+        {
+          "id": "print-return",
+          "title": "Print inside, return outside",
+          "kind": "output",
+          "example": "print-return",
+          "q": "Write every output line. Identify which method prints each one.",
+          "why": "product prints once before returning; main then prints the returned value and its continuation message.",
+          "rule": "A method may both print and return. Trace each action separately.",
+          "change": ""
+        },
+        {
+          "id": "four",
+          "title": "All four kinds in one program",
+          "kind": "output",
+          "example": "four",
+          "q": "Predict all four lines. For each method, say: inputs yes/no, returned value yes/no.",
+          "why": "welcome and showSum print internally. product and fixedValue return values that main prints.",
+          "rule": "Empty parentheses mean no parameters; void means no returned value.",
+          "change": ""
+        },
+        {
+          "id": "empty-return",
+          "title": "Does this compile?",
+          "kind": "diagnose",
+          "example": "empty-return",
+          "q": "Write “compiles” or “does not compile”. If rejected, write the replacement statement.",
+          "why": "product promises int, but return; supplies no value. Use return p;.",
+          "rule": "A value-returning method must supply a compatible value.",
+          "change": "",
+          "fixed": "empty-return-fixed"
+        }
+      ]
+    },
+    {
+      "id": "headers",
+      "title": "4 · Recognize the exam vocabulary",
+      "minutes": 5,
+      "focus": "Header, signature, body, access and static",
+      "tasks": [
+        {
+          "id": "header",
+          "title": "Read one header",
+          "kind": "recall",
+          "q": "Identify the access specifier, modifier, return type, name and signature.",
+          "answer": "Access: public. Modifier: static. Return type: int. Name: twice. Signature: twice(int). The full declaration shown is the header / prototype in school terminology.",
+          "rule": "The signature excludes return type, parameter names and access specifier.",
+          "fragment": "public static int twice(int n)"
+        },
+        {
+          "id": "static",
+          "title": "A class call without an object",
+          "kind": "output",
+          "example": "static",
+          "q": "Write the output. Was a Twice object needed?",
+          "why": "The static method is called through its class name; no object is created.",
+          "rule": "static describes how the method is called; int describes the returned value.",
+          "change": ""
+        },
+        {
+          "id": "instance-error",
+          "title": "An instance method from static main",
+          "kind": "diagnose",
+          "example": "instance-error",
+          "q": "Does it compile? Replace only the faulty call.",
+          "why": "welcome is an instance method. static main must call it through g: g.welcome();.",
+          "rule": "An instance method runs on an object.",
+          "change": "",
+          "fixed": "instance-error-fixed"
+        },
+        {
+          "id": "access",
+          "title": "Choose the access",
+          "kind": "recall",
+          "q": "Write the access for: own class only; same package; anywhere; same package plus inheritance outside it.",
+          "answer": "Own class only: private. Same package: no specifier (default access). Anywhere: public. Same package plus inheritance outside it: protected.",
+          "rule": "Default access means omitting a keyword, not writing default before the method."
+        }
+      ]
+    },
+    {
+      "id": "overloads",
+      "title": "5 · Same name, different parameter lists",
+      "minutes": 8,
+      "focus": "Selection by count, type and order",
+      "tasks": [
+        {
+          "id": "overload",
+          "title": "Which version runs?",
+          "kind": "output",
+          "example": "overload",
+          "q": "For each call, write the chosen signature, then predict its output.",
+          "why": "The three calls match int,int; double,double; and char,char. In the char body, a+b adds character codes.",
+          "rule": "Method overloading: same name in the same class, different parameter lists.",
+          "change": "Change the integer call to sum(10.0,20.0). Which version runs now?"
+        },
+        {
+          "id": "type-order",
+          "title": "Type order changes the signature",
+          "kind": "output",
+          "example": "type-order",
+          "q": "Write both signatures and both output lines.",
+          "why": "show(int,char) and show(char,int) are different signatures, despite using the same two types.",
+          "rule": "Count, types or order of parameter types can distinguish overloads.",
+          "change": ""
+        },
+        {
+          "id": "count",
+          "title": "One argument or two?",
+          "kind": "output",
+          "example": "count",
+          "q": "Predict both labelled lines. What distinguishes these overloads?",
+          "why": "The square method takes one int. The rectangle method takes two ints.",
+          "rule": "Different numbers of parameters create different signatures.",
+          "change": ""
+        },
+        {
+          "id": "return-overload",
+          "title": "Only the return type changes",
+          "kind": "diagnose",
+          "example": "return-overload",
+          "q": "Does this compile? Explain without running it.",
+          "why": "Both declarations have signature value(int). Different return types alone cannot create overloads.",
+          "rule": "Overloading is distinguished by parameter lists.",
+          "change": "",
+          "fixed": "return-overload-fixed"
+        }
+      ]
+    },
+    {
+      "id": "mixed",
+      "title": "6 · Mixed checks without hints",
+      "minutes": 7,
+      "focus": "Transfer: widening, no-parameter return and original school program",
+      "tasks": [
+        {
+          "id": "widen",
+          "title": "No exact int version",
+          "kind": "output",
+          "example": "widen",
+          "q": "Does it compile? If yes, write the exact output.",
+          "why": "Java widens the int argument to double when calling show(double).",
+          "rule": "Primitive widening may make a call valid; narrowing is not automatic.",
+          "change": ""
+        },
+        {
+          "id": "narrow",
+          "title": "Reverse the conversion",
+          "kind": "diagnose",
+          "example": "narrow",
+          "q": "Does it compile? What changed compared with the previous example?",
+          "why": "A double argument cannot automatically narrow to int. The corrected example uses an int argument.",
+          "rule": "A valid widening conversion does not imply a valid conversion in the opposite direction.",
+          "change": "",
+          "fixed": "narrow-fixed"
+        },
+        {
+          "id": "noargs",
+          "title": "Return without new arguments",
+          "kind": "output",
+          "example": "noargs",
+          "q": "Predict the output. Where does sum() get the values it uses?",
+          "why": "input stores fields x and y on the object. sum reads those fields and returns their sum without parameters.",
+          "rule": "A method with no parameters may still use its object’s stored values.",
+          "change": ""
+        },
+        {
+          "id": "compute",
+          "title": "School Q4-style program",
+          "kind": "output",
+          "example": "compute",
+          "q": "For each call, write its selected signature and output. Then change all three selector characters and try again.",
+          "why": "Argument types select a method first. Its if/else then selects a formula. Those are separate decisions.",
+          "rule": "Identify the signature before tracing the selected method body.",
+          "change": "Use compute(5,'c'), compute(3.0,'d'), compute(10,5,'p'). Predict which formula each uses."
+        }
+      ]
+    },
+    {
+      "id": "paper",
+      "title": "7 · Write the answer sheet",
+      "minutes": 12,
+      "focus": "Two notebook tasks, solutions hidden",
+      "tasks": [
+        {
+          "id": "paper-product",
+          "title": "Notebook · method and call",
+          "kind": "paper",
+          "example": "paper-product",
+          "q": "Write class Calculator with public int product(int x,int y). It returns the product. In static void main(), create an object, call it with 4 and 5, store the result, then print Product = followed by the result and a second line Back in main. Name the formal/actual parameters and write the signature.",
+          "hint": "Define the method outside main. Return p; main stores the returned value.",
+          "checklist": [
+            "Typed formal parameters and int return type",
+            "return supplies the product",
+            "Object created before call",
+            "Actual arguments have no type declarations",
+            "All variables have /** */ descriptions",
+            "Both output lines predicted"
+          ]
+        },
+        {
+          "id": "paper-area",
+          "title": "Notebook · overloaded methods",
+          "kind": "paper",
+          "example": "paper-area",
+          "q": "Write class Area with int area(int side) returning square area and int area(int length,int breadth) returning rectangle area. static void main() creates one object and prints labelled results for side 4 and rectangle 5 × 3. Write both signatures.",
+          "hint": "Use the same name with different parameter counts. main prints each returned value.",
+          "checklist": [
+            "Two different signatures",
+            "Each method returns a value",
+            "Both helpers defined outside main",
+            "Object created and both versions called",
+            "All variables have /** */ descriptions",
+            "Correct formulas, labels and paired braces"
+          ]
+        }
+      ]
+    }
+  ]
+};
+})();
+
+</script>
+<script>
+/* Practice-first reading path. Existing stages and storage are untouched. */
+(function () {
+  var JP=globalThis.JP, data=JP.guides.methods;
+  function node(tag,text) { var e=document.createElement(tag); if(text!==undefined)e.textContent=text; return e; }
+  function codeBlock(code){var p=node('pre');p.appendChild(node('code',code));return p;}
+  function button(text,fn){var b=node('button',text);b.type='button';b.addEventListener('click',fn);return b;}
+  function lookup(id){return data.examples.filter(function(e){return e.id===id;})[0];}
+  function norm(text){return text.replace(/\r/g,'').split('\n').map(function(l){return l.replace(/\s+$/,'');}).join('\n').trim();}
+  var contents=document.getElementById('contents'), sections=document.getElementById('sections'), number=0;
+  function editor(src){
+    var group=node('details');group.className='verify';group.appendChild(node('summary','Optional · check or experiment in W3Schools'));
+    var code=JP.ui.toW3(src),block=codeBlock(code);group.appendChild(node('p','Copy the whole runnable version below. Replace all code in the editor, then Run. The extra Main launcher is for the web editor; use the class above in the BlueJ exam.'));
+    var actions=node('div');actions.className='actions';var status=node('span');status.className='status';status.setAttribute('role','status');
+    actions.appendChild(button('Copy runnable code',function(){
+      function fallback(){var selection=window.getSelection(),range=document.createRange();range.selectNodeContents(block);selection.removeAllRanges();selection.addRange(range);status.textContent='Code selected. Press Ctrl+C or use Copy, then paste into the editor.';}
+      if(navigator.clipboard && navigator.clipboard.writeText)navigator.clipboard.writeText(code).then(function(){status.textContent='Copied. Paste into W3Schools and Run.';},fallback);else fallback();
+    }));var link=node('a','Open W3Schools ↗');link.href='https://www.w3schools.com/java/tryjava.asp?filename=demo_helloworld';link.target='_blank';link.rel='noopener';link.className='editor';actions.appendChild(link);actions.appendChild(status);group.appendChild(actions);group.appendChild(block);return group;
+  }
+  data.batches.forEach(function(batch){
+    var link=node('a',batch.title);link.href='#'+batch.id;contents.appendChild(link);
+    var section=node('section');section.id=batch.id;section.className='batch';section.appendChild(node('h2',batch.title));var meta=node('p','~'+batch.minutes+' min · '+batch.focus);meta.className='batch-meta';section.appendChild(meta);
+    batch.tasks.forEach(function(t){
+      number++;var item=node('article');item.id='exercise-'+t.id;item.className='exercise';item.setAttribute('data-task',t.id);item.setAttribute('data-kind',t.kind);
+      var badge=node('span',(t.kind==='paper'?'WRITE':t.kind==='recall'?'NAME IT':t.kind==='diagnose'?'FIND THE ERROR':'PREDICT')+' · '+number);badge.className='eyebrow';item.appendChild(badge);item.appendChild(node('h3',t.title));item.appendChild(node('p',t.q));
+      var ex=t.example?lookup(t.example):null,result=ex?JP.engine.run(ex.code):null;
+      if(ex && t.kind!=='paper')item.appendChild(codeBlock(ex.code));if(t.fragment)item.appendChild(codeBlock(t.fragment));
+      var solution=node('div');solution.className='answer-reveal';solution.hidden=true;
+      if(t.kind==='paper'){
+        var hint=node('details');hint.className='hint';hint.appendChild(node('summary','Need a starting hint?'));hint.appendChild(node('p',t.hint));item.appendChild(hint);
+        item.appendChild(button('I wrote it · compare with the solution',function(){solution.hidden=!solution.hidden;this.setAttribute('aria-expanded',String(!solution.hidden));}));
+        solution.appendChild(node('h4','Compare your notebook with this school-style solution'));solution.appendChild(codeBlock(ex.code));solution.appendChild(node('h4','Computed output'));solution.appendChild(codeBlock(result.output));
+        var list=node('div');list.className='checklist';t.checklist.forEach(function(c){var label=node('label');var input=node('input');input.type='checkbox';label.appendChild(input);label.appendChild(document.createTextNode(' '+c));list.appendChild(label);});solution.appendChild(list);
+      }else{
+        var controls=node('div');controls.className='attempt-controls';var response=node('textarea');response.rows=t.kind==='recall'?2:3;response.placeholder=t.kind==='diagnose'?'Optional: compiles / does not compile, then your corrected line':t.kind==='recall'?'Optional: write your short answer here':'Optional: type your output, one line per println';response.id='response-'+t.id;
+        var label=node('label','Answer on paper, or type here');label.htmlFor=response.id;label.className='answer-label';controls.appendChild(label);controls.appendChild(response);
+        var feedback=node('div');feedback.className='feedback';feedback.setAttribute('role','status');
+        var actions=node('div');actions.className='actions';
+        actions.appendChild(button('I tried on paper · reveal & explain',function(){solution.hidden=!solution.hidden;this.setAttribute('aria-expanded',String(!solution.hidden));}));
+        if(t.kind==='output')actions.appendChild(button('Check typed output',function(){if(!response.value.trim()){feedback.textContent='Write your prediction first, or use the paper reveal.';return;}solution.hidden=false;feedback.textContent=norm(response.value)===norm(result.output)?'Correct. Now explain why each line appears.':'Compare the output below. Find the first line that differs, then retry on paper.';}));
+        controls.appendChild(actions);controls.appendChild(feedback);item.appendChild(controls);
+        if(t.kind==='recall'){solution.appendChild(node('h4','Short exam answer'));solution.appendChild(node('p',t.answer));}
+        else if(t.kind==='diagnose'){
+          if(result.phase!=='compile')throw new Error('Expected compile error: '+t.id);
+          solution.appendChild(node('h4','Does not compile'));solution.appendChild(node('p','Engine check · line '+result.error.line+': '+result.error.message));solution.appendChild(node('p',t.why));
+          var fixed=lookup(t.fixed);solution.appendChild(node('h4','Corrected program'));solution.appendChild(codeBlock(fixed.code));solution.appendChild(node('h4','Corrected output'));solution.appendChild(codeBlock(JP.engine.run(fixed.code).output));
+        }else {if(!result.ok)throw new Error('Example failed: '+t.id);solution.appendChild(node('h4','Computed output'));solution.appendChild(codeBlock(result.output));solution.appendChild(node('p',t.why));}
+        solution.appendChild(node('p','Name the rule: '+t.rule)).className='rule';
+        if(t.change){solution.appendChild(node('p','Try one variation: '+t.change)).className='variation';}
+        if(t.kind==='output'||t.kind==='diagnose')solution.appendChild(node('p','If you missed it: cover the answer, trace separate values on paper, then try the nearby exercise.')).className='retry';
+      }
+      item.appendChild(solution);if(ex)item.appendChild(editor(ex.code));section.appendChild(item);
+    });sections.appendChild(section);
+  });
+  var reference=node('section');reference.id='reference';reference.className='reference';reference.appendChild(node('h2','Quick reference · only when needed'));
+  data.sections.forEach(function(s){var detail=node('details');detail.appendChild(node('summary',s.title.replace(/^\d+\. /,'')));var body=node('div');body.innerHTML=s.body;detail.appendChild(body);reference.appendChild(detail);});sections.appendChild(reference);
+  var rlink=node('a','Quick reference');rlink.href='#reference';contents.appendChild(rlink);
+  document.getElementById('print').addEventListener('click',function(){window.print();});
+})();
+
+</script>
+</body></html>

@@ -157,3 +157,13 @@ The existing stages and engine remain intact. No dedicated pure/impure or shared
 Stage 9 verification: Node 300/300, Java 21 520/520, browser 177 routes, file opening and visual review passed.
 
 Reading-guide verification: Node 309 passed; full Java 21 suite 538 passed; existing browser smoke 177 routes. All nine copied W3Schools launchers compiled and ran with identical output. Clipboard contents, output reveal, navigation, file:// opening, desktop and 390px layout passed with no page errors or mobile horizontal overflow.
+
+## Practice-first Methods revision (2026-10-06)
+
+The owner approved replacing the long reading guide with learning by doing, inspired by simple explanations and varied exercises in the uploaded C textbook. All exercises are original Java, within 00-exam-scope, using school style. The guide now has 27 tasks in seven progressive batches (53 suggested minutes): calls; parameter values/copies; print versus return; vocabulary/access/static; overloads; mixed checks; two handwritten tasks. Concepts are named after the attempt; explanations stay short. Theory remains in collapsed references. Optional W3Schools copying supports checking and experiments after paper predictions; intentionally incorrect programs are clearly labelled in their answer reveals.
+
+The guide supports typed output checks or notebook attempts, engine-computed outputs and compile errors, corrected programs, retry prompts, and questions-only printing. No localStorage or interactive-stage changes. tests/run.js includes all 27 guide program fixtures (including corrections), and flags intended compile failures. guides/methods-review.html is a self-contained offline review copy of the revised guide; regenerate it when guide assets change. No commit/push is authorized by this revision request.
+
+PYQ next step: owner can supply methods/overloading questions to calibrate final difficulty. Current tasks are school-style exercises, not presented as actual past-paper questions. PYQ preparation should use small variations leading to unassisted original questions on paper, rather than a large undifferentiated question list.
+
+Revision verification: Node 327 passed; full Java 21 suite 574 passed; browser SMOKE OK (177 routes). All 27 W3Schools launcher versions were separately compiled: expected failures were rejected and accepted programs matched engine output. Guide checks confirmed hidden answers before attempts, typed checking, error/correction reveals, clipboard launcher contents, questions-only print mode, 390px layout, file:// use, and the self-contained review copy. No page errors.

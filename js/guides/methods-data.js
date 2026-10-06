@@ -1,4 +1,4 @@
-/* Practice-first Chapter 3: original Java exercises; answers computed by the engine. */
+/* Practice-first Chapter 3; answers computed by the engine. */
 (function () {
 var JP=globalThis.JP=globalThis.JP||{};
 JP.guides=JP.guides||{};
@@ -217,6 +217,51 @@ JP.guides.methods={
       "id": "paper-area",
       "title": "Notebook solution",
       "code": "class Area\n{\n    /** side stores the side of the square */\n    int area(int side)\n    {\n        return side*side;\n    }\n    /** length and breadth store rectangle dimensions */\n    int area(int length, int breadth)\n    {\n        return length*breadth;\n    }\n    static void main()\n    {\n        /** a refers to an Area object */\n        Area a=new Area();\n        System.out.println(\"Square = \"+a.area(4));\n        System.out.println(\"Rectangle = \"+a.area(5,3));\n    }\n}"
+    },
+    {
+      "id": "lab-full",
+      "title": "The complete program: predict seven lines",
+      "code": "class Order\n{\n    /** price stores the price of one item */\n    private int price;\n    /** quantity stores the object's item count */\n    private int quantity;\n\n    public void welcome()\n    {\n        System.out.println(\"Order ready\");\n    }\n\n    /** p and q receive the price and quantity to store */\n    public void accept(int p, int q)\n    {\n        price=p;\n        quantity=q;\n    }\n\n    public int total()\n    {\n        return price*quantity;\n    }\n\n    /** p and q receive values for a separate calculation */\n    public int total(int p, int q)\n    {\n        return p*q;\n    }\n\n    void display()\n    {\n        System.out.println(\"Stored total = \"+total());\n    }\n\n    /** n receives a copy of the caller's number */\n    public void changeCopy(int n)\n    {\n        n=n+1;\n        System.out.println(\"Inside copy = \"+n);\n    }\n\n    /** n receives the number to double */\n    public static int twice(int n)\n    {\n        return 2*n;\n    }\n\n    static void main()\n    {\n        /** o refers to an Order object */\n        Order o=new Order();\n        o.welcome();\n        o.accept(50,2);\n        System.out.println(\"Returned total = \"+o.total());\n        System.out.println(\"Other total = \"+o.total(30,3));\n        o.display();\n        /** q stores the caller's quantity */\n        int q=2;\n        o.changeCopy(q);\n        System.out.println(\"Caller quantity = \"+q);\n        System.out.println(\"Static result = \"+Order.twice(7));\n    }\n}"
+    },
+    {
+      "id": "lab-void",
+      "title": "Store values without printing",
+      "code": "class Order\n{\n    /** price stores the price of one item */\n    private int price;\n    /** quantity stores the object's item count */\n    private int quantity;\n\n    public void welcome()\n    {\n        System.out.println(\"Order ready\");\n    }\n\n    /** p and q receive the price and quantity to store */\n    public void accept(int p, int q)\n    {\n        price=p;\n        quantity=q;\n    }\n\n    public int total()\n    {\n        return price*quantity;\n    }\n\n    /** p and q receive values for a separate calculation */\n    public int total(int p, int q)\n    {\n        return p*q;\n    }\n\n    void display()\n    {\n        System.out.println(\"Stored total = \"+total());\n    }\n\n    /** n receives a copy of the caller's number */\n    public void changeCopy(int n)\n    {\n        n=n+1;\n        System.out.println(\"Inside copy = \"+n);\n    }\n\n    /** n receives the number to double */\n    public static int twice(int n)\n    {\n        return 2*n;\n    }\n\n    static void main()\n    {\n        /** o refers to an Order object */\n        Order o=new Order();\n        o.accept(50,2);\n        System.out.println(\"Reached main\");\n    }\n}"
+    },
+    {
+      "id": "lab-return",
+      "title": "Calling total alone does not print",
+      "code": "class Order\n{\n    /** price stores the price of one item */\n    private int price;\n    /** quantity stores the object's item count */\n    private int quantity;\n\n    public void welcome()\n    {\n        System.out.println(\"Order ready\");\n    }\n\n    /** p and q receive the price and quantity to store */\n    public void accept(int p, int q)\n    {\n        price=p;\n        quantity=q;\n    }\n\n    public int total()\n    {\n        return price*quantity;\n    }\n\n    /** p and q receive values for a separate calculation */\n    public int total(int p, int q)\n    {\n        return p*q;\n    }\n\n    void display()\n    {\n        System.out.println(\"Stored total = \"+total());\n    }\n\n    /** n receives a copy of the caller's number */\n    public void changeCopy(int n)\n    {\n        n=n+1;\n        System.out.println(\"Inside copy = \"+n);\n    }\n\n    /** n receives the number to double */\n    public static int twice(int n)\n    {\n        return 2*n;\n    }\n\n    static void main()\n    {\n        /** o refers to an Order object */\n        Order o=new Order();\n        o.accept(50,2);\n        o.total();\n        System.out.println(\"Returned to main\");\n    }\n}"
+    },
+    {
+      "id": "lab-args",
+      "title": "Arguments versus stored fields",
+      "code": "class Order\n{\n    /** price stores the price of one item */\n    private int price;\n    /** quantity stores the object's item count */\n    private int quantity;\n\n    public void welcome()\n    {\n        System.out.println(\"Order ready\");\n    }\n\n    /** p and q receive the price and quantity to store */\n    public void accept(int p, int q)\n    {\n        price=p;\n        quantity=q;\n    }\n\n    public int total()\n    {\n        return price*quantity;\n    }\n\n    /** p and q receive values for a separate calculation */\n    public int total(int p, int q)\n    {\n        return p*q;\n    }\n\n    void display()\n    {\n        System.out.println(\"Stored total = \"+total());\n    }\n\n    /** n receives a copy of the caller's number */\n    public void changeCopy(int n)\n    {\n        n=n+1;\n        System.out.println(\"Inside copy = \"+n);\n    }\n\n    /** n receives the number to double */\n    public static int twice(int n)\n    {\n        return 2*n;\n    }\n\n    static void main()\n    {\n        /** o refers to an Order object */\n        Order o=new Order();\n        o.accept(50,2);\n        System.out.println(\"Arguments = \"+o.total(10,4));\n        o.display();\n    }\n}"
+    },
+    {
+      "id": "lab-copy",
+      "title": "The caller and parameter are separate",
+      "code": "class Order\n{\n    /** price stores the price of one item */\n    private int price;\n    /** quantity stores the object's item count */\n    private int quantity;\n\n    public void welcome()\n    {\n        System.out.println(\"Order ready\");\n    }\n\n    /** p and q receive the price and quantity to store */\n    public void accept(int p, int q)\n    {\n        price=p;\n        quantity=q;\n    }\n\n    public int total()\n    {\n        return price*quantity;\n    }\n\n    /** p and q receive values for a separate calculation */\n    public int total(int p, int q)\n    {\n        return p*q;\n    }\n\n    void display()\n    {\n        System.out.println(\"Stored total = \"+total());\n    }\n\n    /** n receives a copy of the caller's number */\n    public void changeCopy(int n)\n    {\n        n=n+1;\n        System.out.println(\"Inside copy = \"+n);\n    }\n\n    /** n receives the number to double */\n    public static int twice(int n)\n    {\n        return 2*n;\n    }\n\n    static void main()\n    {\n        /** o refers to an Order object */\n        Order o=new Order();\n        /** q stores the caller's quantity */\n        int q=2;\n        o.changeCopy(q);\n        System.out.println(\"Caller = \"+q);\n    }\n}"
+    },
+    {
+      "id": "lab-state",
+      "title": "A different method really changes the fields",
+      "code": "class Order\n{\n    /** price stores the price of one item */\n    private int price;\n    /** quantity stores the object's item count */\n    private int quantity;\n\n    public void welcome()\n    {\n        System.out.println(\"Order ready\");\n    }\n\n    /** p and q receive the price and quantity to store */\n    public void accept(int p, int q)\n    {\n        price=p;\n        quantity=q;\n    }\n\n    public int total()\n    {\n        return price*quantity;\n    }\n\n    /** p and q receive values for a separate calculation */\n    public int total(int p, int q)\n    {\n        return p*q;\n    }\n\n    void display()\n    {\n        System.out.println(\"Stored total = \"+total());\n    }\n\n    /** n receives a copy of the caller's number */\n    public void changeCopy(int n)\n    {\n        n=n+1;\n        System.out.println(\"Inside copy = \"+n);\n    }\n\n    /** n receives the number to double */\n    public static int twice(int n)\n    {\n        return 2*n;\n    }\n\n    static void main()\n    {\n        /** o refers to an Order object */\n        Order o=new Order();\n        o.accept(50,2);\n        o.display();\n        o.accept(50,3);\n        o.display();\n    }\n}"
+    },
+    {
+      "id": "lab-static",
+      "title": "Use the class name, with no object",
+      "code": "class Order\n{\n    /** price stores the price of one item */\n    private int price;\n    /** quantity stores the object's item count */\n    private int quantity;\n\n    public void welcome()\n    {\n        System.out.println(\"Order ready\");\n    }\n\n    /** p and q receive the price and quantity to store */\n    public void accept(int p, int q)\n    {\n        price=p;\n        quantity=q;\n    }\n\n    public int total()\n    {\n        return price*quantity;\n    }\n\n    /** p and q receive values for a separate calculation */\n    public int total(int p, int q)\n    {\n        return p*q;\n    }\n\n    void display()\n    {\n        System.out.println(\"Stored total = \"+total());\n    }\n\n    /** n receives a copy of the caller's number */\n    public void changeCopy(int n)\n    {\n        n=n+1;\n        System.out.println(\"Inside copy = \"+n);\n    }\n\n    /** n receives the number to double */\n    public static int twice(int n)\n    {\n        return 2*n;\n    }\n\n    static void main()\n    {\n        System.out.println(Order.twice(7));\n        System.out.println(Order.twice(10));\n    }\n}"
+    },
+    {
+      "id": "lab-nested",
+      "title": "A return value becomes another argument",
+      "code": "class Order\n{\n    /** price stores the price of one item */\n    private int price;\n    /** quantity stores the object's item count */\n    private int quantity;\n\n    public void welcome()\n    {\n        System.out.println(\"Order ready\");\n    }\n\n    /** p and q receive the price and quantity to store */\n    public void accept(int p, int q)\n    {\n        price=p;\n        quantity=q;\n    }\n\n    public int total()\n    {\n        return price*quantity;\n    }\n\n    /** p and q receive values for a separate calculation */\n    public int total(int p, int q)\n    {\n        return p*q;\n    }\n\n    void display()\n    {\n        System.out.println(\"Stored total = \"+total());\n    }\n\n    /** n receives a copy of the caller's number */\n    public void changeCopy(int n)\n    {\n        n=n+1;\n        System.out.println(\"Inside copy = \"+n);\n    }\n\n    /** n receives the number to double */\n    public static int twice(int n)\n    {\n        return 2*n;\n    }\n\n    static void main()\n    {\n        /** o refers to an Order object */\n        Order o=new Order();\n        o.accept(50,2);\n        System.out.println(o.total(Order.twice(5),3));\n    }\n}"
+    },
+    {
+      "id": "lab-paper",
+      "title": "Order notebook reconstruction",
+      "code": "class Order\n{\n    /** price stores the price of one item */\n    private int price;\n    /** quantity stores the object's item count */\n    private int quantity;\n\n    public void welcome()\n    {\n        System.out.println(\"Order ready\");\n    }\n\n    /** p and q receive the price and quantity to store */\n    public void accept(int p, int q)\n    {\n        price=p;\n        quantity=q;\n    }\n\n    public int total()\n    {\n        return price*quantity;\n    }\n\n    /** p and q receive values for a separate calculation */\n    public int total(int p, int q)\n    {\n        return p*q;\n    }\n\n    void display()\n    {\n        System.out.println(\"Stored total = \"+total());\n    }\n\n    /** n receives a copy of the caller's number */\n    public void changeCopy(int n)\n    {\n        n=n+1;\n        System.out.println(\"Inside copy = \"+n);\n    }\n\n    /** n receives the number to double */\n    public static int twice(int n)\n    {\n        return 2*n;\n    }\n\n    static void main()\n    {\n        /** o refers to an Order object */\n        Order o=new Order();\n        o.accept(25,4);\n        o.display();\n        System.out.println(\"Separate = \"+o.total(10,3));\n        System.out.println(\"Twice = \"+Order.twice(6));\n    }\n}"
     }
   ],
   "batches": [
@@ -514,6 +559,163 @@ JP.guides.methods={
           "rule": "Identify the signature before tracing the selected method body.",
           "change": "Use compute(5,'c'), compute(3.0,'d'), compute(10,5,'p'). Predict which formula each uses."
         }
+      ]
+    },
+    {
+      "id": "program-lab",
+      "title": "Program lab · one class, many method experiments",
+      "minutes": 20,
+      "focus": "Use one Order class to connect every method idea",
+      "intro": "Keep the same Order class. For each short experiment below, only main changes. Predict first; the W3Schools copy includes the complete class for that experiment.",
+      "tasks": [
+        {
+          "id": "lab-full",
+          "title": "The complete program: predict seven lines",
+          "kind": "output",
+          "example": "lab-full",
+          "q": "Start in main. Write every output line before opening the answer. Mark which calls return values and which print.",
+          "why": "welcome prints. accept stores 50 and 2 without printing. total() returns their product; total(30,3) returns a separate product without changing the fields. display prints the stored total. changeCopy changes only n. twice returns a value through the class call.",
+          "rule": "Call → receive inputs → execute → return or print → continue.",
+          "change": "Change accept(50,2) to accept(50,4). Identify exactly which output lines change."
+        },
+        {
+          "id": "lab-void",
+          "title": "Store values without printing",
+          "kind": "output",
+          "example": "lab-void",
+          "q": "What prints? Does accept returning void mean it did nothing?",
+          "why": "accept changes the fields but has no println and returns no value. main still prints its continuation message.",
+          "rule": "void means no returned value, not no work.",
+          "change": "",
+          "displayCode": "static void main()\n{\n    /** o refers to an Order object */\n    Order o=new Order();\n    o.accept(50,2);\n    System.out.println(\"Reached main\");\n}",
+          "snippetLabel": "Focus snippet · replacement main only; copy includes the full Order class"
+        },
+        {
+          "id": "lab-return",
+          "title": "Calling total alone does not print",
+          "kind": "output",
+          "example": "lab-return",
+          "q": "Predict the output. Now suppose o.total() were inside println—what would change?",
+          "why": "total computes and returns a value, but this call discards it. Only main prints.",
+          "rule": "A returned value is not automatically output.",
+          "change": "Replace o.total(); with System.out.println(o.total());. Predict the added line.",
+          "displayCode": "static void main()\n{\n    /** o refers to an Order object */\n    Order o=new Order();\n    o.accept(50,2);\n    o.total();\n    System.out.println(\"Returned to main\");\n}",
+          "snippetLabel": "Focus snippet · replacement main only; copy includes the full Order class"
+        },
+        {
+          "id": "lab-args",
+          "title": "Arguments versus stored fields",
+          "kind": "output",
+          "example": "lab-args",
+          "q": "Write both lines. Did total(10,4) replace the object’s price and quantity?",
+          "why": "The overloaded method calculates from its formal parameters p and q. It does not assign the object’s fields. display still uses values stored by accept.",
+          "rule": "Parameters are method inputs; fields are the object’s stored state.",
+          "change": "",
+          "displayCode": "static void main()\n{\n    /** o refers to an Order object */\n    Order o=new Order();\n    o.accept(50,2);\n    System.out.println(\"Arguments = \"+o.total(10,4));\n    o.display();\n}",
+          "snippetLabel": "Focus snippet · replacement main only; copy includes the full Order class"
+        },
+        {
+          "id": "lab-copy",
+          "title": "The caller and parameter are separate",
+          "kind": "output",
+          "example": "lab-copy",
+          "q": "Draw q in main and n inside changeCopy. Predict both lines.",
+          "why": "n receives a copy of q. Increasing n does not assign anything to q.",
+          "rule": "Primitive values are copied into formal parameters.",
+          "change": "Change q to 5 and predict again.",
+          "displayCode": "static void main()\n{\n    /** o refers to an Order object */\n    Order o=new Order();\n    /** q stores the caller's quantity */\n    int q=2;\n    o.changeCopy(q);\n    System.out.println(\"Caller = \"+q);\n}",
+          "snippetLabel": "Focus snippet · replacement main only; copy includes the full Order class"
+        },
+        {
+          "id": "lab-state",
+          "title": "A different method really changes the fields",
+          "kind": "output",
+          "example": "lab-state",
+          "q": "Compare this with changeCopy. Why can the second display now differ?",
+          "why": "accept assigns price and quantity on the object. The next display reads those new stored values.",
+          "rule": "An instance method may change object fields; this differs from changing a local primitive parameter.",
+          "change": "",
+          "displayCode": "static void main()\n{\n    /** o refers to an Order object */\n    Order o=new Order();\n    o.accept(50,2);\n    o.display();\n    o.accept(50,3);\n    o.display();\n}",
+          "snippetLabel": "Focus snippet · replacement main only; copy includes the full Order class"
+        },
+        {
+          "id": "lab-static",
+          "title": "Use the class name, with no object",
+          "kind": "output",
+          "example": "lab-static",
+          "q": "Write both lines. Find the object creation statement—or explain why there is none.",
+          "why": "twice is static. It receives an int and returns an int without needing an Order object.",
+          "rule": "static describes how to call; int describes the returned value.",
+          "change": "",
+          "displayCode": "static void main()\n{\n    System.out.println(Order.twice(7));\n    System.out.println(Order.twice(10));\n}",
+          "snippetLabel": "Focus snippet · replacement main only; copy includes the full Order class"
+        },
+        {
+          "id": "lab-nested",
+          "title": "A return value becomes another argument",
+          "kind": "output",
+          "example": "lab-nested",
+          "q": "Follow the inner call first. Write the values passed to total, then the printed result.",
+          "why": "twice(5) completes first. Its returned value becomes the first argument of total(int,int). That overload returns the product for println.",
+          "rule": "Finish an inner call to get the argument value before tracing the outer call.",
+          "change": "",
+          "displayCode": "static void main()\n{\n    /** o refers to an Order object */\n    Order o=new Order();\n    o.accept(50,2);\n    System.out.println(o.total(Order.twice(5),3));\n}",
+          "snippetLabel": "Focus snippet · replacement main only; copy includes the full Order class"
+        },
+        {
+          "id": "lab-paper",
+          "title": "Notebook: rebuild the useful methods",
+          "kind": "paper",
+          "example": "lab-paper",
+          "q": "Close the complete program. Write class Order with private int price and quantity; accept(int p,int q) stores them; int total() returns their product; int total(int p,int q) returns the argument product; void display() prints Stored total = and the field-based result; static int twice(int n) returns twice n. Write static main that creates o, accepts 25 and 4, displays, prints Separate = and total(10,3), then Twice = and twice(6). Extra welcome/changeCopy methods in the comparison solution are optional. Predict the three lines.",
+          "hint": "Write fields first, then five separate methods. total is overloaded by parameter count. main calls through o, except the static class call.",
+          "checklist": [
+            "Fields and parameters have /** */ descriptions",
+            "All four parameter/return combinations understood",
+            "total() and total(int,int) have different signatures",
+            "accept changes fields; parameter-based total does not",
+            "display prints while total returns",
+            "Static call uses Order.twice",
+            "Full main and three outputs written without copying"
+          ]
+        }
+      ],
+      "methodMap": [
+        [
+          "welcome()",
+          "No parameters · void",
+          "Prints a message"
+        ],
+        [
+          "accept(int,int)",
+          "Parameters · void",
+          "Stores values in the object"
+        ],
+        [
+          "total()",
+          "No parameters · int",
+          "Returns a calculation using fields"
+        ],
+        [
+          "total(int,int)",
+          "Parameters · int",
+          "Returns a calculation using arguments"
+        ],
+        [
+          "display()",
+          "Instance method",
+          "Prints the result of another method call"
+        ],
+        [
+          "changeCopy(int)",
+          "Primitive parameter copy",
+          "Changes its local copy, not the caller"
+        ],
+        [
+          "Order.twice(int)",
+          "Static method · int",
+          "Called through the class name"
+        ]
       ]
     },
     {

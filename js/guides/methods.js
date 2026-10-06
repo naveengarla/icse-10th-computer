@@ -19,11 +19,13 @@
   data.batches.forEach(function(batch){
     var link=node('a',batch.title);link.href='#'+batch.id;contents.appendChild(link);
     var section=node('section');section.id=batch.id;section.className='batch';section.appendChild(node('h2',batch.title));var meta=node('p','~'+batch.minutes+' min · '+batch.focus);meta.className='batch-meta';section.appendChild(meta);
+    if(batch.intro)section.appendChild(node('p',batch.intro));
+    if(batch.methodMap){var map=node('details');map.className='method-map';map.appendChild(node('summary','Name the methods after trying them · quick map'));var table=node('table');var body=node('tbody');batch.methodMap.forEach(function(row){var tr=node('tr');row.forEach(function(cell){tr.appendChild(node('td',cell));});body.appendChild(tr);});table.appendChild(body);map.appendChild(table);section.appendChild(map);}
     batch.tasks.forEach(function(t){
       number++;var item=node('article');item.id='exercise-'+t.id;item.className='exercise';item.setAttribute('data-task',t.id);item.setAttribute('data-kind',t.kind);
       var badge=node('span',(t.kind==='paper'?'WRITE':t.kind==='recall'?'NAME IT':t.kind==='diagnose'?'FIND THE ERROR':'PREDICT')+' · '+number);badge.className='eyebrow';item.appendChild(badge);item.appendChild(node('h3',t.title));item.appendChild(node('p',t.q));
       var ex=t.example?lookup(t.example):null,result=ex?JP.engine.run(ex.code):null;
-      if(ex && t.kind!=='paper')item.appendChild(codeBlock(ex.code));if(t.fragment)item.appendChild(codeBlock(t.fragment));
+      if(ex && t.kind!=='paper'){if(t.snippetLabel)item.appendChild(node('p',t.snippetLabel)).className='version';item.appendChild(codeBlock(t.displayCode||ex.code));}if(t.fragment)item.appendChild(codeBlock(t.fragment));
       var solution=node('div');solution.className='answer-reveal';solution.hidden=true;
       if(t.kind==='paper'){
         var hint=node('details');hint.className='hint';hint.appendChild(node('summary','Need a starting hint?'));hint.appendChild(node('p',t.hint));item.appendChild(hint);

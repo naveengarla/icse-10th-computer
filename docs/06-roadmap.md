@@ -275,3 +275,5 @@ The six-file completion criterion also requires the listed worksheet sections. N
 Stage 9 follows the owner's exam-time priority: concise concept explanations, prediction and repair practice, then a handwritten method-and-call task. It is locally built; publication awaits instruction.
 
 2026-10-06: The separate Methods guide has been revised to practice-first batches under owner instruction. Existing interactive stages remain intact. PYQs from the owner will calibrate later practice; this is not a claim of full M2 completion.
+
+2026-10-06: Added an Order program lab to the separate Methods guide under owner instruction, with full program plus focused main variants and handwritten reconstruction; publishing authorized. Existing M2 stage completion status is unchanged.
